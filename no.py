@@ -17,7 +17,7 @@ block_length  = 1024    # samples
 
 
 class Limiter:
- def __init__(self, attack_coeff, release_coeff, delay, dtype=float32):
+def __init__(self, attack_coeff, release_coeff, delay, dtype=float32):
     self.delay_index = 0
     self.envelope = 0
     self.gain = 1
