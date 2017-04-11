@@ -49,10 +49,10 @@ def limit(self, signal, threshold):
 
 
 
- print "Recording Audio"
+ print ("Recording Audio")
  signal = sd.rec(signal_length * fs, samplerate=fs, channels=1, dtype=dtype)
  sd.wait() 
- print "Audio recording complete , Play Audio"
+ print ("Audio recording complete , Play Audio")
 
 
 original_signal = array(signal, copy=True, dtype=dtype)
