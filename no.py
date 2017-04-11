@@ -49,28 +49,28 @@ def limit(self, signal, threshold):
 
 
 
- print ("Recording Audio")
- signal = sd.rec(signal_length * fs, samplerate=fs, channels=1, dtype=dtype)
- sd.wait() 
- print ("Audio recording complete , Play Audio")
+		print ("Recording Audio")
+		signal = sd.rec(signal_length * fs, samplerate=fs, channels=1, dtype=dtype)
+		sd.wait() 
+		print ("Audio recording complete , Play Audio")
 
 
-original_signal = array(signal, copy=True, dtype=dtype)
-limiter = Limiter(attack_coeff, release_coeff, delay, dtype)
+		original_signal = array(signal, copy=True, dtype=dtype)
+		limiter = Limiter(attack_coeff, release_coeff, delay, dtype)
 
 def callback(in_data, frame_count, time_info, flag):
-if flag:
-    print("Playback Error: %i" % flag)
-played_frames = callback.counter
-callback.counter += frame_count
-limiter.limit(signal[played_frames:callback.counter], threshold)
-return signal[played_frames:callback.counter], paContinue
+		if flag:
+			print("Playback Error: %i" % flag)
+		played_frames = callback.counter
+		callback.counter += frame_count
+		limiter.limit(signal[played_frames:callback.counter], threshold)
+		return signal[played_frames:callback.counter], paContinue
 
-callback.counter = 0
+		callback.counter = 0
 
-pa = PyAudio()
+		pa = PyAudio()
 
-stream = pa.open(format = paFloat32,
+		stream = pa.open(format = paFloat32,
              channels = 1,
              rate = fs,
              frames_per_buffer = block_length,
