@@ -22,7 +22,15 @@ inp.setperiodsize(buffer_period)
 
 # creation of an array of arrays
 print("Creation of array to store data")
-
-
+buffer = np.empty([3,32000],dtype=np.float32)
 
 # store data
+data=0.12
+i=0
+while True :
+    l, data=inp.read()
+    
+   # buffer[0,i]=np.fromstring(inp.write(data),dtype=np.float32)
+   # print(buffer[0])
+   # i=i+1
+
