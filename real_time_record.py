@@ -1,14 +1,19 @@
 # all import here
 import alsaaudio as alsa
+from multiprocessing import Process, Queue 
 import numpy as np
 import math
+import struct
+import array
+import time
+import audioop
 
-# constant
+
+#constant
 fs = 16000 #sample rate fixed at 16kHz
 n_channel=1 # number of channel use for record : 1 -> mono, 2 -> stereo.
-format_style = alsa.PCM_FORMAT_S32_LE # sample is defined with float 32
-buffer_period = 160 
-# change buffer_period to have 1 sample per write
+format_style = alsa.PCM_FORMAT_S16_LE # sample is defined with float 32
+buffer_period = 160
 
 # initialize sound card -> choose by default : -arecord -l in terminal allow to know name of default card
 print("Initialization of sound card -> set parameters to sound card")
@@ -22,16 +27,25 @@ inp.setformat(format_style)
 inp.setperiodsize(buffer_period)
 
 # creation of an array of arrays
-print("Creation of array to store data")
-#buffer = np.empty([3,32000],dtype=np.float32)
-buffer=[]
+print("Recording ...")
 # store data
+buffer=[[],[],[]]
+
+j = 0
+i=0
 while True:
-    l, data = inp.read()
-    buffer.append(np.fromstring(data,dtype=np.float32))
-    print(len(buffer))
-    if len(buffer)>=100:
-        #out.write(buffer[0])
-        
-	#del buffer[0]
-	print(buffer)
+        # Read data from device, if possible.
+        raw_data=b''
+        start=time.time()
+        while len(raw_data)<2*fs:
+            frame_count, data = inp.read()
+            if frame_count >0 :
+                raw_data+=data
+        end=time.time()
+        buffer[i]=raw_data
+        print "buffer", i , " is full"
+        i+=1
+        i=i%3
+        print(len(np.fromstring(raw_data[:2*fs],dtype=np.int16)))
+        print(end-start)
+   
