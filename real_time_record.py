@@ -47,5 +47,6 @@ while True:
         i+=1
         i=i%3
         print(len(np.fromstring(raw_data[:2*fs],dtype=np.int16)))
+        print(np.fromstring(raw_data[:2*fs],dtype=np.int16))
         print(end-start)
    
