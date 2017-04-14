@@ -7,9 +7,12 @@ import struct
 import array
 import time
 
+__author__="Quentin MASCRET <quentin.mascret.1 ulaval.ca>"
+__date__="2017-04-14"
+__version__="1.0-dev"
 class Record(object) :
     """Initialize audio buffer"""
-    def __init__(self) :
+    def __init__(self):
         self.__rate=16000 # sample rate
         self.__channels=1 # number of channel use in record
         self.__read_queue = Queue()
@@ -19,7 +22,7 @@ class Record(object) :
     def __read(self) :
         card='sysdefault:CARD=Device'
         inp = alsa.PCM(
-alsa.PCM_CAPTURE, alsa.PCM_NORMAL,card)
+        alsa.PCM_CAPTURE, alsa.PCM_NORMAL,card)
         inp.setchannels(1)
         inp.setrate(self.__rate)
         inp.setformat(alsa.PCM_FORMAT_S32_LE)
