@@ -36,9 +36,12 @@ class Record(object) :
 
     """ I don't know if it's necessary but runs the read processes"""
     def run(self):
-        read_process = Process(target=self.__read)
-        read_process.start()
+        self.__read_process = Process(target=self.__read)
+        self.__read_process.start()
 
+    def stop(self):
+        self.__read_process.terminate()
+        
     def read(self):
         return self.__read_queue.get() , self.__read_frame.get()
 
@@ -75,9 +78,9 @@ if __name__=='__main__' :
     audio= Record()
     audio.run()
     r=audio.read_data()
-    while True :
-        print(r.next())
-        print("end of transmission -> waiting new data")
+    print(r.next())
+    print("end of transmission -> waiting new data")
+    audio.stop()
     
         
     
