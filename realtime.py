@@ -8,7 +8,6 @@ import time
 A class implementing buffered audio I/O.
 """
 class Audio:
-
     """
     Initialize the audio buffer.
     """
