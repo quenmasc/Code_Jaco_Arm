@@ -10,7 +10,7 @@ import DSP
 
 __author__="Quentin MASCRET <quentin.mascret.1 ulaval.ca>"
 __date__="2017-04-14"
-__version__="1.0-dev"
+__version__="1.1-dev"
 class Record(object) :
     """Initialize audio buffer"""
     def __init__(self):
