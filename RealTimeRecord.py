@@ -18,9 +18,15 @@ class Record(object) :
         self.__channels=1 # number of channel use in record
         self.__read_queue = Queue()
         self.__read_frame = Queue()
+	self.__write_buffer= Queue ()
         self.__window_ms=0.015
         self.__step_ms=0.005
-
+	self.__format=alsa.PCM_FORMAT_S32_LE
+	self.__max=192324
+	if self.__format==alsa.PCM_FORMAT_S16_LE :
+		self.__max=self.__max/2
+	
+	#self.__raw_data=
     """"Reads audio from ALSA audio device """
     def __read(self) :
         card='sysdefault:CARD=Device'
@@ -28,7 +34,7 @@ class Record(object) :
         alsa.PCM_CAPTURE, alsa.PCM_NORMAL,card)
         inp.setchannels(1)
         inp.setrate(self.__rate)
-        inp.setformat(alsa.PCM_FORMAT_S32_LE)
+        inp.setformat(self.__format)
         inp.setperiodsize(self.__rate / 100)
         print("Audio Device is parameted")
 
@@ -49,21 +55,26 @@ class Record(object) :
         return self.__read_queue.get() , self.__read_frame.get()
 
 
-    def push_up(self,buffer):
-        return buffer
        
 
     def read_data(self):
         print("Reading data")
         buffer=[]
+	i=0
         while True:
                 raw_data=b''
-                while len(raw_data)<2*self.__rate :
+                while len(raw_data)<4*self.__rate :
                     data, length = audio.read()
+		    
                     if length >0 :
                         raw_data+=data
+			i+=1
+			print(i)
+			print(len(data))
+			print "leng of raw_data is" , len(raw_data)
+			print(len(np.fromstring(raw_data[:4*self.__rate],dtype=np.int32)))
                 if raw_data==[] :
-                    print ("Buffer is not empty -> fatal error ! ")
+                    print ("Buffer is empty -> fatal error ! ")
                     break
                 else :
                     buffer=np.fromstring(raw_data[:2*self.__rate],
@@ -75,17 +86,18 @@ class Record(object) :
                 i=i%3
                # print(len(np.fromstring(raw_data[:2*rate],dtype=np.int16)))
                # print(np.fromstring(raw_data[:2*rate],dtype=np.int16))
-
-
+    
+  
+  
 if __name__=='__main__' :
     audio= Record()
     audio.run()
     r=audio.read_data()
     a=r.next()
-    d=DSP.normalize(a)
-    f=DSP.subframe(d)
-    for i in range(0,198):
-        print(f.next())
+#    d=DSP.normalize(a)
+#    f=DSP.subframe(d)
+#    for i in range(0,198):
+#        print(f.next())
     print("end of transmission -> waiting new data")
     audio.stop()
     
