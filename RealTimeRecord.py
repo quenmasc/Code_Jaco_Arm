@@ -17,20 +17,19 @@ class Record(object) :
     def __init__(self):
         self.__rate=16000 # sample rate
         self.__channels=1 # number of channel use in record
+        # all queues
         self.__read_queue = Queue()
         self.__read_frame = Queue()
 	self.__write_queue=Queue()
+	# params  
         self.__window_ms=0.015
         self.__step_ms=0.005
 	self.__format=alsa.PCM_FORMAT_S16_LE
-	self.__max=192323 # max-1
+	self.__max=192324 
 	self.__byte =4
 	self.__head=0
 	self.__tail=0
 	self.__cur=0
-	self.__flag=0
-	# for a try
-
 	self.__start=0
 	self.__length=0
 	if self.__format==alsa.PCM_FORMAT_S16_LE :
@@ -54,55 +53,62 @@ class Record(object) :
             frame_count, data = inp.read()
             self.__read_queue.put(data)
             self.__read_frame.put(frame_count)
-
-    """ I don't know if it's necessary but runs the read processes"""
-    def run(self):
-        self.__read_process = Process(target=self.__read)
-        self.__read_process.start()
-	self.__write_process = Process(target=self.__write)
-	self.__write_process.start()
-    def stop(self):
-
-        self.__read_process.terminate()
-        self.__write_process.terminate()
-        
-    def read(self):
-        return self.__read_queue.get() , self.__read_frame.get()       
-    
-    def write(self,data,length):
-	if length>0:
-        	self.__write_queue.put(data)
+    """ Write data into a list (ring buffer) -> intialize with None value at beggining"""     
     def __write(self):
-	while self.__flag==0 :
+        raw_data=[None for i in xrange(self.__max)]
+	while True :
 		data=self.__write_queue.get()
-		if self.__cur >= self.__max :
-                        self.__str_data+=''.join(self.__raw_data)
+		# not really use just for test 
+		
+		# USE 
+                self.__tail+=len(data)
+                raw_data[self.__cur:self.__tail]=data
+                self.__cur=self.__tail
+                if self.__cur >= self.__max :
+                        self.__str_data+=''.join(raw_data)
 			f=wave.open("test.wav",'w')
 			f.setnchannels(1)
 			f.setsampwidth(self.__byte)
 			f.setframerate(self.__rate)
 			f.writeframes(self.__str_data)
 			f.close()
-			self.__flag+=1
-		else :
-                    self.__tail+=len(data)
-                    self.__raw_data[self.__cur:self.__tail]=data
-                    print "current position is :",self.__cur," finale position is :", self.__tail-1
-                    self.__cur=self.__tail
-                    self.__start+=1
-		
+			print("End of recording")
+                if self.__cur >=self.__max :
+                            self.__cur=0
+                            self.__tail=0
 
-    def read_data(self):
-        print("Reading data")
- 
-  
+    """ Run proccesses """
+    def run(self):
+        self.__read_process = Process(target=self.__read)
+        self.__read_process.start()
+	self.__write_process = Process(target=self.__write)
+	self.__write_process.start()
+    """ Stop processes """		
+    def stop(self):
+        self.__read_process.terminate()
+        self.__write_process.terminate()
+
+    """ get all data from audiuo devices """
+    def read(self):
+        return self.__read_queue.get() , self.__read_frame.get()       
+
+    """ put in queue alla data record """
+    def write(self,data,length):
+	if length>0:
+        	self.__write_queue.put(data)
+
+    def push(self):
+        cur=self.__cur
+        return cur
+            
+
 if __name__=='__main__' :
     audio= Record()
     audio.run()
     while True :
         data, length = audio.read()
         audio.write(data,length)
-        
+     #   print(audio.push)
     print("out of loop")
     print("end of transmission -> waiting new data")
     audio.stop()
