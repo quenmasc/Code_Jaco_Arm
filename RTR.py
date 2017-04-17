@@ -27,9 +27,16 @@ class Record(object) :
 	self.__format=alsa.PCM_FORMAT_S16_LE
 	self.__max=192324 
 	self.__byte =4
+	# buffer params
+	self.__tail=0
+	self.__cur=0
+	self.__start=0
+	self.__length=0
+	self.__push_value=[self.__max/3, self.__max/2,self.__max]
 	if self.__format==alsa.PCM_FORMAT_S16_LE :
 		self.__max=self.__max/2
 		self.__byte=self.__byte/2
+		self.__push_value=[self.__max/3, self.__max/2,self.__max]
 	self.__str_data=""
         self.__raw_data=[None for i in xrange(self.__max)]
 	
@@ -51,7 +58,7 @@ class Record(object) :
     """ Write data into a list (ring buffer) -> intialize with None value at beggining"""     
     def __write(self):
         raw_data=[None for i in xrange(self.__max)]
-	while True :
+	while True : 
 		data=self.__write_queue.get()
 		# not really use just for test 
 		
@@ -61,6 +68,7 @@ class Record(object) :
                 self.__cur=self.__tail
                 if self.__cur >= self. __max :
                         self.__str_data+=''.join(raw_data)
+                        yield raw_data
 			f=wave.open("test.wav",'w')
 			f.setnchannels(1)
 			f.setsampwidth(self.__byte)
@@ -81,7 +89,7 @@ class Record(object) :
     """ Stop processes """		
     def stop(self):
         self.__read_process.terminate()
-         self.__write_process.terminate()
+        self.__write_process.terminate()
 
     """ get all data from audiuo devices """
     def read(self):
@@ -93,13 +101,31 @@ class Record(object) :
         	self.__write_queue.put(data)
 
 
-
+    def write_buffer(self,data,length):
+        if lenght >0 :
+            self.__tail+=len(data)
+            raw_data[self.__cur:self.__tail]=data
+            self.__cur=self.__tail
+            if self.__cur >= self. __max :
+                        self.__str_data+=''.join(raw_data)
+			f=wave.open("test.wav",'w')
+			f.setnchannels(1)
+			f.setsampwidth(self.__byte)
+			f.setframerate(self.__rate)
+			f.writeframes(self.__str_data)
+			f.close()
+			print("End of recording")
+            if self.__cur >=self.__max :
+                        self.__cur=0
+                        self.__tail=0 
+            
+            
 if __name__=='__main__' :
     audio= Record()
     audio.run()
     while True :
         data, length = audio.read()
-        audio.write(data)
+        audio.write(data,length)
 
      #   print(audio.push)
     print("out of loop")
