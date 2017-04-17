@@ -64,7 +64,7 @@ class Record(object) :
                 self.__tail+=len(data)
                 raw_data[self.__cur:self.__tail]=data
                 self.__cur=self.__tail
-                if self.__cur >= self.__max :
+                if self.__cur >= self. __max :
                         self.__str_data+=''.join(raw_data)
 			f=wave.open("test.wav",'w')
 			f.setnchannels(1)
@@ -74,8 +74,8 @@ class Record(object) :
 			f.close()
 			print("End of recording")
                 if self.__cur >=self.__max :
-                            self.__cur=0
-                            self.__tail=0
+                        self.__cur=0
+                        self.__tail=0
 
     """ Run proccesses """
     def run(self):
@@ -86,7 +86,7 @@ class Record(object) :
     """ Stop processes """		
     def stop(self):
         self.__read_process.terminate()
-        self.__write_process.terminate()
+         self.__write_process.terminate()
 
     """ get all data from audiuo devices """
     def read(self):
@@ -107,7 +107,8 @@ if __name__=='__main__' :
     audio.run()
     while True :
         data, length = audio.read()
-        audio.write(data,length)
+        audio.write(data)
+
      #   print(audio.push)
     print("out of loop")
     print("end of transmission -> waiting new data")
