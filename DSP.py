@@ -29,8 +29,6 @@ def subframe(data,window_ms=0.015,step_ms=0.005, rate=16000) :
         yield vector
     #return data[(nbFrame-1)*step_sample+window_sample: len(data)]
     
-   
-    
 
 
 
