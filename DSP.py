@@ -10,7 +10,7 @@ __author__="Quentin MASCRET <quentin.mascret.1 ulaval.ca>"
 __date__="2017-04-14"
 __version__="1.0-dev"
 
-
+THRESHOLD=0.1
 """ Normalize the audio samples from an array of integers"""
 def normalize(data) :
     vector = data-np.mean(data)
@@ -30,6 +30,7 @@ def subframe(data,window_ms=0.015,step_ms=0.005, rate=16000) :
     #return data[(nbFrame-1)*step_sample+window_sample: len(data)]
     
 
-
-
+def threshold(snd_data):
+    # return 'true' if below the 'silent' threshold
+    return np.max(snd_data) > THRESHOLD
 
