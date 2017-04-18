@@ -1,0 +1,1037 @@
+2017-03-05 16:54:27.847 Info   Starting JoyToKey Ver5.8.2
+2017-03-05 16:54:27.847 Info   ExeFile=C:\Users\Etudiant\Dropbox\Projet_CPP\HMI_Project_3D_L7\Debug\XBOX\JoyToKey.exe
+2017-03-05 16:54:27.847 Info   ConfigDir=C:\Users\Etudiant\Dropbox\Projet_CPP\HMI_Project_3D_L7\Debug\XBOX\
+2017-03-05 16:54:27.847 Info   IniFile=C:\Users\Etudiant\Dropbox\Projet_CPP\HMI_Project_3D_L7\Debug\XBOX\JoyToKey.ini
+2017-03-05 16:54:27.847 Info   Windows Version = 6.2
+2017-03-05 16:54:27.847 Error  Failed to load VistaAPI.dll (Utils\Utils.cpp#212)
+2017-03-05 16:54:27.847 Info   LicenseKey "" is not valid
+2017-03-05 16:54:28.128 Info   Loading XInput1_3.dll (Joystick.cpp#126)
+2017-03-05 16:54:28.128 Info   Initialized XInput (Joystick.cpp#144)
+2017-03-05 16:54:28.206 Info   0 joysticks are detected (Joystick.cpp#166)
+2017-03-05 16:54:28.206 Info   ConfigDir=C:\Users\Etudiant\Dropbox\Projet_CPP\HMI_Project_3D_L7\Debug\XBOX\*.cfg (ConfigFileManager.cpp#43)
+2017-03-05 16:54:28.206 Info   Failed to find AppLink.dat (AppLink\AppLinkManager.cpp#32)
+2017-03-05 16:54:28.222 Info   TimerInit: Initializing timer with x1 speed mode (interval = 16 msec)
+2017-03-05 16:54:28.284 Info   Starting in a minimized mode (JoyToKey.cpp#36)
+2017-03-05 16:55:41.551 Error  Seule une partie d’une requête ReadProcessMemory ou WriteProcessMemory a été effectuée.
+ (Utils\Utils.cpp#459)
+2017-03-05 17:02:17.365 Error  Seule une partie d’une requête ReadProcessMemory ou WriteProcessMemory a été effectuée.
+ (Utils\Utils.cpp#459)
+2017-03-05 17:02:18.162 Error  Seule une partie d’une requête ReadProcessMemory ou WriteProcessMemory a été effectuée.
+ (Utils\Utils.cpp#459)
+2017-03-05 17:02:19.755 Error  Descripteur non valide
+ (Utils\Utils.cpp#459)
+2017-03-05 17:02:24.943 Error  Seule une partie d’une requête ReadProcessMemory ou WriteProcessMemory a été effectuée.
+ (Utils\Utils.cpp#459)
+2017-03-05 17:02:25.708 Error  Descripteur non valide
+ (Utils\Utils.cpp#459)
+2017-03-05 17:02:35.365 Error  Descripteur non valide
+ (Utils\Utils.cpp#459)
+2017-03-05 17:02:38.146 Error  Seule une partie d’une requête ReadProcessMemory ou WriteProcessMemory a été effectuée.
+ (Utils\Utils.cpp#459)
+2017-03-05 17:02:39.240 Error  Descripteur non valide
+ (Utils\Utils.cpp#459)
+2017-03-05 17:02:41.865 Error  Seule une partie d’une requête ReadProcessMemory ou WriteProcessMemory a été effectuée.
+ (Utils\Utils.cpp#459)
+2017-03-05 17:02:44.209 Error  Descripteur non valide
+ (Utils\Utils.cpp#459)
+2017-03-05 17:03:33.850 Error  Descripteur non valide
+ (Utils\Utils.cpp#459)
+2017-03-05 18:32:02.207 Error  Descripteur non valide
+ (Utils\Utils.cpp#459)
+2017-03-05 18:32:12.676 Error  Descripteur non valide
+ (Utils\Utils.cpp#459)
+2017-03-05 18:33:00.329 Error  Descripteur non valide
+ (Utils\Utils.cpp#459)
+2017-03-05 18:33:06.001 Error  Descripteur non valide
+ (Utils\Utils.cpp#459)
+2017-03-05 18:36:00.471 Error  Descripteur non valide
+ (Utils\Utils.cpp#459)
+2017-03-05 18:36:07.815 Error  Descripteur non valide
+ (Utils\Utils.cpp#459)
+2017-03-05 18:36:52.581 Error  Descripteur non valide
+ (Utils\Utils.cpp#459)
+2017-03-05 18:37:00.785 Error  Descripteur non valide
+ (Utils\Utils.cpp#459)
+2017-03-05 18:39:07.427 Error  Descripteur non valide
+ (Utils\Utils.cpp#459)
+2017-03-05 18:39:43.749 Error  Descripteur non valide
+ (Utils\Utils.cpp#459)
+2017-03-05 18:40:33.781 Error  Descripteur non valide
+ (Utils\Utils.cpp#459)
+2017-03-05 18:40:36.968 Error  Descripteur non valide
+ (Utils\Utils.cpp#459)
+2017-03-05 18:41:02.941 Error  Descripteur non valide
+ (Utils\Utils.cpp#459)
+2017-03-05 18:41:32.367 Error  Descripteur non valide
+ (Utils\Utils.cpp#459)
+2017-03-05 18:41:35.374 Error  Seule une partie d’une requête ReadProcessMemory ou WriteProcessMemory a été effectuée.
+ (Utils\Utils.cpp#459)
+2017-03-05 18:41:36.479 Error  Descripteur non valide
+ (Utils\Utils.cpp#459)
+2017-03-05 18:41:41.038 Error  Seule une partie d’une requête ReadProcessMemory ou WriteProcessMemory a été effectuée.
+ (Utils\Utils.cpp#459)
+2017-03-05 18:41:44.478 Error  Descripteur non valide
+ (Utils\Utils.cpp#459)
+2017-03-05 18:41:48.894 Error  Descripteur non valide
+ (Utils\Utils.cpp#459)
+2017-03-05 18:42:00.174 Error  Descripteur non valide
+ (Utils\Utils.cpp#459)
+2017-03-05 18:42:02.302 Error  Seule une partie d’une requête ReadProcessMemory ou WriteProcessMemory a été effectuée.
+ (Utils\Utils.cpp#459)
+2017-03-05 18:42:03.630 Error  Descripteur non valide
+ (Utils\Utils.cpp#459)
+2017-03-05 18:42:05.614 Error  Seule une partie d’une requête ReadProcessMemory ou WriteProcessMemory a été effectuée.
+ (Utils\Utils.cpp#459)
+2017-03-05 18:42:06.623 Error  Descripteur non valide
+ (Utils\Utils.cpp#459)
+2017-03-05 18:42:08.271 Error  Descripteur non valide
+ (Utils\Utils.cpp#459)
+2017-03-05 18:42:34.174 Error  Descripteur non valide
+ (Utils\Utils.cpp#459)
+2017-03-05 18:42:41.998 Error  Descripteur non valide
+ (Utils\Utils.cpp#459)
+2017-03-05 20:19:02.942 Error  Descripteur non valide
+ (Utils\Utils.cpp#459)
+2017-03-05 20:19:05.832 Error  Seule une partie d’une requête ReadProcessMemory ou WriteProcessMemory a été effectuée.
+ (Utils\Utils.cpp#459)
+2017-03-05 20:19:06.754 Error  Descripteur non valide
+ (Utils\Utils.cpp#459)
+2017-03-05 20:19:35.286 Error  Descripteur non valide
+ (Utils\Utils.cpp#459)
+2017-03-05 20:19:53.005 Error  Descripteur non valide
+ (Utils\Utils.cpp#459)
+2017-03-05 20:20:20.705 Error  Seule une partie d’une requête ReadProcessMemory ou WriteProcessMemory a été effectuée.
+ (Utils\Utils.cpp#459)
+2017-03-05 20:20:22.455 Error  Descripteur non valide
+ (Utils\Utils.cpp#459)
+2017-03-05 20:21:58.128 Error  Descripteur non valide
+ (Utils\Utils.cpp#459)
+2017-03-05 20:22:26.581 Error  Descripteur non valide
+ (Utils\Utils.cpp#459)
+2017-03-05 20:28:14.945 Error  Descripteur non valide
+ (Utils\Utils.cpp#459)
+2017-03-05 20:30:22.336 Error  Descripteur non valide
+ (Utils\Utils.cpp#459)
+2017-03-05 20:30:27.836 Error  Descripteur non valide
+ (Utils\Utils.cpp#459)
+2017-03-05 20:31:02.414 Error  Descripteur non valide
+ (Utils\Utils.cpp#459)
+2017-03-05 20:31:19.758 Error  Descripteur non valide
+ (Utils\Utils.cpp#459)
+2017-03-05 20:31:26.586 Error  Descripteur non valide
+ (Utils\Utils.cpp#459)
+2017-03-05 20:31:30.336 Error  Descripteur non valide
+ (Utils\Utils.cpp#459)
+2017-03-05 20:31:33.071 Error  Descripteur non valide
+ (Utils\Utils.cpp#459)
+2017-03-05 20:31:51.946 Error  Descripteur non valide
+ (Utils\Utils.cpp#459)
+2017-03-05 20:34:06.307 Error  Descripteur non valide
+ (Utils\Utils.cpp#459)
+2017-03-05 20:36:46.293 Error  Descripteur non valide
+ (Utils\Utils.cpp#459)
+2017-03-05 20:36:50.028 Error  Seule une partie d’une requête ReadProcessMemory ou WriteProcessMemory a été effectuée.
+ (Utils\Utils.cpp#459)
+2017-03-05 20:36:52.637 Error  Descripteur non valide
+ (Utils\Utils.cpp#459)
+2017-03-05 20:36:56.934 Error  Seule une partie d’une requête ReadProcessMemory ou WriteProcessMemory a été effectuée.
+ (Utils\Utils.cpp#459)
+2017-03-05 20:37:05.043 Error  Descripteur non valide
+ (Utils\Utils.cpp#459)
+2017-03-05 20:38:01.966 Error  Seule une partie d’une requête ReadProcessMemory ou WriteProcessMemory a été effectuée.
+ (Utils\Utils.cpp#459)
+2017-03-05 20:38:04.732 Error  Descripteur non valide
+ (Utils\Utils.cpp#459)
+2017-03-05 20:38:23.201 Error  Descripteur non valide
+ (Utils\Utils.cpp#459)
+2017-03-05 20:38:54.982 Error  Descripteur non valide
+ (Utils\Utils.cpp#459)
+2017-03-05 20:39:01.998 Error  Descripteur non valide
+ (Utils\Utils.cpp#459)
+2017-03-05 20:39:45.202 Error  Descripteur non valide
+ (Utils\Utils.cpp#459)
+2017-03-05 20:40:50.405 Error  Descripteur non valide
+ (Utils\Utils.cpp#459)
+2017-03-05 20:41:31.922 Error  Descripteur non valide
+ (Utils\Utils.cpp#459)
+2017-03-05 20:41:34.906 Error  Seule une partie d’une requête ReadProcessMemory ou WriteProcessMemory a été effectuée.
+ (Utils\Utils.cpp#459)
+2017-03-05 20:41:35.609 Error  Descripteur non valide
+ (Utils\Utils.cpp#459)
+2017-03-05 20:41:41.625 Error  Seule une partie d’une requête ReadProcessMemory ou WriteProcessMemory a été effectuée.
+ (Utils\Utils.cpp#459)
+2017-03-05 20:41:43.359 Error  Descripteur non valide
+ (Utils\Utils.cpp#459)
+2017-03-05 20:42:21.777 Error  Descripteur non valide
+ (Utils\Utils.cpp#459)
+2017-03-05 20:42:30.199 Error  Seule une partie d’une requête ReadProcessMemory ou WriteProcessMemory a été effectuée.
+ (Utils\Utils.cpp#459)
+2017-03-05 20:42:33.012 Error  Descripteur non valide
+ (Utils\Utils.cpp#459)
+2017-03-05 20:42:34.949 Error  Descripteur non valide
+ (Utils\Utils.cpp#459)
+2017-03-05 20:43:23.872 Error  Descripteur non valide
+ (Utils\Utils.cpp#459)
+2017-03-05 20:43:24.684 Error  Descripteur non valide
+ (Utils\Utils.cpp#459)
+2017-03-05 20:43:29.856 Error  Seule une partie d’une requête ReadProcessMemory ou WriteProcessMemory a été effectuée.
+ (Utils\Utils.cpp#459)
+2017-03-05 20:43:32.668 Error  Descripteur non valide
+ (Utils\Utils.cpp#459)
+2017-03-05 20:43:49.278 Error  Descripteur non valide
+ (Utils\Utils.cpp#459)
+2017-03-05 20:44:28.800 Error  Descripteur non valide
+ (Utils\Utils.cpp#459)
+2017-03-05 20:44:31.956 Error  Descripteur non valide
+ (Utils\Utils.cpp#459)
+2017-03-05 20:44:47.034 Error  Descripteur non valide
+ (Utils\Utils.cpp#459)
+2017-03-05 20:45:29.019 Error  Descripteur non valide
+ (Utils\Utils.cpp#459)
+2017-03-05 20:45:31.457 Error  Seule une partie d’une requête ReadProcessMemory ou WriteProcessMemory a été effectuée.
+ (Utils\Utils.cpp#459)
+2017-03-05 20:45:34.847 Error  Descripteur non valide
+ (Utils\Utils.cpp#459)
+2017-03-05 20:45:38.785 Error  Descripteur non valide
+ (Utils\Utils.cpp#459)
+2017-03-05 20:53:08.941 Error  Descripteur non valide
+ (Utils\Utils.cpp#459)
+2017-03-05 20:53:12.613 Error  Seule une partie d’une requête ReadProcessMemory ou WriteProcessMemory a été effectuée.
+ (Utils\Utils.cpp#459)
+2017-03-05 20:53:15.051 Error  Descripteur non valide
+ (Utils\Utils.cpp#459)
+2017-03-05 20:57:06.897 Error  Descripteur non valide
+ (Utils\Utils.cpp#459)
+2017-03-05 20:57:07.038 Error  Descripteur non valide
+ (Utils\Utils.cpp#459)
+2017-03-05 20:57:13.522 Error  Descripteur non valide
+ (Utils\Utils.cpp#459)
+2017-03-05 20:57:19.663 Error  Descripteur non valide
+ (Utils\Utils.cpp#459)
+2017-03-05 20:57:28.991 Error  Descripteur non valide
+ (Utils\Utils.cpp#459)
+2017-03-05 20:57:33.491 Error  Descripteur non valide
+ (Utils\Utils.cpp#459)
+2017-03-05 20:58:08.288 Error  Descripteur non valide
+ (Utils\Utils.cpp#459)
+2017-03-05 20:59:41.711 Error  Descripteur non valide
+ (Utils\Utils.cpp#459)
+2017-03-05 21:00:31.649 Error  Descripteur non valide
+ (Utils\Utils.cpp#459)
+2017-03-05 21:01:05.744 Error  Descripteur non valide
+ (Utils\Utils.cpp#459)
+2017-03-05 21:01:26.759 Error  Descripteur non valide
+ (Utils\Utils.cpp#459)
+2017-03-05 21:01:39.666 Error  Descripteur non valide
+ (Utils\Utils.cpp#459)
+2017-03-05 21:02:10.260 Error  Descripteur non valide
+ (Utils\Utils.cpp#459)
+2017-03-05 21:02:36.745 Error  Descripteur non valide
+ (Utils\Utils.cpp#459)
+2017-03-05 21:02:41.542 Error  Seule une partie d’une requête ReadProcessMemory ou WriteProcessMemory a été effectuée.
+ (Utils\Utils.cpp#459)
+2017-03-05 21:02:43.526 Error  Descripteur non valide
+ (Utils\Utils.cpp#459)
+2017-03-05 21:03:12.253 Error  Descripteur non valide
+ (Utils\Utils.cpp#459)
+2017-03-05 21:04:13.950 Error  Descripteur non valide
+ (Utils\Utils.cpp#459)
+2017-03-05 21:04:17.470 Error  Seule une partie d’une requête ReadProcessMemory ou WriteProcessMemory a été effectuée.
+ (Utils\Utils.cpp#459)
+2017-03-05 21:04:18.265 Error  Descripteur non valide
+ (Utils\Utils.cpp#459)
+2017-03-05 21:04:53.455 Error  Descripteur non valide
+ (Utils\Utils.cpp#459)
+2017-03-05 21:05:00.462 Error  Descripteur non valide
+ (Utils\Utils.cpp#459)
+2017-03-05 21:05:02.958 Error  Seule une partie d’une requête ReadProcessMemory ou WriteProcessMemory a été effectuée.
+ (Utils\Utils.cpp#459)
+2017-03-05 21:05:04.542 Error  Descripteur non valide
+ (Utils\Utils.cpp#459)
+2017-03-05 21:05:20.478 Error  Descripteur non valide
+ (Utils\Utils.cpp#459)
+2017-03-05 21:06:23.455 Error  Descripteur non valide
+ (Utils\Utils.cpp#459)
+2017-03-05 21:06:24.846 Error  Descripteur non valide
+ (Utils\Utils.cpp#459)
+2017-03-05 21:06:26.814 Error  Descripteur non valide
+ (Utils\Utils.cpp#459)
+2017-03-05 21:06:31.790 Error  Descripteur non valide
+ (Utils\Utils.cpp#459)
+2017-03-05 21:06:35.358 Error  Seule une partie d’une requête ReadProcessMemory ou WriteProcessMemory a été effectuée.
+ (Utils\Utils.cpp#459)
+2017-03-05 21:06:37.054 Error  Descripteur non valide
+ (Utils\Utils.cpp#459)
+2017-03-05 21:06:46.958 Error  Descripteur non valide
+ (Utils\Utils.cpp#459)
+2017-03-05 21:07:48.155 Error  Descripteur non valide
+ (Utils\Utils.cpp#459)
+2017-03-05 21:07:49.624 Error  Descripteur non valide
+ (Utils\Utils.cpp#459)
+2017-03-05 21:07:52.155 Error  Descripteur non valide
+ (Utils\Utils.cpp#459)
+2017-03-05 21:08:03.718 Error  Descripteur non valide
+ (Utils\Utils.cpp#459)
+2017-03-05 21:09:17.766 Error  Seule une partie d’une requête ReadProcessMemory ou WriteProcessMemory a été effectuée.
+ (Utils\Utils.cpp#459)
+2017-03-05 21:09:24.859 Error  Descripteur non valide
+ (Utils\Utils.cpp#459)
+2017-03-05 21:17:31.416 Error  Seule une partie d’une requête ReadProcessMemory ou WriteProcessMemory a été effectuée.
+ (Utils\Utils.cpp#459)
+2017-03-05 21:17:33.228 Error  Descripteur non valide
+ (Utils\Utils.cpp#459)
+2017-03-05 21:17:36.994 Error  Descripteur non valide
+ (Utils\Utils.cpp#459)
+2017-03-05 21:17:47.853 Error  Descripteur non valide
+ (Utils\Utils.cpp#459)
+2017-03-05 21:17:52.791 Error  Seule une partie d’une requête ReadProcessMemory ou WriteProcessMemory a été effectuée.
+ (Utils\Utils.cpp#459)
+2017-03-05 21:17:54.541 Error  Descripteur non valide
+ (Utils\Utils.cpp#459)
+2017-03-05 21:18:18.979 Error  Descripteur non valide
+ (Utils\Utils.cpp#459)
+2017-03-05 21:18:26.369 Error  Seule une partie d’une requête ReadProcessMemory ou WriteProcessMemory a été effectuée.
+ (Utils\Utils.cpp#459)
+2017-03-05 21:18:27.791 Error  Descripteur non valide
+ (Utils\Utils.cpp#459)
+2017-03-05 21:18:29.526 Error  Descripteur non valide
+ (Utils\Utils.cpp#459)
+2017-03-05 21:19:58.011 Error  Descripteur non valide
+ (Utils\Utils.cpp#459)
+2017-03-05 21:28:12.492 Error  Descripteur non valide
+ (Utils\Utils.cpp#459)
+2017-03-05 21:28:19.054 Error  Seule une partie d’une requête ReadProcessMemory ou WriteProcessMemory a été effectuée.
+ (Utils\Utils.cpp#459)
+2017-03-05 21:28:21.585 Error  Descripteur non valide
+ (Utils\Utils.cpp#459)
+2017-03-05 21:28:42.304 Error  Descripteur non valide
+ (Utils\Utils.cpp#459)
+2017-03-05 21:28:42.851 Error  Descripteur non valide
+ (Utils\Utils.cpp#459)
+2017-03-05 21:28:43.086 Error  Descripteur non valide
+ (Utils\Utils.cpp#459)
+2017-03-05 21:28:43.398 Error  Descripteur non valide
+ (Utils\Utils.cpp#459)
+2017-03-05 21:28:49.383 Error  Descripteur non valide
+ (Utils\Utils.cpp#459)
+2017-03-05 21:28:54.117 Error  Descripteur non valide
+ (Utils\Utils.cpp#459)
+2017-03-05 21:28:58.320 Error  Descripteur non valide
+ (Utils\Utils.cpp#459)
+2017-03-05 21:29:10.399 Error  Descripteur non valide
+ (Utils\Utils.cpp#459)
+2017-03-05 21:29:10.977 Error  Descripteur non valide
+ (Utils\Utils.cpp#459)
+2017-03-05 21:29:11.367 Error  Descripteur non valide
+ (Utils\Utils.cpp#459)
+2017-03-05 21:29:16.070 Error  Descripteur non valide
+ (Utils\Utils.cpp#459)
+2017-03-05 21:29:17.570 Error  Descripteur non valide
+ (Utils\Utils.cpp#459)
+2017-03-05 21:29:18.711 Error  Descripteur non valide
+ (Utils\Utils.cpp#459)
+2017-03-05 21:29:39.086 Error  Descripteur non valide
+ (Utils\Utils.cpp#459)
+2017-03-05 22:03:32.063 Error  Descripteur non valide
+ (Utils\Utils.cpp#459)
+2017-03-05 22:03:39.891 Error  Descripteur non valide
+ (Utils\Utils.cpp#459)
+2017-03-05 22:04:04.844 Error  Descripteur non valide
+ (Utils\Utils.cpp#459)
+2017-03-05 22:04:16.251 Error  Seule une partie d’une requête ReadProcessMemory ou WriteProcessMemory a été effectuée.
+ (Utils\Utils.cpp#459)
+2017-03-05 22:04:17.735 Error  Descripteur non valide
+ (Utils\Utils.cpp#459)
+2017-03-05 22:05:54.396 Error  Descripteur non valide
+ (Utils\Utils.cpp#459)
+2017-03-05 22:05:57.005 Error  Seule une partie d’une requête ReadProcessMemory ou WriteProcessMemory a été effectuée.
+ (Utils\Utils.cpp#459)
+2017-03-05 22:05:57.724 Error  Descripteur non valide
+ (Utils\Utils.cpp#459)
+2017-03-05 22:06:04.472 Error  Seule une partie d’une requête ReadProcessMemory ou WriteProcessMemory a été effectuée.
+ (Utils\Utils.cpp#459)
+2017-03-05 22:06:05.113 Error  Descripteur non valide
+ (Utils\Utils.cpp#459)
+2017-03-05 22:07:01.976 Error  Descripteur non valide
+ (Utils\Utils.cpp#459)
+2017-03-05 22:07:04.320 Error  Descripteur non valide
+ (Utils\Utils.cpp#459)
+2017-03-05 22:07:36.211 Error  Descripteur non valide
+ (Utils\Utils.cpp#459)
+2017-03-05 22:07:44.899 Error  Seule une partie d’une requête ReadProcessMemory ou WriteProcessMemory a été effectuée.
+ (Utils\Utils.cpp#459)
+2017-03-05 22:07:46.742 Error  Descripteur non valide
+ (Utils\Utils.cpp#459)
+2017-03-05 22:08:07.649 Error  Descripteur non valide
+ (Utils\Utils.cpp#459)
+2017-03-05 22:09:08.074 Error  Descripteur non valide
+ (Utils\Utils.cpp#459)
+2017-03-05 22:09:09.043 Error  Descripteur non valide
+ (Utils\Utils.cpp#459)
+2017-03-05 22:09:11.652 Error  Descripteur non valide
+ (Utils\Utils.cpp#459)
+2017-03-05 22:09:22.715 Error  Descripteur non valide
+ (Utils\Utils.cpp#459)
+2017-03-05 22:09:25.715 Error  Seule une partie d’une requête ReadProcessMemory ou WriteProcessMemory a été effectuée.
+ (Utils\Utils.cpp#459)
+2017-03-05 22:09:26.699 Error  Descripteur non valide
+ (Utils\Utils.cpp#459)
+2017-03-05 22:09:43.590 Error  Descripteur non valide
+ (Utils\Utils.cpp#459)
+2017-03-05 22:10:34.639 Error  Descripteur non valide
+ (Utils\Utils.cpp#459)
+2017-03-05 22:10:35.607 Error  Descripteur non valide
+ (Utils\Utils.cpp#459)
+2017-03-05 22:10:37.576 Error  Descripteur non valide
+ (Utils\Utils.cpp#459)
+2017-03-05 22:10:51.936 Error  Descripteur non valide
+ (Utils\Utils.cpp#459)
+2017-03-05 22:10:54.014 Error  Seule une partie d’une requête ReadProcessMemory ou WriteProcessMemory a été effectuée.
+ (Utils\Utils.cpp#459)
+2017-03-05 22:10:55.389 Error  Descripteur non valide
+ (Utils\Utils.cpp#459)
+2017-03-05 22:11:07.983 Error  Descripteur non valide
+ (Utils\Utils.cpp#459)
+2017-03-05 22:11:56.775 Error  Descripteur non valide
+ (Utils\Utils.cpp#459)
+2017-03-05 22:11:57.869 Error  Descripteur non valide
+ (Utils\Utils.cpp#459)
+2017-03-05 22:11:59.666 Error  Descripteur non valide
+ (Utils\Utils.cpp#459)
+2017-03-05 22:12:24.229 Error  Descripteur non valide
+ (Utils\Utils.cpp#459)
+2017-03-05 22:12:35.541 Error  Seule une partie d’une requête ReadProcessMemory ou WriteProcessMemory a été effectuée.
+ (Utils\Utils.cpp#459)
+2017-03-05 22:12:36.885 Error  Descripteur non valide
+ (Utils\Utils.cpp#459)
+2017-03-05 22:12:49.104 Error  Descripteur non valide
+ (Utils\Utils.cpp#459)
+2017-03-05 22:13:44.072 Error  Descripteur non valide
+ (Utils\Utils.cpp#459)
+2017-03-05 22:13:45.869 Error  Descripteur non valide
+ (Utils\Utils.cpp#459)
+2017-03-05 22:13:47.807 Error  Descripteur non valide
+ (Utils\Utils.cpp#459)
+2017-03-05 22:14:11.323 Error  Descripteur non valide
+ (Utils\Utils.cpp#459)
+2017-03-05 22:14:18.276 Error  Seule une partie d’une requête ReadProcessMemory ou WriteProcessMemory a été effectuée.
+ (Utils\Utils.cpp#459)
+2017-03-05 22:14:19.651 Error  Descripteur non valide
+ (Utils\Utils.cpp#459)
+2017-03-05 22:14:37.229 Error  Descripteur non valide
+ (Utils\Utils.cpp#459)
+2017-03-05 22:15:31.581 Error  Descripteur non valide
+ (Utils\Utils.cpp#459)
+2017-03-05 22:15:33.081 Error  Descripteur non valide
+ (Utils\Utils.cpp#459)
+2017-03-05 22:15:36.221 Error  Descripteur non valide
+ (Utils\Utils.cpp#459)
+2017-03-05 22:15:56.253 Error  Descripteur non valide
+ (Utils\Utils.cpp#459)
+2017-03-05 22:15:59.503 Error  Seule une partie d’une requête ReadProcessMemory ou WriteProcessMemory a été effectuée.
+ (Utils\Utils.cpp#459)
+2017-03-05 22:16:01.050 Error  Descripteur non valide
+ (Utils\Utils.cpp#459)
+2017-03-05 22:16:14.940 Error  Descripteur non valide
+ (Utils\Utils.cpp#459)
+2017-03-05 22:17:09.684 Error  Descripteur non valide
+ (Utils\Utils.cpp#459)
+2017-03-05 22:17:11.935 Error  Descripteur non valide
+ (Utils\Utils.cpp#459)
+2017-03-05 22:17:15.622 Error  Descripteur non valide
+ (Utils\Utils.cpp#459)
+2017-03-05 22:17:29.669 Error  Descripteur non valide
+ (Utils\Utils.cpp#459)
+2017-03-05 22:17:35.185 Error  Seule une partie d’une requête ReadProcessMemory ou WriteProcessMemory a été effectuée.
+ (Utils\Utils.cpp#459)
+2017-03-05 22:17:36.325 Error  Descripteur non valide
+ (Utils\Utils.cpp#459)
+2017-03-05 22:17:46.216 Error  Descripteur non valide
+ (Utils\Utils.cpp#459)
+2017-03-05 22:19:03.210 Error  Descripteur non valide
+ (Utils\Utils.cpp#459)
+2017-03-05 22:19:04.569 Error  Descripteur non valide
+ (Utils\Utils.cpp#459)
+2017-03-05 22:19:08.069 Error  Seule une partie d’une requête ReadProcessMemory ou WriteProcessMemory a été effectuée.
+ (Utils\Utils.cpp#459)
+2017-03-05 22:19:12.804 Error  Descripteur non valide
+ (Utils\Utils.cpp#459)
+2017-03-05 22:19:14.257 Error  Descripteur non valide
+ (Utils\Utils.cpp#459)
+2017-03-05 22:19:27.991 Error  Descripteur non valide
+ (Utils\Utils.cpp#459)
+2017-03-05 22:20:55.648 Error  Seule une partie d’une requête ReadProcessMemory ou WriteProcessMemory a été effectuée.
+ (Utils\Utils.cpp#459)
+2017-03-05 22:22:17.638 Error  Seule une partie d’une requête ReadProcessMemory ou WriteProcessMemory a été effectuée.
+ (Utils\Utils.cpp#459)
+2017-03-05 22:22:22.310 Error  Descripteur non valide
+ (Utils\Utils.cpp#459)
+2017-03-05 22:23:40.417 Error  Seule une partie d’une requête ReadProcessMemory ou WriteProcessMemory a été effectuée.
+ (Utils\Utils.cpp#459)
+2017-03-05 22:23:41.230 Error  Descripteur non valide
+ (Utils\Utils.cpp#459)
+2017-03-05 22:23:59.089 Error  Descripteur non valide
+ (Utils\Utils.cpp#459)
+2017-03-05 22:24:42.636 Error  Descripteur non valide
+ (Utils\Utils.cpp#459)
+2017-03-05 22:25:09.832 Error  Descripteur non valide
+ (Utils\Utils.cpp#459)
+2017-03-05 22:25:12.613 Error  Seule une partie d’une requête ReadProcessMemory ou WriteProcessMemory a été effectuée.
+ (Utils\Utils.cpp#459)
+2017-03-05 22:25:13.379 Error  Descripteur non valide
+ (Utils\Utils.cpp#459)
+2017-03-05 22:27:30.062 Error  Descripteur non valide
+ (Utils\Utils.cpp#459)
+2017-03-05 22:28:09.631 Error  Seule une partie d’une requête ReadProcessMemory ou WriteProcessMemory a été effectuée.
+ (Utils\Utils.cpp#459)
+2017-03-05 22:28:11.866 Error  Descripteur non valide
+ (Utils\Utils.cpp#459)
+2017-03-05 22:39:22.929 Error  Descripteur non valide
+ (Utils\Utils.cpp#459)
+2017-03-05 22:39:23.492 Error  Descripteur non valide
+ (Utils\Utils.cpp#459)
+2017-03-05 22:39:25.820 Error  Descripteur non valide
+ (Utils\Utils.cpp#459)
+2017-03-05 22:39:27.664 Error  Descripteur non valide
+ (Utils\Utils.cpp#459)
+2017-03-05 22:39:39.628 Error  Descripteur non valide
+ (Utils\Utils.cpp#459)
+2017-03-05 22:39:40.190 Error  Descripteur non valide
+ (Utils\Utils.cpp#459)
+2017-03-05 22:39:40.737 Error  Descripteur non valide
+ (Utils\Utils.cpp#459)
+2017-03-05 22:42:55.290 Error  Descripteur non valide
+ (Utils\Utils.cpp#459)
+2017-03-05 22:48:23.814 Error  Descripteur non valide
+ (Utils\Utils.cpp#459)
+2017-03-05 22:48:43.264 Error  Descripteur non valide
+ (Utils\Utils.cpp#459)
+2017-03-05 22:48:44.561 Error  Descripteur non valide
+ (Utils\Utils.cpp#459)
+2017-03-05 22:48:46.499 Error  Descripteur non valide
+ (Utils\Utils.cpp#459)
+2017-03-05 22:48:47.014 Error  Descripteur non valide
+ (Utils\Utils.cpp#459)
+2017-03-05 22:48:47.561 Error  Descripteur non valide
+ (Utils\Utils.cpp#459)
+2017-03-05 22:54:12.799 Error  Descripteur non valide
+ (Utils\Utils.cpp#459)
+2017-03-05 22:54:14.908 Error  Descripteur non valide
+ (Utils\Utils.cpp#459)
+2017-03-05 22:54:17.127 Error  Descripteur non valide
+ (Utils\Utils.cpp#459)
+2017-03-05 22:54:19.330 Error  Seule une partie d’une requête ReadProcessMemory ou WriteProcessMemory a été effectuée.
+ (Utils\Utils.cpp#459)
+2017-03-05 22:54:22.697 Error  Descripteur non valide
+ (Utils\Utils.cpp#459)
+2017-03-05 22:55:18.516 Error  Descripteur non valide
+ (Utils\Utils.cpp#459)
+2017-03-05 22:57:20.091 Error  Descripteur non valide
+ (Utils\Utils.cpp#459)
+2017-03-05 22:57:23.299 Error  Descripteur non valide
+ (Utils\Utils.cpp#459)
+2017-03-05 22:57:23.533 Error  Descripteur non valide
+ (Utils\Utils.cpp#459)
+2017-03-05 22:57:25.611 Error  Seule une partie d’une requête ReadProcessMemory ou WriteProcessMemory a été effectuée.
+ (Utils\Utils.cpp#459)
+2017-03-05 22:57:27.580 Error  Descripteur non valide
+ (Utils\Utils.cpp#459)
+2017-03-05 22:57:38.110 Error  Descripteur non valide
+ (Utils\Utils.cpp#459)
+2017-03-05 22:57:41.516 Error  Descripteur non valide
+ (Utils\Utils.cpp#459)
+2017-03-05 22:58:27.223 Error  Descripteur non valide
+ (Utils\Utils.cpp#459)
+2017-03-05 22:58:28.332 Error  Descripteur non valide
+ (Utils\Utils.cpp#459)
+2017-03-05 22:58:30.629 Error  Seule une partie d’une requête ReadProcessMemory ou WriteProcessMemory a été effectuée.
+ (Utils\Utils.cpp#459)
+2017-03-05 22:58:33.379 Error  Descripteur non valide
+ (Utils\Utils.cpp#459)
+2017-03-05 22:58:54.250 Error  Descripteur non valide
+ (Utils\Utils.cpp#459)
+2017-03-05 23:01:29.838 Error  Descripteur non valide
+ (Utils\Utils.cpp#459)
+2017-03-05 23:01:31.041 Error  Descripteur non valide
+ (Utils\Utils.cpp#459)
+2017-03-05 23:01:32.900 Error  Descripteur non valide
+ (Utils\Utils.cpp#459)
+2017-03-05 23:05:08.141 Error  Descripteur non valide
+ (Utils\Utils.cpp#459)
+2017-03-05 23:05:11.610 Error  Descripteur non valide
+ (Utils\Utils.cpp#459)
+2017-03-05 23:05:16.290 Error  Descripteur non valide
+ (Utils\Utils.cpp#459)
+2017-03-05 23:05:56.030 Error  Descripteur non valide
+ (Utils\Utils.cpp#459)
+2017-03-05 23:07:25.070 Error  Descripteur non valide
+ (Utils\Utils.cpp#459)
+2017-03-05 23:07:36.158 Error  Descripteur non valide
+ (Utils\Utils.cpp#459)
+2017-03-05 23:07:41.070 Error  Descripteur non valide
+ (Utils\Utils.cpp#459)
+2017-03-05 23:07:43.278 Error  Descripteur non valide
+ (Utils\Utils.cpp#459)
+2017-03-05 23:07:45.310 Error  Descripteur non valide
+ (Utils\Utils.cpp#459)
+2017-03-05 23:07:47.278 Error  Descripteur non valide
+ (Utils\Utils.cpp#459)
+2017-03-05 23:08:41.135 Error  Descripteur non valide
+ (Utils\Utils.cpp#459)
+2017-03-05 23:10:57.219 Error  Descripteur non valide
+ (Utils\Utils.cpp#459)
+2017-03-05 23:11:02.686 Error  Seule une partie d’une requête ReadProcessMemory ou WriteProcessMemory a été effectuée.
+ (Utils\Utils.cpp#459)
+2017-03-05 23:11:03.439 Error  Descripteur non valide
+ (Utils\Utils.cpp#459)
+2017-03-05 23:11:18.222 Error  Descripteur non valide
+ (Utils\Utils.cpp#459)
+2017-03-05 23:12:37.454 Error  Descripteur non valide
+ (Utils\Utils.cpp#459)
+2017-03-05 23:12:38.527 Error  Descripteur non valide
+ (Utils\Utils.cpp#459)
+2017-03-05 23:29:04.830 Error  Descripteur non valide
+ (Utils\Utils.cpp#459)
+2017-03-05 23:29:08.414 Error  Descripteur non valide
+ (Utils\Utils.cpp#459)
+2017-03-05 23:31:16.478 Error  Descripteur non valide
+ (Utils\Utils.cpp#459)
+2017-03-05 23:31:21.239 Error  Descripteur non valide
+ (Utils\Utils.cpp#459)
+2017-03-05 23:31:21.320 Error  Seule une partie d’une requête ReadProcessMemory ou WriteProcessMemory a été effectuée.
+ (Utils\Utils.cpp#459)
+2017-03-05 23:31:29.341 Error  Seule une partie d’une requête ReadProcessMemory ou WriteProcessMemory a été effectuée.
+ (Utils\Utils.cpp#459)
+2017-03-06 00:08:03.862 Error  Seule une partie d’une requête ReadProcessMemory ou WriteProcessMemory a été effectuée.
+ (Utils\Utils.cpp#459)
+2017-03-06 00:08:05.128 Error  Seule une partie d’une requête ReadProcessMemory ou WriteProcessMemory a été effectuée.
+ (Utils\Utils.cpp#459)
+2017-03-06 00:08:06.174 Error  Descripteur non valide
+ (Utils\Utils.cpp#459)
+2017-03-06 00:08:44.550 Error  Seule une partie d’une requête ReadProcessMemory ou WriteProcessMemory a été effectuée.
+ (Utils\Utils.cpp#459)
+2017-03-06 00:08:44.815 Error  Descripteur non valide
+ (Utils\Utils.cpp#459)
+2017-03-06 00:08:45.003 Error  Descripteur non valide
+ (Utils\Utils.cpp#459)
+2017-03-06 00:08:45.019 Error  Descripteur non valide
+ (Utils\Utils.cpp#459)
+2017-03-06 00:09:06.722 Error  Descripteur non valide
+ (Utils\Utils.cpp#459)
+2017-03-06 00:09:06.753 Error  Descripteur non valide
+ (Utils\Utils.cpp#459)
+2017-03-06 00:10:09.159 Error  Descripteur non valide
+ (Utils\Utils.cpp#459)
+2017-03-06 00:10:14.190 Error  Descripteur non valide
+ (Utils\Utils.cpp#459)
+2017-03-06 00:10:24.706 Error  Descripteur non valide
+ (Utils\Utils.cpp#459)
+2017-03-06 00:10:48.925 Error  Descripteur non valide
+ (Utils\Utils.cpp#459)
+2017-03-06 00:10:49.519 Error  Descripteur non valide
+ (Utils\Utils.cpp#459)
+2017-03-06 00:11:33.082 Error  Descripteur non valide
+ (Utils\Utils.cpp#459)
+2017-03-06 00:11:42.754 Error  Seule une partie d’une requête ReadProcessMemory ou WriteProcessMemory a été effectuée.
+ (Utils\Utils.cpp#459)
+2017-03-06 00:11:45.363 Error  Descripteur non valide
+ (Utils\Utils.cpp#459)
+2017-03-06 00:12:17.270 Error  Descripteur non valide
+ (Utils\Utils.cpp#459)
+2017-03-06 00:12:31.473 Error  Descripteur non valide
+ (Utils\Utils.cpp#459)
+2017-03-06 00:14:38.553 Error  Descripteur non valide
+ (Utils\Utils.cpp#459)
+2017-03-06 00:14:42.334 Error  Descripteur non valide
+ (Utils\Utils.cpp#459)
+2017-03-06 00:14:56.459 Error  Seule une partie d’une requête ReadProcessMemory ou WriteProcessMemory a été effectuée.
+ (Utils\Utils.cpp#459)
+2017-03-06 00:14:57.287 Error  Descripteur non valide
+ (Utils\Utils.cpp#459)
+2017-03-06 00:15:03.397 Error  Descripteur non valide
+ (Utils\Utils.cpp#459)
+2017-03-06 00:15:06.694 Error  Descripteur non valide
+ (Utils\Utils.cpp#459)
+2017-03-06 00:15:27.006 Error  Descripteur non valide
+ (Utils\Utils.cpp#459)
+2017-03-06 00:16:03.538 Error  Seule une partie d’une requête ReadProcessMemory ou WriteProcessMemory a été effectuée.
+ (Utils\Utils.cpp#459)
+2017-03-06 00:16:51.398 Error  Descripteur non valide
+ (Utils\Utils.cpp#459)
+2017-03-06 00:17:24.336 Error  Seule une partie d’une requête ReadProcessMemory ou WriteProcessMemory a été effectuée.
+ (Utils\Utils.cpp#459)
+2017-03-06 00:17:29.727 Error  Descripteur non valide
+ (Utils\Utils.cpp#459)
+2017-03-06 00:17:34.680 Error  Descripteur non valide
+ (Utils\Utils.cpp#459)
+2017-03-06 00:17:48.305 Error  Descripteur non valide
+ (Utils\Utils.cpp#459)
+2017-03-06 00:18:36.540 Error  Seule une partie d’une requête ReadProcessMemory ou WriteProcessMemory a été effectuée.
+ (Utils\Utils.cpp#459)
+2017-03-06 00:18:53.493 Error  Descripteur non valide
+ (Utils\Utils.cpp#459)
+2017-03-06 00:18:55.978 Error  Seule une partie d’une requête ReadProcessMemory ou WriteProcessMemory a été effectuée.
+ (Utils\Utils.cpp#459)
+2017-03-06 00:18:58.040 Error  Descripteur non valide
+ (Utils\Utils.cpp#459)
+2017-03-06 00:25:20.364 Error  Descripteur non valide
+ (Utils\Utils.cpp#459)
+2017-03-06 00:27:00.528 Error  Descripteur non valide
+ (Utils\Utils.cpp#459)
+2017-03-06 00:27:13.341 Error  Descripteur non valide
+ (Utils\Utils.cpp#459)
+2017-03-06 00:27:26.200 Error  Descripteur non valide
+ (Utils\Utils.cpp#459)
+2017-03-06 00:27:44.935 Error  Descripteur non valide
+ (Utils\Utils.cpp#459)
+2017-03-06 00:28:01.279 Error  Seule une partie d’une requête ReadProcessMemory ou WriteProcessMemory a été effectuée.
+ (Utils\Utils.cpp#459)
+2017-03-06 00:28:03.716 Error  Descripteur non valide
+ (Utils\Utils.cpp#459)
+2017-03-06 00:28:06.982 Error  Descripteur non valide
+ (Utils\Utils.cpp#459)
+2017-03-06 00:28:17.701 Error  Descripteur non valide
+ (Utils\Utils.cpp#459)
+2017-03-06 00:28:24.529 Error  Descripteur non valide
+ (Utils\Utils.cpp#459)
+2017-03-06 00:28:24.670 Error  Descripteur non valide
+ (Utils\Utils.cpp#459)
+2017-03-06 00:30:23.687 Error  Descripteur non valide
+ (Utils\Utils.cpp#459)
+2017-03-06 00:34:22.705 Error  Seule une partie d’une requête ReadProcessMemory ou WriteProcessMemory a été effectuée.
+ (Utils\Utils.cpp#459)
+2017-03-06 00:34:24.424 Error  Descripteur non valide
+ (Utils\Utils.cpp#459)
+2017-03-06 00:34:52.159 Error  Seule une partie d’une requête ReadProcessMemory ou WriteProcessMemory a été effectuée.
+ (Utils\Utils.cpp#459)
+2017-03-06 00:35:01.737 Error  Descripteur non valide
+ (Utils\Utils.cpp#459)
+2017-03-06 00:35:10.190 Error  Descripteur non valide
+ (Utils\Utils.cpp#459)
+2017-03-06 00:35:37.278 Error  Descripteur non valide
+ (Utils\Utils.cpp#459)
+2017-03-06 00:35:46.716 Error  Descripteur non valide
+ (Utils\Utils.cpp#459)
+2017-03-06 00:36:07.652 Error  Descripteur non valide
+ (Utils\Utils.cpp#459)
+2017-03-06 00:36:29.684 Error  Descripteur non valide
+ (Utils\Utils.cpp#459)
+2017-03-06 00:37:08.183 Error  Descripteur non valide
+ (Utils\Utils.cpp#459)
+2017-03-06 00:37:50.184 Error  Descripteur non valide
+ (Utils\Utils.cpp#459)
+2017-03-06 00:38:45.038 Error  Descripteur non valide
+ (Utils\Utils.cpp#459)
+2017-03-06 00:40:02.639 Error  Descripteur non valide
+ (Utils\Utils.cpp#459)
+2017-03-06 00:40:45.406 Error  Descripteur non valide
+ (Utils\Utils.cpp#459)
+2017-03-06 00:40:48.238 Error  Descripteur non valide
+ (Utils\Utils.cpp#459)
+2017-03-06 00:40:57.838 Error  Descripteur non valide
+ (Utils\Utils.cpp#459)
+2017-03-06 00:41:04.798 Error  Descripteur non valide
+ (Utils\Utils.cpp#459)
+2017-03-06 00:41:05.230 Error  Descripteur non valide
+ (Utils\Utils.cpp#459)
+2017-03-06 00:41:05.518 Error  Descripteur non valide
+ (Utils\Utils.cpp#459)
+2017-03-06 00:41:06.622 Error  Descripteur non valide
+ (Utils\Utils.cpp#459)
+2017-03-06 00:41:06.894 Error  Descripteur non valide
+ (Utils\Utils.cpp#459)
+2017-03-06 00:41:06.926 Error  Descripteur non valide
+ (Utils\Utils.cpp#459)
+2017-03-06 00:41:09.550 Error  Descripteur non valide
+ (Utils\Utils.cpp#459)
+2017-03-06 00:42:33.663 Error  Descripteur non valide
+ (Utils\Utils.cpp#459)
+2017-03-06 00:42:44.030 Error  Descripteur non valide
+ (Utils\Utils.cpp#459)
+2017-03-06 00:42:44.222 Error  Descripteur non valide
+ (Utils\Utils.cpp#459)
+2017-03-06 00:42:46.755 Error  Seule une partie d’une requête ReadProcessMemory ou WriteProcessMemory a été effectuée.
+ (Utils\Utils.cpp#459)
+2017-03-06 00:42:51.890 Error  Descripteur non valide
+ (Utils\Utils.cpp#459)
+2017-03-06 00:45:27.358 Error  Descripteur non valide
+ (Utils\Utils.cpp#459)
+2017-03-06 00:45:30.526 Error  Seule une partie d’une requête ReadProcessMemory ou WriteProcessMemory a été effectuée.
+ (Utils\Utils.cpp#459)
+2017-03-06 00:45:38.622 Error  Descripteur non valide
+ (Utils\Utils.cpp#459)
+2017-03-06 00:46:06.431 Error  Seule une partie d’une requête ReadProcessMemory ou WriteProcessMemory a été effectuée.
+ (Utils\Utils.cpp#459)
+2017-03-06 00:46:08.942 Error  Descripteur non valide
+ (Utils\Utils.cpp#459)
+2017-03-06 00:46:31.870 Error  Seule une partie d’une requête ReadProcessMemory ou WriteProcessMemory a été effectuée.
+ (Utils\Utils.cpp#459)
+2017-03-06 00:46:47.326 Error  Descripteur non valide
+ (Utils\Utils.cpp#459)
+2017-03-06 00:47:05.154 Error  Descripteur non valide
+ (Utils\Utils.cpp#459)
+2017-03-06 00:47:11.518 Error  Seule une partie d’une requête ReadProcessMemory ou WriteProcessMemory a été effectuée.
+ (Utils\Utils.cpp#459)
+2017-03-06 00:47:16.622 Error  Descripteur non valide
+ (Utils\Utils.cpp#459)
+2017-03-06 00:47:26.862 Error  Descripteur non valide
+ (Utils\Utils.cpp#459)
+2017-03-06 00:48:20.222 Error  Descripteur non valide
+ (Utils\Utils.cpp#459)
+2017-03-06 00:49:14.509 Error  Descripteur non valide
+ (Utils\Utils.cpp#459)
+2017-03-06 00:49:15.821 Error  Descripteur non valide
+ (Utils\Utils.cpp#459)
+2017-03-06 00:49:29.228 Error  Seule une partie d’une requête ReadProcessMemory ou WriteProcessMemory a été effectuée.
+ (Utils\Utils.cpp#459)
+2017-03-06 00:49:32.087 Error  Descripteur non valide
+ (Utils\Utils.cpp#459)
+2017-03-06 00:49:35.603 Error  Descripteur non valide
+ (Utils\Utils.cpp#459)
+2017-03-06 00:49:39.368 Error  Descripteur non valide
+ (Utils\Utils.cpp#459)
+2017-03-06 00:49:44.275 Error  Descripteur non valide
+ (Utils\Utils.cpp#459)
+2017-03-06 00:53:58.819 Error  Seule une partie d’une requête ReadProcessMemory ou WriteProcessMemory a été effectuée.
+ (Utils\Utils.cpp#459)
+2017-03-06 00:55:29.455 Error  Descripteur non valide
+ (Utils\Utils.cpp#459)
+2017-03-06 01:01:23.144 Error  Descripteur non valide
+ (Utils\Utils.cpp#459)
+2017-03-06 01:02:16.708 Error  Descripteur non valide
+ (Utils\Utils.cpp#459)
+2017-03-06 01:02:17.098 Error  Descripteur non valide
+ (Utils\Utils.cpp#459)
+2017-03-06 01:02:17.333 Error  Descripteur non valide
+ (Utils\Utils.cpp#459)
+2017-03-06 01:02:18.239 Error  Descripteur non valide
+ (Utils\Utils.cpp#459)
+2017-03-06 01:02:18.520 Error  Descripteur non valide
+ (Utils\Utils.cpp#459)
+2017-03-06 01:02:18.551 Error  Descripteur non valide
+ (Utils\Utils.cpp#459)
+2017-03-06 01:02:21.661 Error  Descripteur non valide
+ (Utils\Utils.cpp#459)
+2017-03-06 01:02:30.239 Error  Descripteur non valide
+ (Utils\Utils.cpp#459)
+2017-03-06 01:03:47.662 Error  Descripteur non valide
+ (Utils\Utils.cpp#459)
+2017-03-06 01:03:49.537 Error  Descripteur non valide
+ (Utils\Utils.cpp#459)
+2017-03-06 01:04:02.287 Error  Seule une partie d’une requête ReadProcessMemory ou WriteProcessMemory a été effectuée.
+ (Utils\Utils.cpp#459)
+2017-03-06 01:04:04.006 Error  Descripteur non valide
+ (Utils\Utils.cpp#459)
+2017-03-06 01:16:06.936 Error  Descripteur non valide
+ (Utils\Utils.cpp#459)
+2017-03-06 01:16:08.092 Error  Descripteur non valide
+ (Utils\Utils.cpp#459)
+2017-03-06 01:16:08.311 Error  Descripteur non valide
+ (Utils\Utils.cpp#459)
+2017-03-06 01:16:08.498 Error  Descripteur non valide
+ (Utils\Utils.cpp#459)
+2017-03-06 01:16:09.483 Error  Descripteur non valide
+ (Utils\Utils.cpp#459)
+2017-03-06 01:16:09.748 Error  Descripteur non valide
+ (Utils\Utils.cpp#459)
+2017-03-06 01:16:09.842 Error  Descripteur non valide
+ (Utils\Utils.cpp#459)
+2017-03-06 01:16:12.686 Error  Descripteur non valide
+ (Utils\Utils.cpp#459)
+2017-03-06 01:16:54.874 Error  Descripteur non valide
+ (Utils\Utils.cpp#459)
+2017-03-06 01:16:57.749 Error  Descripteur non valide
+ (Utils\Utils.cpp#459)
+2017-03-06 01:17:19.937 Error  Descripteur non valide
+ (Utils\Utils.cpp#459)
+2017-03-06 01:17:56.515 Error  Descripteur non valide
+ (Utils\Utils.cpp#459)
+2017-03-06 01:18:53.482 Error  Descripteur non valide
+ (Utils\Utils.cpp#459)
+2017-03-06 01:20:37.389 Error  Descripteur non valide
+ (Utils\Utils.cpp#459)
+2017-03-06 01:20:43.999 Error  Descripteur non valide
+ (Utils\Utils.cpp#459)
+2017-03-06 01:20:54.718 Error  Descripteur non valide
+ (Utils\Utils.cpp#459)
+2017-03-06 01:21:03.796 Error  Descripteur non valide
+ (Utils\Utils.cpp#459)
+2017-03-06 01:21:08.265 Error  Descripteur non valide
+ (Utils\Utils.cpp#459)
+2017-03-06 01:21:14.343 Error  Descripteur non valide
+ (Utils\Utils.cpp#459)
+2017-03-06 01:22:23.203 Error  Descripteur non valide
+ (Utils\Utils.cpp#459)
+2017-03-06 01:22:36.422 Error  Descripteur non valide
+ (Utils\Utils.cpp#459)
+2017-03-06 01:22:36.641 Error  Descripteur non valide
+ (Utils\Utils.cpp#459)
+2017-03-06 01:22:36.813 Error  Descripteur non valide
+ (Utils\Utils.cpp#459)
+2017-03-06 01:22:37.828 Error  Descripteur non valide
+ (Utils\Utils.cpp#459)
+2017-03-06 01:22:38.000 Error  Descripteur non valide
+ (Utils\Utils.cpp#459)
+2017-03-06 01:22:38.031 Error  Descripteur non valide
+ (Utils\Utils.cpp#459)
+2017-03-06 01:22:42.078 Error  Descripteur non valide
+ (Utils\Utils.cpp#459)
+2017-03-06 01:22:59.829 Error  Descripteur non valide
+ (Utils\Utils.cpp#459)
+2017-03-06 01:23:01.579 Error  Descripteur non valide
+ (Utils\Utils.cpp#459)
+2017-03-06 01:23:14.298 Error  Descripteur non valide
+ (Utils\Utils.cpp#459)
+2017-03-06 01:23:14.657 Error  Descripteur non valide
+ (Utils\Utils.cpp#459)
+2017-03-06 01:23:14.844 Error  Descripteur non valide
+ (Utils\Utils.cpp#459)
+2017-03-06 01:23:15.751 Error  Descripteur non valide
+ (Utils\Utils.cpp#459)
+2017-03-06 01:23:16.016 Error  Descripteur non valide
+ (Utils\Utils.cpp#459)
+2017-03-06 01:23:16.048 Error  Descripteur non valide
+ (Utils\Utils.cpp#459)
+2017-03-06 01:23:18.594 Error  Descripteur non valide
+ (Utils\Utils.cpp#459)
+2017-03-06 02:03:47.810 Error  Descripteur non valide
+ (Utils\Utils.cpp#459)
+2017-03-06 02:04:29.014 Error  Descripteur non valide
+ (Utils\Utils.cpp#459)
+2017-03-06 02:04:29.170 Error  Descripteur non valide
+ (Utils\Utils.cpp#459)
+2017-03-06 02:04:29.327 Error  Descripteur non valide
+ (Utils\Utils.cpp#459)
+2017-03-06 02:04:30.295 Error  Descripteur non valide
+ (Utils\Utils.cpp#459)
+2017-03-06 02:04:30.467 Error  Descripteur non valide
+ (Utils\Utils.cpp#459)
+2017-03-06 02:04:30.498 Error  Descripteur non valide
+ (Utils\Utils.cpp#459)
+2017-03-06 02:04:35.983 Error  Descripteur non valide
+ (Utils\Utils.cpp#459)
+2017-03-06 02:04:54.139 Error  Descripteur non valide
+ (Utils\Utils.cpp#459)
+2017-03-06 02:05:06.249 Error  Descripteur non valide
+ (Utils\Utils.cpp#459)
+2017-03-06 02:05:12.343 Error  Descripteur non valide
+ (Utils\Utils.cpp#459)
+2017-03-06 02:05:12.655 Error  Descripteur non valide
+ (Utils\Utils.cpp#459)
+2017-03-06 02:05:12.921 Error  Descripteur non valide
+ (Utils\Utils.cpp#459)
+2017-03-06 02:05:13.936 Error  Descripteur non valide
+ (Utils\Utils.cpp#459)
+2017-03-06 02:05:14.140 Error  Descripteur non valide
+ (Utils\Utils.cpp#459)
+2017-03-06 02:05:14.171 Error  Descripteur non valide
+ (Utils\Utils.cpp#459)
+2017-03-06 02:05:16.858 Error  Descripteur non valide
+ (Utils\Utils.cpp#459)
+2017-03-06 02:05:22.155 Error  Descripteur non valide
+ (Utils\Utils.cpp#459)
+2017-03-06 02:05:26.093 Error  Descripteur non valide
+ (Utils\Utils.cpp#459)
+2017-03-06 02:06:21.984 Error  Descripteur non valide
+ (Utils\Utils.cpp#459)
+2017-03-06 02:06:22.375 Error  Descripteur non valide
+ (Utils\Utils.cpp#459)
+2017-03-06 02:06:22.578 Error  Descripteur non valide
+ (Utils\Utils.cpp#459)
+2017-03-06 02:06:23.593 Error  Descripteur non valide
+ (Utils\Utils.cpp#459)
+2017-03-06 02:06:23.859 Error  Descripteur non valide
+ (Utils\Utils.cpp#459)
+2017-03-06 02:06:23.906 Error  Descripteur non valide
+ (Utils\Utils.cpp#459)
+2017-03-06 02:06:28.469 Error  Descripteur non valide
+ (Utils\Utils.cpp#459)
+2017-03-06 02:06:43.094 Error  Descripteur non valide
+ (Utils\Utils.cpp#459)
+2017-03-06 02:06:54.063 Error  Descripteur non valide
+ (Utils\Utils.cpp#459)
+2017-03-06 02:07:48.298 Error  Descripteur non valide
+ (Utils\Utils.cpp#459)
+2017-03-06 02:07:48.673 Error  Descripteur non valide
+ (Utils\Utils.cpp#459)
+2017-03-06 02:07:48.844 Error  Descripteur non valide
+ (Utils\Utils.cpp#459)
+2017-03-06 02:07:49.782 Error  Descripteur non valide
+ (Utils\Utils.cpp#459)
+2017-03-06 02:07:50.094 Error  Descripteur non valide
+ (Utils\Utils.cpp#459)
+2017-03-06 02:07:50.157 Error  Descripteur non valide
+ (Utils\Utils.cpp#459)
+2017-03-06 02:07:51.454 Error  Descripteur non valide
+ (Utils\Utils.cpp#459)
+2017-03-06 02:08:00.423 Error  Descripteur non valide
+ (Utils\Utils.cpp#459)
+2017-03-06 02:08:24.439 Error  Descripteur non valide
+ (Utils\Utils.cpp#459)
+2017-03-06 02:08:24.626 Error  Descripteur non valide
+ (Utils\Utils.cpp#459)
+2017-03-06 02:08:24.782 Error  Descripteur non valide
+ (Utils\Utils.cpp#459)
+2017-03-06 02:08:25.751 Error  Descripteur non valide
+ (Utils\Utils.cpp#459)
+2017-03-06 02:08:26.001 Error  Descripteur non valide
+ (Utils\Utils.cpp#459)
+2017-03-06 02:08:26.048 Error  Descripteur non valide
+ (Utils\Utils.cpp#459)
+2017-03-06 02:08:27.517 Error  Descripteur non valide
+ (Utils\Utils.cpp#459)
+2017-03-06 02:09:41.018 Error  Descripteur non valide
+ (Utils\Utils.cpp#459)
+2017-03-06 02:09:43.752 Error  Descripteur non valide
+ (Utils\Utils.cpp#459)
+2017-03-06 02:09:52.877 Error  Descripteur non valide
+ (Utils\Utils.cpp#459)
+2017-03-06 02:09:53.236 Error  Descripteur non valide
+ (Utils\Utils.cpp#459)
+2017-03-06 02:09:53.424 Error  Descripteur non valide
+ (Utils\Utils.cpp#459)
+2017-03-06 02:09:54.346 Error  Descripteur non valide
+ (Utils\Utils.cpp#459)
+2017-03-06 02:09:54.627 Error  Descripteur non valide
+ (Utils\Utils.cpp#459)
+2017-03-06 02:09:54.674 Error  Descripteur non valide
+ (Utils\Utils.cpp#459)
+2017-03-06 02:09:56.955 Error  Descripteur non valide
+ (Utils\Utils.cpp#459)
+2017-03-06 02:09:58.705 Error  Descripteur non valide
+ (Utils\Utils.cpp#459)
+2017-03-06 02:09:59.330 Error  Descripteur non valide
+ (Utils\Utils.cpp#459)
+2017-03-06 02:10:01.096 Error  Descripteur non valide
+ (Utils\Utils.cpp#459)
+2017-03-06 02:10:01.330 Error  Descripteur non valide
+ (Utils\Utils.cpp#459)
+2017-03-06 02:10:05.112 Error  Descripteur non valide
+ (Utils\Utils.cpp#459)
+2017-03-06 02:10:05.393 Error  Descripteur non valide
+ (Utils\Utils.cpp#459)
+2017-03-06 02:10:08.549 Error  Descripteur non valide
+ (Utils\Utils.cpp#459)
+2017-03-06 02:10:11.409 Error  Descripteur non valide
+ (Utils\Utils.cpp#459)
+2017-03-06 02:10:11.424 Error  Seule une partie d’une requête ReadProcessMemory ou WriteProcessMemory a été effectuée.
+ (Utils\Utils.cpp#459)
+2017-03-06 02:10:14.737 Error  Seule une partie d’une requête ReadProcessMemory ou WriteProcessMemory a été effectuée.
+ (Utils\Utils.cpp#459)
+2017-03-06 02:10:17.518 Error  Seule une partie d’une requête ReadProcessMemory ou WriteProcessMemory a été effectuée.
+ (Utils\Utils.cpp#459)
+2017-03-06 02:10:21.940 Error  Seule une partie d’une requête ReadProcessMemory ou WriteProcessMemory a été effectuée.
+ (Utils\Utils.cpp#459)
+2017-03-06 02:10:34.706 Error  Seule une partie d’une requête ReadProcessMemory ou WriteProcessMemory a été effectuée.
+ (Utils\Utils.cpp#459)
+2017-03-06 02:10:37.565 Error  Seule une partie d’une requête ReadProcessMemory ou WriteProcessMemory a été effectuée.
+ (Utils\Utils.cpp#459)
+2017-03-06 02:10:37.815 Error  Seule une partie d’une requête ReadProcessMemory ou WriteProcessMemory a été effectuée.
+ (Utils\Utils.cpp#459)
+2017-03-06 02:10:40.550 Error  Seule une partie d’une requête ReadProcessMemory ou WriteProcessMemory a été effectuée.
+ (Utils\Utils.cpp#459)
+2017-03-06 02:10:41.862 Error  Seule une partie d’une requête ReadProcessMemory ou WriteProcessMemory a été effectuée.
+ (Utils\Utils.cpp#459)
+2017-03-06 02:10:47.206 Info   Received WM_QUERYENDSESSION.  Exiting... (Main.cpp#208)
+2017-03-06 02:10:47.393 Error  Accès refusé.
+ (Utils\Utils.cpp#464)
