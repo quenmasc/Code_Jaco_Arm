@@ -18,16 +18,14 @@ def normalize(data) :
     normalize_vector = vector / max_value
     return normalize_vector
 
-def subframe(data,window_ms=0.015,step_ms=0.005, rate=16000) :
+def subframe(data,window_ms=0.025,step_ms=0.01, rate=16000) :
     window_sample=int(window_ms*rate)
     step_sample= int(step_ms*rate)
     nbFrame=int((len(data)-window_sample)/step_sample)
     print(nbFrame)
     for i in range(0,(nbFrame+1)) : # 197 frames
-        print(i)
         vector= data[1+(i-1)*step_sample:1+(i-1)*step_sample+window_sample]
         yield vector
-    #return data[(nbFrame-1)*step_sample+window_sample: len(data)]
     
 
 def threshold(snd_data):
