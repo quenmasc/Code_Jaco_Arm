@@ -26,7 +26,7 @@ def melinv(m):
 
 class MFCC(object):
     def __init__(self, nfilt=40, ncep=13,
-                 lowerf=133.3333, upperf=6855.4976, alpha=0.97,
+                 lowerf=300, upperf=3700, alpha=0.97,
                  samprate=16000, frate=100, wlen=0.0256,
                  nfft=512):
         # Store parameters
@@ -84,15 +84,7 @@ class MFCC(object):
             while freq < rightfr:
                 self.filters[freq, whichfilt] = (freq - rightfr) * rightslope
                 freq = freq + 1
-                #             print("Filter %d: left %d=%f center %d=%f right %d=%f width %d" %
-                #                   (whichfilt,
-                #                   leftfr, leftfr*dfreq,
-                #                   centerfr, centerfr*dfreq,
-                #                   rightfr, rightfr*dfreq,
-                #                   freq - leftfr))
-                #             print self.filters[leftfr:rightfr,whichfilt]
 
-        # Build DCT matrix
         self.s2dct = s2dctmat(nfilt, ncep, 1. / nfilt)
         self.dct = dctmat(nfilt, ncep, numpy.pi / nfilt)
 

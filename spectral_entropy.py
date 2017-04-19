@@ -9,6 +9,7 @@ __date__ ="07.04.2017"
 import numpy as np
 import numpy.fft
 from scipy import signal
+import math 
 
 
 class SPECTRAL_ENTROPY(object):
@@ -50,9 +51,8 @@ class SPECTRAL_ENTROPY(object):
 
         # Power Spectral Entropy
         eps = 2.220446049250313e-16
-        log_p = np.log2(Normalize_PSD+eps)
+        log_p = math.log(Normalize_PSD+eps)
         p=Normalize_PSD+eps
-        print(-np.sum(p * log_p))
         return -np.sum(p * log_p)
 
     def euclideandistance(self, frame_noise,frame):
