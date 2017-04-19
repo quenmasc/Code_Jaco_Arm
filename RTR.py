@@ -9,14 +9,14 @@ import time
 import DSP
 import wave
 import os
+from threading import Thread
+
 
 __author__="Quentin MASCRET <quentin.mascret.1@ulaval.ca>"
 __date__="2017-04-14"
 __version__="1.1-dev"
 
 class Record(object) :
-    global pipe_name
-    pipe_name ='pipe_buf'
     """Initialize audio buffer"""
     def __init__(self):
         # all queues
@@ -24,89 +24,81 @@ class Record(object) :
         self.__read_frame = Queue()
 	self.__write_queue=Queue()
 	self.__push_queue= Queue()
+	self.__checking_queue=Queue()
 	# params  
         self.__window_ms=0.015 # length of working window
         self.__step_ms=0.005 # shift between two windows
 	self.__format=alsa.PCM_FORMAT_S16_LE # format of sample 
 	self.__max=192324 # length max of ring buffer for float values
 	self.__byte =4 # size of each sample 
-	self.__rate=16000 # sample rate
+	self.__rate=8000 # sample rate
         self.__channels=1 # number of channel use in record
-	# buffer params
-	self.__tail=0
-	self.__cur=0
-	self.__start=0 
-	# params for bufer push out 
-	self.__shift=0
-	self.__push_value=[self.__max/3, self.__max/2,self.__max]
 	# change some parameters in terms of sample rate 
 	if self.__format==alsa.PCM_FORMAT_S16_LE :
 		self.__max=self.__max/2
 		self.__byte=self.__byte/2
 		self.__push_value=[self.__max/3, 2*self.__max/3,self.__max]
-	# define ring buffer
-        self.__raw_data=[None for i in xrange(self.__max)]
+
+
+        #### NO PCM-NONBLOCK ELSE ERROR NO THE SAME CADENCE BETWEEN PROCESSES ####
     """"Reads audio from ALSA audio device """
     def __read(self) :
         card='sysdefault:CARD=Device'  # define default recording card 
-        inp = alsa.PCM(alsa.PCM_CAPTURE, alsa.PCM_NONBLOCK,card) 
+        inp = alsa.PCM(alsa.PCM_CAPTURE, alsa.PCM_NORMAL,card) 
         inp.setchannels(1) # number of channels
         inp.setrate(self.__rate) # sample  rate
         inp.setformat(self.__format) # format of sample
         inp.setperiodsize(self.__rate / 100) # buffer period size
         print("Audio Device is parameted")
-
+        
         while True :
             frame_count, data = inp.read()  # process to get all value from alsa buffer -> period size * bytes per sample
             self.__read_queue.put(data) # put data in queue -> string type
             self.__read_frame.put(frame_count) # put length -> over 0 data else None
+
+            
     """ Write data into a list (ring buffer) -> intialize with None value at beggining"""     
-    def __write(self):
-        buff_str=[]
-        buff_int=[]
-        start=time.time()
-        pipeout=os.open(pipe_name,os.O_WRONLY)
-	while True : 
-		data=self.__write_queue.get() # retrieve data 
-                self.__tail+=len(data) # define tail (end of current data in buffer) as length of data 
-                self.__raw_data[self.__cur:self.__tail]=data# put data in ring buffer at a given position
-                self.__cur=self.__tail # change current value (begin of data position in current loop) -> tail value 
-        
-# here I would like to push out a buffer when it's full. But I don't
-# know how to proceed -> perhap thread in process but that seems special, isn't it ? Process not use same memories while p
-# thread use the same 
-##### begin idea here  ########
-                if self.__cur >= self.__push_value[self.__shift] and len(buff_str)==0: # if current position in ring buffer is equal or over push value
-                    buff_str=self.__raw_data[self.__start:self.__push_value[self.__shift]] # put a part of ring buffer in a buffer
-                  #  buff_str=','.join(str(buff_str))
-                  #  buff_int= np.fromstring(buff_str[:self.__byte*self.__rate], dtype=np.int16) # convert string to array of integers 
-                    #if len(buff_int) == self.__rate : # check if 1second of data in buffer
-                    if len(buff_str)==(self.__max/3) :
-                        self.__push_queue.put(buff_str)
-                        stop=time.time()
-                       # self.__raw_data[self.__start:self.__push_value[self.__shift]]=[None for i in xrange(self.__push_value[self.__shift])]
-                        self.__start=self.__push_value[self.__shift] # change start value
-                        self.__start=self.__start%self.__max
-                        self.__shift+=1
-                        self.__shift=self.__shift%(len(self.__push_value))# change shift value [0 .. 1 .. 2 ]
-                       
-                        print "buffer pushed with elapse time :", stop-start
-                        buff_int=[]
-                        buff_str=[]
-                        
-                    else :
-                        print("Error")
-                       # yield buffer_int # return buffer_int with yield to avoid to leave process 
-##### end of idea ######
-                if self.__cur >=self.__max : # definition of ring buffer 
-                        self.__cur=0
-                        self.__tail=0
+    def __write(self,queue,fl):
+        raw_data=[b'',b'',b'']
+        i=0
+        flag=0
+	while True :
+                
+		data=self.__write_queue.get() # retrieve data
+		flag=0
+		if len(raw_data[i])>=self.__byte*self.__rate :
+                  #  queue.put(raw_data[i])
+                    pipe_out=raw_data[i]
+                    queue.put(np.fromstring(pipe_out[:self.__byte*self.__rate], dtype=np.uint16))
+                    raw_data[i]=b''
+                    flag=1
+                    i+=1
+                    i=i%len(raw_data)
+                raw_data[i]+=data
+                fl.put(flag)
+    """ Push buffer when is full"""
+    def __push(self,queue) :
+        while True :
+            self.__push_queue.put(queue.get())
+                
+    def __checking(self,fl):
+        while True :
+                self.__checking_queue.put(0)
+                if (fl.get()==1):
+                    self.__checking_queue.put(1)
+               
     """ Run proccesses """
     def run(self):
+        queue=Queue()
+        fl=Queue()
         self.__read_process = Process(target=self.__read)
         self.__read_process.start()
-        self.__write_process = Process(target=self.__write)
+        self.__write_process = Process(target=self.__write,args=(queue,fl,))
         self.__write_process.start()
+        self.__checking_process = Process(target=self.__checking,args=(fl,))
+        self.__checking_process.start()
+        self.__push_process = Process(target=self.__push,args=(queue,))
+        self.__push_process.start()
     """ Stop processes """		
     def stop(self):
         # not really usefull for the moment -> need to kill process with ctrl+z due to while loop in main
@@ -123,21 +115,31 @@ class Record(object) :
 	if length>0:
         	self.__write_queue.put(data)
 
+
     def push(self):
         return self.__push_queue.get()
 
+    def checking(self):
+        return self.__checking_queue.get()
+        
+        
 
 if __name__=='__main__' :
     audio= Record()
     audio.run()
+    start=time.time()
     while True :
+        
         data, length = audio.read()
         audio.write(data,length)
-       # bu=audio.push()
-      #  print(bu)
+        a=audio.checking()
+        if a==1 :
+            r=audio.push()
+            stop=time.time()
+            print(r)
+            print(stop-start)
     print("out of loop")
     print("end of transmission -> waiting new data")
-    audio.stop()
     
         
     
