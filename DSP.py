@@ -12,11 +12,12 @@ __version__="1.0-dev"
 
 THRESHOLD=0.1
 """ Normalize the audio samples from an array of integers"""
-def normalize(data) :
-    vector = data-np.mean(data)
-    max_value=np.max(np.abs(data))
-    normalize_vector = vector / max_value
-    return normalize_vector
+def normalize(data,max_value) :
+    data=np.array(data)
+    biais=int(0.5 * max_value)
+    fac=1.0/(0.5 * max_value)
+    data=fac * (data - biais )
+    return data
 
 def subframe(data,window_ms=0.025,step_ms=0.01, rate=16000) :
     window_sample=int(window_ms*rate)

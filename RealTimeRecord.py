@@ -27,9 +27,6 @@ class Record(object) :
 	self.__format=alsa.PCM_FORMAT_S16_LE
 	self.__max=192324 
 	self.__byte =4
-	self.__head=0
-	self.__tail=0
-	self.__cur=0
 	self.__start=0
 	self.__length=0
 	if self.__format==alsa.PCM_FORMAT_S16_LE :
