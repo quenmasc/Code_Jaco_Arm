@@ -32,3 +32,14 @@ def threshold(snd_data):
     # return 'true' if below the 'silent' threshold
     return np.max(snd_data) > THRESHOLD
 
+
+
+    """
+    Denormalize the data from an array of floats with unity level into an array of integers.
+    """
+def denormalize(self, data, max_val):
+        bias = int(0.5 * max_val)
+        fac = 0.5 * max_val
+        data = np.array(data)
+        data = (fac * data).astype(np.int64) + bias
+        return data

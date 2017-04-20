@@ -59,22 +59,22 @@ class Record(object) :
             
     """ Write data into a list (ring buffer) -> intialize with None value at beggining"""     
     def __write(self,queue,fl):
-        raw_data=[b'',b'',b'']
+        raw_data=[[],[],[]]
         i=0
         flag=0
 	while True :
                 
 		data=self.__write_queue.get() # retrieve data
 		flag=0
-		if len(raw_data[i])>=self.__byte*self.__rate :
+		if len(raw_data[i])>=self.__rate :
                   #  queue.put(raw_data[i])
                     pipe_out=raw_data[i]
                     queue.put(np.fromstring(pipe_out[:self.__byte*self.__rate], dtype=np.uint16))
-                    raw_data[i]=b''
+                    raw_data[i]=[]
                     flag=1
                     i+=1
                     i=i%len(raw_data)
-                raw_data[i]+=data
+                raw_data[i].append(data)
                 fl.put(flag)
     """ Push buffer when is full"""
     def __push(self,queue) :
@@ -91,6 +91,7 @@ class Record(object) :
     def run(self):
         queue=Queue()
         fl=Queue()
+        self.__pre_post_data():
         self.__read_process = Process(target=self.__read)
         self.__read_process.start()
         self.__write_process = Process(target=self.__write,args=(queue,fl,))
@@ -117,12 +118,28 @@ class Record(object) :
         return struct.unpack(">" + ("I" * (len(s) / self.__byte)), s)
 
 
+       """
+    Depseudonymize the audio samples from an array of integers into a binary string.
+    """
+    def depseudonymize(self, a):
+        s = ""
+
+        for elem in a:
+            s += struct.pack(">I", elem)
+
+        return s
+
 
     """ put in queue alla data record """
     def write(self,data,length):
 	if length>0:
         	self.__write_queue.put(data)
 
+    def __pre_post_data(self):
+        zeros = np.zeros(self.__rate / 100, dtype = np.int16)
+
+        for i in range(0, self.__byte):
+            self.__write_queue.put(zeros)
 
     def push(self):
         return self.__push_queue.get()
@@ -137,9 +154,9 @@ if __name__=='__main__' :
     audio.run()
     start=time.time()
     while True :
-        
         data, length = audio.read()
-        audio.write(data,length)
+        pdata=audio.pseudonymize(data)
+        audio.write(pdata,length)
         a=audio.checking()
         if a==1 :
             r=audio.push()
