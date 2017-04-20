@@ -28,7 +28,7 @@ class Audio:
         inp = alsaaudio.PCM(alsaaudio.PCM_CAPTURE, alsaaudio.PCM_NORMAL,card)
         inp.setchannels(1)
         inp.setrate(self.__rate)
-        inp.setformat(alsaaudio.PCM_FORMAT_S16_LE)
+        inp.setformat(alsaaudio.PCM_FORMAT_S32_LE)
         inp.setperiodsize(self.__rate / 50)
 
         while True:
@@ -55,7 +55,7 @@ class Audio:
     Pre-post data into the output buffer to avoid buffer underrun.
     """
     def __pre_post_data(self):
-        zeros = np.zeros(self.__rate / 50, dtype = np.uint32)
+        zeros = np.zeros(self.__rate / 50, dtype = np.int32)
 
         for i in range(0, self.__pre_post):
             self.__write_queue.put(zeros)
@@ -86,7 +86,7 @@ class Audio:
     Pseudonymize the audio samples from a binary string into an array of integers.
     """
     def pseudonymize(self, s):
-        return struct.unpack(">" + ("I" * (len(s) / self.__stride)), s)
+        return np.fromstring(s[:2*8000], dtype='f') #struct.unpack(">" + ("I" * (len(s) / self.__stride)), s)
 
     """
     Depseudonymize the audio samples from an array of integers into a binary string.
@@ -119,49 +119,34 @@ class Audio:
         data = (fac * data).astype(np.int64) + bias
         return data
 
-debug = True
+debug = False
 audio = Audio()
 audio.run()
-j=0
 while True:
-    raw_data=b''
-    start=time.time()
-    while len(raw_data)<2*8000:
-        data = audio.read()
-        raw_data+=data
-    end=time.time()
-    print(len(np.fromstring(raw_data[:2*8000],dtype=np.int16)))
-    print(np.fromstring(raw_data[:2*8000],dtype=np.int16))
-    print(end-start)
-    #  if frame_count > 0:
-  ##  data_float_array=array.array('f',np.fromstring(data,dtype=np.float32))
-   # j+=1
-    #time.sleep(0.0001)
-   # if j>=15 :
-    #    print(data_float_array)
-     #   break
-#    pdata = audio.pseudonymize(data)
+    data=audio.read()
+    pdata = audio.pseudonymize(data)
     
- #  if debug:
-#        print "[PRE-PSEUDONYMIZED] Min: " + str(np.min(pdata)) + ", Max: " + str(np.max(pdata))
 
- #   ndata = audio.normalize(pdata, 0xffffffff)
+    if debug:
+        print "[PRE-PSEUDONYMIZED] Min: " + str(np.min(pdata)) + ", Max: " + str(np.max(pdata))
 
-  #  if debug:
-  #      print "[PRE-NORMALIZED] Min: " + str(np.min(ndata)) + ", Max: " + str(np.max(ndata))
-  #      print "[PRE-NORMALIZED] Level: " + str(int(10.0 * np.log10(np.max(np.absolute(ndata)))))
+   # ndata = audio.normalize(pdata, 0xffffffff)
 
-    #ndata += 0.01 # When I comment in this line, it wreaks complete havoc!
+    if debug:
+        print "[PRE-NORMALIZED] Min: " + str(np.min(ndata)) + ", Max: " + str(np.max(ndata))
+        print "[PRE-NORMALIZED] Level: " + str(int(10.0 * np.log10(np.max(np.absolute(ndata)))))
 
-  #  if debug:
-   #     print "[POST-NORMALIZED] Level: " + str(int(10.0 * np.log10(np.max(np.absolute(ndata)))))
-  #      print "[POST-NORMALIZED] Min: " + str(np.min(ndata)) + ", Max: " + str(np.max(ndata))
+  #  ndata += 0.01 # When I comment in this line, it wreaks complete havoc!
 
-#    pdata = audio.denormalize(ndata, 0xffffffff)
+    if debug:
+         print "[POST-NORMALIZED] Level: " + str(int(10.0 * np.log10(np.max(np.absolute(ndata)))))
+         print "[POST-NORMALIZED] Min: " + str(np.min(ndata)) + ", Max: " + str(np.max(ndata))
 
-  #  if debug:
-  #      print "[POST-PSEUDONYMIZED] Min: " + str(np.min(pdata)) + ", Max: " + str(np.max(pdata))
-  #      print 
+   # pdata = audio.denormalize(ndata, 0xffffffff)
 
-  #  data = audio.depseudonymize(pdata)
-  #  audio.write(data)
+    if debug:
+        print "[POST-PSEUDONYMIZED] Min: " + str(np.min(pdata)) + ", Max: " + str(np.max(pdata))
+        print 
+
+    data = audio.depseudonymize(pdata)
+    audio.write(data)

@@ -14,9 +14,9 @@ THRESHOLD=0.1
 """ Normalize the audio samples from an array of integers"""
 def normalize(data,max_value) :
     data=np.array(data)
-    biais=int(0.5 * max_value)
-    fac=1.0/(0.5 * max_value)
-    data=fac * (data - biais )
+  #  biais=int(0.5 * max_value)
+    fac=1.0/(max_value)
+    data=fac * (data)# - biais )
     return data
 
 def subframe(data,window_ms=0.025,step_ms=0.01, rate=16000) :
@@ -38,9 +38,9 @@ def threshold(snd_data):
     """
     Denormalize the data from an array of floats with unity level into an array of integers.
     """
-def denormalize(self, data, max_val):
+def denormalize(data, max_val):
         bias = int(0.5 * max_val)
         fac = 0.5 * max_val
         data = np.array(data)
-        data = (fac * data).astype(np.int64) + bias
+        data = (fac * data).astype('H') + bias
         return data
