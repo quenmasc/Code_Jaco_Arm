@@ -51,6 +51,7 @@ class Record(object) :
         inp.setperiodsize(self.__rate / 50) # buffer period size
         print("Audio Device is parameted")
         
+
         while True :
             frame_count, data = inp.read()  # process to get all value from alsa buffer -> period size * bytes per sample
             self.__read_queue.put(data) # put data in queue -> string type
@@ -78,9 +79,10 @@ class Record(object) :
 
 
             
+
     """ Run proccesses """
     def run(self):
-        self.__pre_post_data()
+        #self.__pre_post_data()
         read_process = Process(target=self.__read)
         write_process = Process(target = self.__write)
         read_process.start()
@@ -98,6 +100,7 @@ class Record(object) :
 
     # Pseudonymize the audio samples from a binary string into an array of integers
     def pseudonymize(self, s):
+
         sl=len(s)/self.__byte
         return struct.unpack('<%dh' % sl,s)
     #np.fromstring(s[:2*8000], dtype=np.uint16)
@@ -118,7 +121,7 @@ if __name__=='__main__' :
     step_sample=80
     buff=RingBuffer.RingBuffer(RingLength,window_sample,step_sample)
     audio.run()
-    cur=0
+      cur=0
     tail=0
     i=0
     start=time.time()
