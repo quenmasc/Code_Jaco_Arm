@@ -1,6 +1,6 @@
 # all import here
 import alsaaudio as alsa
-from multiprocessing import Process, Queue 
+from multiprocessing import Process, Queue , Pool , Lock
 import numpy as np
 import math
 import struct
@@ -119,12 +119,13 @@ if __name__=='__main__' :
     audio= Record()
     RingLength=24650
     window_sample=200
-    step_sample=80
+    step_sample=85
     buff=RingBuffer.RingBuffer(RingLength,window_sample,step_sample)
     audio.run()
     cur=0
     tail=0
     i=0
+    c=[[],[]]
     start=time.time()
     while True :
         data, length = audio.read()
@@ -136,14 +137,18 @@ if __name__=='__main__' :
             buff.extend(ndata)
             a=buff.index()
             if a> window_sample :
-               c=buff.get()
-               i+=1
-               print(i)
+                j=0
+                while j<2 :
+                   c[j]=buff.get()
+                   j+=1
+                i+=1
+              # print "iteration :", i, "buffer index:", a
+              #  print(c)
             stop=time.time()
             print(stop-start)
-           # ndata=DSP.denormalize(ndata,0xFFFF)
-           # ndata=audio.depseudonymize(pdata)
-           # audio.write(ndata)
+            #ndata=DSP.denormalize(ndata,0xFFFF)
+            ndata=audio.depseudonymize(pdata)
+            audio.write(ndata)
 #
     print("out of loop")
     print("end of transmission -> waiting new data")
