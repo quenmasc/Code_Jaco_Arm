@@ -135,8 +135,8 @@ if __name__=='__main__' :
                c=buff.get()
                i+=1
                print(i)
-            stop=time.time()
-            print(stop-start)
+            #stop=time.time()
+           # print(stop-start)
            # ndata=DSP.denormalize(ndata,0xFFFF)
            # ndata=audio.depseudonymize(pdata)
            # audio.write(ndata)
