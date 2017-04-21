@@ -31,9 +31,13 @@ class RingBuffer(object):
     """ Add data to the ring buffer -> data is anarray of float I suppose """
     def extend(self,data):
         data_index=(self.__index + np.arange(data.size))
-        self.__data[data_index]=data
-        self.__index=data_index[-1]+1
-        self.__index=self.__index%self.__length
+        if np.all(self.__data[data_index]==np.zeros(len(data_index))) :
+            self.__data[data_index]=data
+            self.__index=data_index[-1]+1
+            self.__index=self.__index%self.__length
+        else :
+            print("Error : RingBuffer is overwritten ")
+            
         
     """ get data from ring buffer FIFO -> idea : get working window at each time"""
     def get(self):
@@ -47,8 +51,12 @@ class RingBuffer(object):
         self.__shift+=self.__step
         if self.__shift >= self.__length :
             self.__shift=self.__shift-self.__length
-        print idx, self.__shift
-        return self.__data[idx]
+        temp=self.__data[idx]
+        self.__data[idx]=np.zeros(self.__window)
+        #print idx, self.__shift
+        return temp
 
     def index(self):
-        return self.__index 
+        return self.__index
+
+    

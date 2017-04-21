@@ -67,6 +67,7 @@ class Record(object) :
 
         while True:
             data = self.__write_queue.get()
+
             outp.write(data)
 
 
@@ -121,7 +122,7 @@ if __name__=='__main__' :
     step_sample=80
     buff=RingBuffer.RingBuffer(RingLength,window_sample,step_sample)
     audio.run()
-      cur=0
+    cur=0
     tail=0
     i=0
     start=time.time()
@@ -138,8 +139,8 @@ if __name__=='__main__' :
                c=buff.get()
                i+=1
                print(i)
-            #stop=time.time()
-           # print(stop-start)
+            stop=time.time()
+            print(stop-start)
            # ndata=DSP.denormalize(ndata,0xFFFF)
            # ndata=audio.depseudonymize(pdata)
            # audio.write(ndata)
