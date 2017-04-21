@@ -39,13 +39,18 @@ class RingBuffer(object):
     def get(self):
         idx=(self.__shift + np.arange(self.__window))
         if self.__shift+self.__window > self.__length :
-            temp_end=(np.arange(self.__length-self.__shift))
-            temp_beg=(0 + np.arange(self.__window-temp_end.size))
-            idx=temp_end+temp_beg
-        print(idx)
+            temp_end=(np.arange(self.__shift,self.__length))
+            temp_beg=(0+np.arange(self.__window-temp_end.size))
+            idx= np.concatenate([temp_end,temp_beg])
+        #print(idx)
         #### ERROR NEED TO FIXS IT ####
         self.__shift+=self.__step
+        if self.__shift >= self.__length :
+            self.__shift=self.__shift-self.__length
+        print idx, self.__shift
         return self.__data[idx]
 
     def index(self):
-        return self.__index 
+        return self.__index
+
+    
