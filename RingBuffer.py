@@ -67,11 +67,16 @@ class RingBuffer(object):
 class WaitingBuffer(object):
 
     """ Initialzation -> define the size of the array """
-    def __init__(self,size):
+    def __init__(self,size,window_sample):
         self.__size=size
-        self.__storeArray=np.array()
-
-    def store(self,
+        self.__storeArray=np.ndarray((window_sample,size), dtype='f')
+        self.__storeArray[:]=0.
+        print(self.__storeArray)
+        self.__index=0
+        
+   # def store(self,DataArray) :
+    #    for i in range(len(DataArray)):
+            
 
     
     

@@ -114,6 +114,8 @@ class Record(object) :
 
         return s
 
+    """  Ring Buffer -> READ AND WRITE METHODS """
+    def RingBufferWrite(ring,data):
     
 if __name__=='__main__' :
     audio= Record()
@@ -121,10 +123,11 @@ if __name__=='__main__' :
     window_sample=200
     step_sample=85
     buff=RingBuffer.RingBuffer(RingLength,window_sample,step_sample)
+    store=RingBuffer.WaitingBuffer(10,window_sample)
     audio.run()
     cur=0
     tail=0
-    i=0
+    i=0 
     c=[[],[]]
     start=time.time()
     while True :
@@ -140,10 +143,7 @@ if __name__=='__main__' :
                 j=0
                 while j<2 :
                    c[j]=buff.get()
-                   j+=1
-                i+=1
-              # print "iteration :", i, "buffer index:", a
-              #  print(c)
+                   j+=1  
             stop=time.time()
             print(stop-start)
             #ndata=DSP.denormalize(ndata,0xFFFF)
