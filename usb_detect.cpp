@@ -13,6 +13,7 @@ void list_devices(libusb_device **devices);
 error_t init_usb();
 int main(){
 	list_devices();
+	 
 	return 0;
 }
 
