@@ -13,8 +13,29 @@ int main(){
 }
 
 
+error_t
+init_usb()
+{
+  int r = libusb_init(&__ctx);
+  if( r<0 ) {
+    fprintf(stderr, "Error initializing libusb. libusb-error: %i", r);
+    return ERROR_USB_INIT;
+  }
 
+  return ERROR_NONE;
+}
 
+/** Exit libusb.
+ * This closes the explicitly created libusb context. It is not needed to call
+ * this when 'init_usb()' has not been called before. However, calling this does
+ * no harm (no exception throwing etc.).
+ */
+void
+close_usb()
+{
+  libusb_exit(__ctx);
+  __ctx = NULL;
+}
 void
 list_devices(libusb_device **devices)
 {
