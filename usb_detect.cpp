@@ -1,14 +1,14 @@
 
-#include <usb.h>
+#include <libusb_1.0/libusb.h>
 #include <stdio.h>
-
+#include "usb_detect.h"
 
 
 
 int main(){
-	static libusb_device** __devices;
 	
-	list_devices(__device);
+	
+	list_devices(USB_detect.__devices);
 	return 0;
 }
 
