@@ -6,10 +6,9 @@
 namespace std {
 USB_detect USB_detect;
 static libusb_device** __devices;
-void list_devices(libsub_device **devices);
 
 int main(){
-	list_devices(USB_detect.__devices);
+	USB_detect.list_devices()
 	return 0;
 }
 
@@ -34,5 +33,36 @@ list_devices(libusb_device **devices)
     desc.idVendor, desc.idProduct, desc.iSerialNumber,
     libusb_get_bus_number(dev), libusb_get_device_address(dev));
   }
+}
+
+void
+list_devices()
+{
+  bool tmp_ctx = false;
+  if( __ctx == NULL ) {
+    // try creating a temporary context
+    error_t err = init_usb();
+    if( err != ERROR_NONE )
+       throw KinDrvException(err, "Failed to initialize temporary libusb context");
+    else
+      tmp_ctx = true;
+  }
+
+  // Get devices
+  ssize_t cnt;
+  cnt = libusb_get_device_list(__ctx, &__devices);
+  if( cnt<0 ) {
+    fprintf( stderr, "Get_device_list error: %i \n", cnt);
+  } else {
+    printf("%i USB devices detected \n", cnt);
+
+    list_devices(__devices);
+
+    // Clear devices list
+    libusb_free_device_list(__devices, /*auto-unref*/ true);
+  }
+
+  if( tmp_ctx )
+    close_usb();
 }
 }
