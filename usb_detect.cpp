@@ -8,7 +8,7 @@ USB_detect USB_detect;
 static libusb_device** __devices;
 
 int main(){
-	USB_detect.list_devices()
+	USB_detect.list_devices();
 	return 0;
 }
 
