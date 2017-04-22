@@ -7,7 +7,10 @@
 USB_detect USB_detect;
 static libusb_device** __devices;
 static libusb_context *__ctx = NULL;
-
+void list_devices();
+void close_usb();
+void list_devices(libusb_device **devices);
+error_t init_usb()
 int main(){
 	list_devices();
 	return 0;
