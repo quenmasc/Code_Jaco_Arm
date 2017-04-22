@@ -6,6 +6,7 @@
 namespace std {
 USB_detect USB_detect;
 static libusb_device** __devices;
+static libusb_context *__ctx = NULL;
 
 int main(){
 	USB_detect.list_devices();
