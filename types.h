@@ -23,10 +23,9 @@
  *  along with libkindrv.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-#ifndef __KINDRV_TYPES_H_
-#define __KINDRV_TYPES_H_
 
-namespace KinDrv {
+
+
 
 typedef enum {
   ERROR_NONE            = 0,
@@ -143,6 +142,3 @@ typedef struct {
   };
 } usb_packet_t;
 
-
-} // end namespace KinDrv
-#endif
