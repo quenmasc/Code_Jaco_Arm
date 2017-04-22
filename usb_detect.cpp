@@ -3,13 +3,13 @@
 #include <stdio.h>
 #include "usb_detect.h"
 
-namespace std {
+
 USB_detect USB_detect;
 static libusb_device** __devices;
 static libusb_context *__ctx = NULL;
 
 int main(){
-	USB_detect::list_devices();
+	list_devices();
 	return 0;
 }
 
@@ -87,4 +87,4 @@ list_devices()
   if( tmp_ctx )
     close_usb();
 }
-}
+
