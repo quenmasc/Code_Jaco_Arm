@@ -5,8 +5,10 @@
 
 namespace std {
 USB_detect USB_detect;
-USB_detect.
+void list_devices(libsub_device **devices);
+
 int main(){
+	USB_detect.list_devices __devices ;
 	list_devices(USB_detect.__devices);
 	return 0;
 }
