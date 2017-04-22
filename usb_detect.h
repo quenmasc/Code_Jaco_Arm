@@ -3,6 +3,7 @@
 #include <libusb-1.0/libusb.h>
 #include <stdio.h>
 #include "types.h"
+#include "exception.h"
 struct libusb_device;
 struct libusb_device_handle;
 
