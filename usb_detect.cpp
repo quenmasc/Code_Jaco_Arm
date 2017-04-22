@@ -1,13 +1,11 @@
 
-#include <usb.h>
+#include <libusb-1.0/libusb.h>
 #include <stdio.h>
 
-
-
+void list_devices(libusb_device **devices);
 
 int main(){
-	static libusb_device** __devices;
-	
+	static libusb_device** __devices ;
 	list_devices(__device);
 	return 0;
 }
