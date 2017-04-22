@@ -1,5 +1,5 @@
 
-#include <libusb.h>
+#include <usb.h>
 #include <stdio.h>
 
 
