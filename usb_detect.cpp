@@ -3,8 +3,9 @@
 #include <stdio.h>
 #include "usb_detect.h"
 
-
-
+namespace std {
+USB_detect USB_detect;
+USB_detect.
 int main(){
 	list_devices(USB_detect.__devices);
 	return 0;
@@ -32,4 +33,4 @@ list_devices(libusb_device **devices)
     libusb_get_bus_number(dev), libusb_get_device_address(dev));
   }
 }
-
+}

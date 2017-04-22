@@ -1,9 +1,10 @@
 
 
-#include <libusb_1.0/libusb.h>
+#include <libusb-1.0/libusb.h>
 #include <stdio.h>
 
 class USB_detect {
-	
-	static libusb_device** __devices;
+	public :	
+	static libusb_device**;
 	void list_devices(libusb_device **devices);
+};
