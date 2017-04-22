@@ -64,10 +64,10 @@ list_devices()
   if( __ctx == NULL ) {
     // try creating a temporary context
     error_t err = init_usb();
-    if( err != ERROR_NONE )
-       throw KinDrvException(err, "Failed to initialize temporary libusb context");
-    else
-      tmp_ctx = true;
+  //  if( err != ERROR_NONE )
+   //    throw KinDrvException(err, "Failed to initialize temporary libusb context");
+  //  else
+    tmp_ctx = true;
   }
 
   // Get devices
