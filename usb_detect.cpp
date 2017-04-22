@@ -6,8 +6,6 @@
 
 
 int main(){
-	
-	
 	list_devices(USB_detect.__devices);
 	return 0;
 }
