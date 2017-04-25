@@ -124,14 +124,16 @@ class Record(object) :
     """  Ring Buffer -> READ AND WRITE METHODS """
     def __RingBufferWrite(self,ring):
         flag=0
+        temp=[[],[]];
         while True :
             data=self.__RingBufferWrite_queue.get()
             ring.extend(data)
             if flag==2 :
-                temp =ring.get()
+                for i in range(0,2):
+                    temp[i] =ring.get()
             else :
                 flag+=1
-                temp=np.zeros(200)
+                temp[:]=np.zeros(200)
             self.__RingBufferRead_queue.put(temp)
 
     def RingBufferWrite(self,data):
@@ -172,7 +174,7 @@ if __name__=='__main__' :
         ndata=DSP.normalize(pdata,0xFFFF)
         audio.RingBufferWrite(ndata)
         c=audio.RingBufferRead()
-        print(c)
+        #print c[0] ,c[1] , "Done"
            # buff.extend(ndata)
            # a=buff.index()
            # if a> window_sample :
