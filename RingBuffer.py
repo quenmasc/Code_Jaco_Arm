@@ -34,7 +34,6 @@ class RingBuffer(object):
         data_index=(self.__index + np.arange(data.size))
         if np.all(self.__data[data_index]==np.zeros(len(data_index))) :
             self.__data[data_index]=data
-        #    print( self.__data[data_index])
             self.__index=data_index[-1]+1
             self.__index=self.__index%self.__length
         else :
@@ -57,7 +56,6 @@ class RingBuffer(object):
             self.__clean=self.__clean-self.__length
         temp=self.__data[idx]
         self.__data[idx_clean]=np.zeros(self.__step)
-       # print idx, self.__shift
         return temp
 
     def index(self):
@@ -72,7 +70,7 @@ class WaitingBuffer(object):
         self.__size=size
         self.__storeArray=np.ndarray((window_sample,size), dtype='f')
         self.__storeArray[:]=0.
-       # print(self.__storeArray)
+        print(self.__storeArray)
         self.__index=0
         
    # def store(self,DataArray) :
