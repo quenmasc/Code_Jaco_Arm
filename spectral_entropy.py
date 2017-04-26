@@ -51,8 +51,6 @@ class SPECTRAL_ENTROPY(object):
 
         # Normalize the calculated PSD do that it can be viewed as a probability Density function (equal to 1)
         Normalize_PSD = Pxx_den / np.sum(Pxx_den)
-        print "f", f, "den", Pxx_den , "somme" , np.sum(Pxx_den) , "normalize" , Normalize_PSD
-        time.sleep(1)
         log_p = numpy.empty(len(Normalize_PSD), 'd')
         p = numpy.empty(len(Normalize_PSD), 'd')
         # Power Spectral Entropy
