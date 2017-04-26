@@ -55,8 +55,8 @@ class SPECTRAL_ENTROPY(object):
         eps = 2.220446049250313e-16
         entropy=0
         for i in range(0,len(Normalize_PSD)) :
-            log_p = math.log(Normalize_PSD[0]+eps)
-            p=Normalize_PSD[0]+eps
+            log_p = math.log(Normalize_PSD[i],2)#+eps)
+            p=Normalize_PSD[i]#+eps
             entropy+=p*log_p
         return -entropy
 
