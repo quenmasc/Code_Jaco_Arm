@@ -57,8 +57,8 @@ class SPECTRAL_ENTROPY(object):
         eps = 2.220446049250313e-16
         entropy=0
         for i in range(0,len(Normalize_PSD)) :
-            log_p[i] = math.log(Normalize_PSD[i],2)#+eps)
-            p[i]=Normalize_PSD[i]#+eps
+            log_p[i] = math.log(Normalize_PSD[i]+eps,2)
+            p[i]=Normalize_PSD[i]+eps
             entropy+=p[i]*log_p[i]
         return -entropy
 
@@ -73,8 +73,4 @@ class SPECTRAL_ENTROPY(object):
         En=-np.sum(s*np.log2(s+eps))
         return En
 
-    def euclideandistance(self, frame_noise,frame):
-        """ Calculate the difference between background entropy value and current entropy value"""
-        return self.frame2periodogram(frame)-frame_noise
-         # need to ask to Ulysse why I have a mistake when I print value first
-
+   
