@@ -12,6 +12,7 @@ import os
 from threading import Thread
 import RingBuffer
 import mfcc
+import spectral_entropy
 
 __author__="Quentin MASCRET <quentin.mascret.1@ulaval.ca>"
 __date__="2017-04-14"
@@ -62,6 +63,7 @@ class Record(object) :
 
     def __write(self):
         card='sysdefault:CARD=Device'
+
         outp = alsa.PCM(alsa.PCM_PLAYBACK, alsa.PCM_NORMAL,card)
         outp.setchannels(1)
         outp.setrate(self.__rate)
@@ -73,6 +75,7 @@ class Record(object) :
             data = self.__write_queue.get()
 
             outp.write(data)
+
 
 
 
@@ -115,6 +118,7 @@ class Record(object) :
 
     def depseudonymize(self, a):
         s = ""
+
 
 
         for elem in a:
@@ -161,6 +165,7 @@ class Record(object) :
 if __name__=='__main__' :
     audio= Record()
     mfcc = mfcc.MFCC()
+    entropy = spectral_entropy.SPECTRAL_ENTROPY()
     RingLength=24650
     window_sample=200
     step_sample=85
@@ -171,6 +176,7 @@ if __name__=='__main__' :
     i=0 
     c=[]
     d=[[],[]]
+    f=[[],[]]
     flag=0
     while True :
         data, length = audio.read()
@@ -179,15 +185,21 @@ if __name__=='__main__' :
         audio.RingBufferWrite(ndata)
         if (c==[]) :
             c=audio.RingBufferRead()
+        else :
+            print ("Overwrite")
+            break
       #  print(c[0])
         if flag < 3:
             flag+=1
         if flag ==3:
             for i in range(0,2) :
                 d[i]=mfcc.frame2s2mfc(np.array(c[i]))
+                f[i]=entropy.frame2periodogram(c[i])
         print(d)
+        print(f)
         c=[]
         d=[[],[]]
+        f=[[],[]]
         ndata=audio.depseudonymize(pdata)
         audio.write(ndata)
 #
