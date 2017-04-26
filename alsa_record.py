@@ -194,7 +194,7 @@ if __name__=='__main__' :
         if flag ==3:
             for i in range(0,2) :
                 d[i]=mfcc.frame2s2mfc(np.array(c[i]))
-                f[i]=entropy.frame2periodogram(c[i])
+                f[i]=entropy.SpectralEntropy(np.array(c[i]))
         print(d)
         print(f)
         c=[]
