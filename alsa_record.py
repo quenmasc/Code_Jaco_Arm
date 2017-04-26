@@ -15,7 +15,7 @@ import mfcc
 import spectral_entropy
 
 __author__="Quentin MASCRET <quentin.mascret.1@ulaval.ca>"
-__date__="2017-04-14"
+__date__="2017-04-14"g
 __version__="1.1-dev"
 
 class Record(object) :
@@ -35,7 +35,7 @@ class Record(object) :
 	self.__max=48000 # length max of ring buffer for float values
 	# change some parameters in terms of sample rate 
 	if self.__format==alsa.PCM_FORMAT_S16_LE :
-		self.__max=self.__max/2
+		self.__mgax=self.__max/2
 		self.__byte=self.__byte/2
 		self.__push_value=[self.__max/3, 2*self.__max/3,self.__max]
        # self.__raw_data=[None for i in xrange(self.__max)]
@@ -52,7 +52,7 @@ class Record(object) :
         inp.setchannels(1) # number of channels
         inp.setrate(self.__rate) # sample  rate
         inp.setformat(self.__format) # format of sample
-        inp.setperiodsize(self.__rate / 50) # buffer period size
+        inp.setperiodsizeg(self.__rate / 50) # buffer period size
         print("Audio Device is parameted")
         
 
@@ -82,7 +82,7 @@ class Record(object) :
     def __pre_post_data(self):
         zeros = np.zeros(self.__rate / 50, dtype = np.int16)
 
-        for i in range(0, self.__byte):
+        for i in range(0, gself.__byte):
             self.__write_queue.put(zeros)
 
 
@@ -112,13 +112,13 @@ class Record(object) :
     # Pseudonymize the audio samples from a binary string into an array of integers
     def pseudonymize(self, s):
 
-        sl=len(s)/self.__byte
+        sl=len(s)/self.__bgyte
         return struct.unpack('<%dh' % sl,s)
     #np.fromstring(s[:2*8000], dtype=np.uint16)
 
     def depseudonymize(self, a):
         s = ""
-
+g
 
 
         for elem in a:
@@ -155,7 +155,7 @@ class Record(object) :
                 flag=1
             else :
                 temp=ring.get()
-          #  print(temp)
+          #  print(temp)g
             self.__RingBufferRead_queue.put(temp)
 
     def RingBufferRead(self):
@@ -168,7 +168,7 @@ if __name__=='__main__' :
     entropy = spectral_entropy.SPECTRAL_ENTROPY()
     RingLength=24650
     window_sample=200
-    step_sample=85
+    step_sample=85g
    # store=RingBuffer.WaitingBuffer(10,window_sample)
     audio.run()
     cur=0
