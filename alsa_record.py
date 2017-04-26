@@ -11,6 +11,7 @@ import wave
 import os
 from threading import Thread
 import RingBuffer
+import mfcc
 
 __author__="Quentin MASCRET <quentin.mascret.1@ulaval.ca>"
 __date__="2017-04-14"
@@ -68,6 +69,7 @@ class Record(object) :
         outp.setperiodsize(self.__rate / 50)
 
         while True:
+
             data = self.__write_queue.get()
 
             outp.write(data)
@@ -114,6 +116,7 @@ class Record(object) :
     def depseudonymize(self, a):
         s = ""
 
+
         for elem in a:
             s += struct.pack('h', elem)
 
@@ -122,17 +125,19 @@ class Record(object) :
     """  Ring Buffer -> READ AND WRITE METHODS """
     def __RingBufferWrite(self,ring):
         flag=0
-        temp=[[],[]];
+        temp=np.zeros(400)
         while True :
             data=self.__RingBufferWrite_queue.get()
             ring.extend(data)
             if flag==2 :
                 for i in range(0,2):
-                    temp[i] =ring.get()
+                    temp.append(ring.get().tolist())
             else :
                 flag+=1
-                temp[:]=np.zeros(200)
+                temp=np.zeros(400)
+           # print "temp is " ,temp
             self.__RingBufferRead_queue.put(temp)
+            temp=[]
 
     def RingBufferWrite(self,data):
         self.__RingBufferWrite_queue.put(data)
@@ -155,6 +160,7 @@ class Record(object) :
 
 if __name__=='__main__' :
     audio= Record()
+    mfcc = mfcc.MFCC()
     RingLength=24650
     window_sample=200
     step_sample=85
@@ -163,14 +169,25 @@ if __name__=='__main__' :
     cur=0
     tail=0
     i=0 
-    c=[[],[]]
+    c=[]
+    d=[[],[]]
+    flag=0
     while True :
         data, length = audio.read()
         pdata=audio.pseudonymize(data)
         ndata=DSP.normalize(pdata,0xFFFF)
         audio.RingBufferWrite(ndata)
-        c=audio.RingBufferRead()
-        
+        if (c==[]) :
+            c=audio.RingBufferRead()
+      #  print(c[0])
+        if flag < 3:
+            flag+=1
+        if flag ==3:
+            for i in range(0,2) :
+                d[i]=mfcc.frame2s2mfc(np.array(c[i]))
+        print(d)
+        c=[]
+        d=[[],[]]
         ndata=audio.depseudonymize(pdata)
         audio.write(ndata)
 #
