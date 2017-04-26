@@ -91,10 +91,8 @@ class Record(object) :
         write_process = Process(target = self.__write)
         ring=RingBuffer.RingBuffer(RingLength,window_sample,step_sample)
         RingBuffer_write_process = Process (target =self.__RingBufferWrite, args=(ring,))
-       # RingBuffer_read_process = Process (target=self.__RingBufferRead, args=(ring,))
         read_process.start()
         RingBuffer_write_process.start()
-       # RingBuffer_read_process.start()
         write_process.start()
         
         
@@ -166,25 +164,13 @@ if __name__=='__main__' :
     tail=0
     i=0 
     c=[[],[]]
-    start=time.time()
     while True :
         data, length = audio.read()
-        #if length>0 :
         pdata=audio.pseudonymize(data)
         ndata=DSP.normalize(pdata,0xFFFF)
         audio.RingBufferWrite(ndata)
         c=audio.RingBufferRead()
-        #print c[0] ,c[1] , "Done"
-           # buff.extend(ndata)
-           # a=buff.index()
-           # if a> window_sample :
-           #     j=0
-           #     while j<2 :
-           #        c[j]=buff.get()
-           #        j+=1  
-        stop=time.time()
-       # print(stop-start)
-            #ndata=DSP.denormalize(ndata,0xFFFF)
+        
         ndata=audio.depseudonymize(pdata)
         audio.write(ndata)
 #
