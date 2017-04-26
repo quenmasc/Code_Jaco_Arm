@@ -25,10 +25,10 @@ def melinv(m):
 
 
 class MFCC(object):
-    def __init__(self, nfilt=40, ncep=13,
+    def __init__(self, nfilt=20, ncep=13,
                  lowerf=300, upperf=3700, alpha=0.97,
-                 samprate=16000, frate=100, wlen=0.0256,
-                 nfft=512):
+                 samprate=8000, frate=100, wlen=0.025,
+                 nfft=256):
         # Store parameters
         self.lowerf = lowerf
         self.upperf = upperf
@@ -88,6 +88,7 @@ class MFCC(object):
         self.s2dct = s2dctmat(nfilt, ncep, 1. / nfilt)
         self.dct = dctmat(nfilt, ncep, numpy.pi / nfilt)
 
+
     def sig2s2mfc(self, sig):
         nfr = int(len(sig) / self.fshift + 1)
         mfcc = numpy.zeros((nfr, self.ncep), 'd')
@@ -120,7 +121,7 @@ class MFCC(object):
 
     def pre_emphasis(self, frame):
         # FIXME: Do this with matrix multiplication
-        outfr = numpy.empty(len(frame), 'd')
+        outfr = numpy.empty(self.wlen, 'd')
         outfr[0] = frame[0] - self.alpha * self.prior
         for i in range(1, len(frame)):
             outfr[i] = frame[i] - self.alpha * frame[i - 1]
@@ -129,7 +130,7 @@ class MFCC(object):
 
     def frame2logspec(self, frame):
         frame = self.pre_emphasis(frame) * self.win
-        fft = numpy.fft.rfft(frame, self.nfft)
+        fft = numpy.fft.rfft(frame, self.nfft) #frame.size
         # Square of absolute value
         power = fft.real * fft.real + fft.imag * fft.imag
         return numpy.log(numpy.dot(power, self.filters).clip(1e-5, numpy.inf))
