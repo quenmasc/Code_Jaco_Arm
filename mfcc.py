@@ -25,9 +25,9 @@ def melinv(m):
 
 
 class MFCC(object):
-    def __init__(self, nfilt=40, ncep=13,
+    def __init__(self, nfilt=20, ncep=13,
                  lowerf=300, upperf=3700, alpha=0.97,
-                 samprate=16000, frate=100, wlen=0.0256,
+                 samprate=8000, frate=100, wlen=0.025,
                  nfft=512):
         # Store parameters
         self.lowerf = lowerf

@@ -13,13 +13,14 @@ import math
 
 
 class SPECTRAL_ENTROPY(object):
-    def __init__(self, wlen=0.015, wshift=0.005, samplerate=16000,
+    def __init__(self, wlen=0.025, wshift=0.001, samplerate=8000,
                  nfft=256, p=0.96, alpha=0.96):
         # store parameter
         self.wlen = int(wlen * samplerate)
         self.wshift = int(wshift * samplerate)
         self.p = p
         self.nfft = nfft
+
         self.samplerate = samplerate
 
         # build hanning window
@@ -48,12 +49,16 @@ class SPECTRAL_ENTROPY(object):
 
         # Normalize the calculated PSD do that it can be viewed as a probability Density function (equal to 1)
         Normalize_PSD = Pxx_den / np.sum(Pxx_den)
-
+        log_p = numpy.empty(len(Normalize_PSD), 'd')
+        p = numpy.empty(len(Normalize_PSD), 'd')
         # Power Spectral Entropy
         eps = 2.220446049250313e-16
-        log_p = math.log(Normalize_PSD+eps)
-        p=Normalize_PSD+eps
-        return -np.sum(p * log_p)
+        entropy=0
+        for i in range(0,len(Normalize_PSD)) :
+            log_p = math.log(Normalize_PSD[0]+eps)
+            p=Normalize_PSD[0]+eps
+            entropy+=p*log_p
+        return -entropy
 
     def euclideandistance(self, frame_noise,frame):
         """ Calculate the difference between background entropy value and current entropy value"""
