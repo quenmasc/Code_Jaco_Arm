@@ -9,6 +9,10 @@ import wave
 import os
 import scipy
 
+__author__="Quentin MASCRET <quentin.mascret.1@ulaval.ca>"
+__date__="2017-04-26"
+__version__="1.0-dev"
+
 def sigmoid(Lambda,x):
        return 1/(5+math.exp(-Lambda*x)) # expit also allows it faster than mine.
 
@@ -22,8 +26,6 @@ def distance(x,x_noise):
 def updateMFCCsNoise(x,x_noise, p):
     # x and x_noise need to be an np.array
       return p*x_noise+(1-p)*x
-
-#def updateEntropyThreshold(x,x_noise,p):
 
 
 def MeanStandardDeviation(x, Lambda):
