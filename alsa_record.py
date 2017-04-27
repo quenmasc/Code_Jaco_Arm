@@ -13,9 +13,10 @@ from threading import Thread
 import RingBuffer
 import mfcc
 import spectral_entropy
+import function
 
 __author__="Quentin MASCRET <quentin.mascret.1@ulaval.ca>"
-__date__="2017-04-14"g
+__date__="2017-04-14"
 __version__="1.1-dev"
 
 class Record(object) :
@@ -52,7 +53,7 @@ class Record(object) :
         inp.setchannels(1) # number of channels
         inp.setrate(self.__rate) # sample  rate
         inp.setformat(self.__format) # format of sample
-        inp.setperiodsizeg(self.__rate / 50) # buffer period size
+        inp.setperiodsize(self.__rate / 50) # buffer period size
         print("Audio Device is parameted")
         
 
@@ -103,6 +104,7 @@ class Record(object) :
         
     """ get all data from audiuo devices """
     def read(self):
+
         return self.__read_queue.get() , self.__read_frame.get()     
 
     def write(self, data):
@@ -112,15 +114,12 @@ class Record(object) :
     # Pseudonymize the audio samples from a binary string into an array of integers
     def pseudonymize(self, s):
 
-        sl=len(s)/self.__bgyte
+        sl=len(s)/self.__byte
         return struct.unpack('<%dh' % sl,s)
     #np.fromstring(s[:2*8000], dtype=np.uint16)
 
     def depseudonymize(self, a):
         s = ""
-g
-
-
         for elem in a:
             s += struct.pack('h', elem)
 
@@ -168,38 +167,53 @@ if __name__=='__main__' :
     entropy = spectral_entropy.SPECTRAL_ENTROPY()
     RingLength=24650
     window_sample=200
-    step_sample=85g
+    step_sample=85
    # store=RingBuffer.WaitingBuffer(10,window_sample)
     audio.run()
     cur=0
     tail=0
-    i=0 
+    j=0 
     c=[]
     d=[[],[]]
-    f=[[],[]]
+    f=[]
+    spectral_entropy=np.empty(2,'f')
+    th=[[],[]]
+    endpoint=np.empty(2,'f')
+    corr=[[],[]]
     flag=0
     while True :
         data, length = audio.read()
         pdata=audio.pseudonymize(data)
-        ndata=DSP.normalize(pdata,0xFFFF)
+        ndata=DSP.normalize(pdata,0xFF)
         audio.RingBufferWrite(ndata)
         if (c==[]) :
             c=audio.RingBufferRead()
         else :
             print ("Overwrite")
             break
-      #  print(c[0])
+        #print(c[0])
         if flag < 3:
             flag+=1
         if flag ==3:
             for i in range(0,2) :
                 d[i]=mfcc.frame2s2mfc(np.array(c[i]))
-                f[i]=entropy.SpectralEntropy(np.array(c[i]))
+                spectral_entropy[i]=entropy.SpectralEntropy(np.array(c[i]))
+                if j==0:
+                    j+=1
+                    f=np.array(d[0])
+                
+                corr[i]=function.correlation_1D(np.array(d[i]),f)
+              #  if j==1 :
+              #  f=function.updateMFCCsNoise(np.array(d[i]),f, 0.9)
+                th[i]=function.sigmoid(1,corr[i])
+                if corr[i]>=th[i]:
+                    print ("_________________OVER _______________")
         print(d)
-        print(f)
+      #  print "background" , f
+        print "distance is : ", corr
+        print "seuil est de ;" ,th
         c=[]
-        d=[[],[]]
-        f=[[],[]]
+        endpoint=[[],[]]
         ndata=audio.depseudonymize(pdata)
         audio.write(ndata)
 #
