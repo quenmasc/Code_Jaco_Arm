@@ -172,7 +172,8 @@ if __name__=='__main__' :
     audio.run()
     cur=0
     tail=0
-    j=0 
+    j=0
+    count=0
     c=[]
     d=[[],[]]
     f=[]
@@ -203,12 +204,17 @@ if __name__=='__main__' :
                     f=np.array(d[0])
                 
                 corr[i]=function.correlation_1D(np.array(d[i]),f)
-              #  if j==1 :
-              #  f=function.updateMFCCsNoise(np.array(d[i]),f, 0.9)
-                th[i]=function.sigmoid(1,corr[i])
+                if j==1 :
+                  f=function.updateMFCCsNoise(np.array(d[i]),f, 0.9)
+                  th[i]=function.sigmoid(1,corr[i])
+                else :
+                    th[i]=0.001
                 if corr[i]>=th[i]:
-                    print ("_________________OVER _______________")
-        print(d)
+                    count +=1
+                    print "_________________OVER _______________", " window" , count
+                else :
+                    count =0
+      #  print(d)
       #  print "background" , f
         print "distance is : ", corr
         print "seuil est de ;" ,th
