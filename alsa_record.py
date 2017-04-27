@@ -14,6 +14,7 @@ import RingBuffer
 import mfcc
 import spectral_entropy
 import function
+import mfccbuffer
 
 __author__="Quentin MASCRET <quentin.mascret.1@ulaval.ca>"
 __date__="2017-04-14"
@@ -102,7 +103,9 @@ class Record(object) :
         write_process.start()
         
         
-    """ get all data from audiuo devices """
+    """__author__="Quentin MASCRET <quentin.mascret.1@ulaval.ca>"
+__date__="2017-04-14"
+__version__="1.0-dev" get all data from audiuo devices """
     def read(self):
 
         return self.__read_queue.get() , self.__read_frame.get()     
@@ -165,6 +168,7 @@ if __name__=='__main__' :
     audio= Record()
     mfcc = mfcc.MFCC()
     entropy = spectral_entropy.SPECTRAL_ENTROPY()
+    buff=mfccbuffer.MFFCsRingBuffer()
     RingLength=24650
     window_sample=200
     step_sample=85
@@ -214,7 +218,8 @@ if __name__=='__main__' :
                     print "_________________OVER _______________", " window" , count
                 else :
                     count =0
-      #  print(d)
+        print ( " _____________________________NEW ________________________________")
+        print "entropy : " ,spectral_entropy
       #  print "background" , f
         print "distance is : ", corr
         print "seuil est de ;" ,th
