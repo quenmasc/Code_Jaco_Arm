@@ -23,6 +23,7 @@ class MFFCsRingBuffer(object):
             self.__head=0
             self.__tail=0
             self.__sustain=0
+            self.__count=0
             self.__flag="out"
             self.__numberOfWindowRejection=17 # 1600 samples
 
@@ -35,3 +36,23 @@ class MFFCsRingBuffer(object):
                     self.__index=self.__index%self.__length
             else :
                 print("Error : RingBuffer is overwritten ")
+
+        def get(self):
+                data_index=(self.__head+np.arange(self.__tail))
+                return self.__data[:,data_index]
+
+        def segmentation(self,data,threshold,coeff):
+                # first case 
+                if data >= thresold and flag=="out" :
+                        self.__flag="in"
+                        self.__tail+=1
+                        
+                if data<threshold and flag="in" :
+                        self.__count+=1
+                        self.extend(coeff)
+                        if self.__count >=self.__numberOfWindowRejection:
+                                return self.__get()
+                
+                                
+                                
+                
