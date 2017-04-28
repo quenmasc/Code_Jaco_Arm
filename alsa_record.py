@@ -182,6 +182,8 @@ if __name__=='__main__' :
     c=[]
     d=[[],[]]
     f=[]
+    e=np.array([[0.9 , 1 , 2 , 0.3 , 6 , 4 , 8],[5,7,0.2,0.6,0.9,0.8,0.4],[1,2,3,4,5,6,7]]).T
+    g=np.empty((13,200),'f')
     spectral_entropy=np.empty(2,'f')
     th=[[],[]]
     endpoint=np.empty(2,'f')
@@ -217,20 +219,18 @@ if __name__=='__main__' :
                     th[i]=0.001
                 fl=buff.flag(corr[i],th[i],d[i])
                 if fl=="admit" :
+                    g=buff.get()
+                    print(e)
+                    print(function.deltaMFCCs(e,9))
                     print("  ##################################################################")
                     print( " __________________________OVER ___________________________________")
                     print("  ##################################################################")
-               # if corr[i]>=th[i]:
-               #     count +=1
-               #     print "_________________OVER _______________", " window" , count
-              #  else :
-               #     count =0
-            
+                    time.sleep(5)
         print ( " _____________________________NEW ________________________________")
-        print "entropy : " ,spectral_entropy
+       # print "entropy : " ,spectral_entropy
         print "flag is : " , fl
-        print "distance is : ", corr
-        print "seuil est de ;" ,th
+       # print "distance is : ", corr
+        #print "seuil est de ;" ,th
         c=[]
         endpoint=[[],[]]
         ndata=audio.depseudonymize(pdata)
