@@ -183,7 +183,7 @@ if __name__=='__main__' :
     d=[[],[]]
     f=[]
     e=np.array([[0.9 , 1 , 2 , 0.3 , 6 , 4 , 8],[5,7,0.2,0.6,0.9,0.8,0.4],[1,2,3,4,5,6,7]]).T
-    g=np.empty((13,200),'f')
+    g=np.empty((26,200),'f')
     spectral_entropy=np.empty(2,'f')
     th=[[],[]]
     endpoint=np.empty(2,'f')
@@ -220,12 +220,12 @@ if __name__=='__main__' :
                 fl=buff.flag(corr[i],th[i],d[i])
                 if fl=="admit" :
                     g=buff.get()
-                    print(e)
-                    print(function.deltaMFCCs(e,9))
+                    print(g)
+                    print "size of mfcc is :", g.size, "length is : " , len(g)
                     print("  ##################################################################")
                     print( " __________________________OVER ___________________________________")
                     print("  ##################################################################")
-                    time.sleep(5)
+
         print ( " _____________________________NEW ________________________________")
        # print "entropy : " ,spectral_entropy
         print "flag is : " , fl
