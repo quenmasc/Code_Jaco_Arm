@@ -12,6 +12,9 @@ import os
 from threading import Thread
 import RingBuffer
 import mfcc
+import spectral_entropy
+import function
+import mfccbuffer
 
 __author__="Quentin MASCRET <quentin.mascret.1@ulaval.ca>"
 __date__="2017-04-14"
@@ -34,7 +37,7 @@ class Record(object) :
 	self.__max=48000 # length max of ring buffer for float values
 	# change some parameters in terms of sample rate 
 	if self.__format==alsa.PCM_FORMAT_S16_LE :
-		self.__max=self.__max/2
+		self.__mgax=self.__max/2
 		self.__byte=self.__byte/2
 		self.__push_value=[self.__max/3, 2*self.__max/3,self.__max]
        # self.__raw_data=[None for i in xrange(self.__max)]
@@ -62,6 +65,7 @@ class Record(object) :
 
     def __write(self):
         card='sysdefault:CARD=Device'
+
         outp = alsa.PCM(alsa.PCM_PLAYBACK, alsa.PCM_NORMAL,card)
         outp.setchannels(1)
         outp.setrate(self.__rate)
@@ -76,10 +80,11 @@ class Record(object) :
 
 
 
+
     def __pre_post_data(self):
         zeros = np.zeros(self.__rate / 50, dtype = np.int16)
 
-        for i in range(0, self.__byte):
+        for i in range(0, gself.__byte):
             self.__write_queue.put(zeros)
 
 
@@ -98,8 +103,11 @@ class Record(object) :
         write_process.start()
         
         
-    """ get all data from audiuo devices """
+    """__author__="Quentin MASCRET <quentin.mascret.1@ulaval.ca>"
+__date__="2017-04-14"
+__version__="1.0-dev" get all data from audiuo devices """
     def read(self):
+
         return self.__read_queue.get() , self.__read_frame.get()     
 
     def write(self, data):
@@ -115,8 +123,6 @@ class Record(object) :
 
     def depseudonymize(self, a):
         s = ""
-
-
         for elem in a:
             s += struct.pack('h', elem)
 
@@ -125,17 +131,19 @@ class Record(object) :
     """  Ring Buffer -> READ AND WRITE METHODS """
     def __RingBufferWrite(self,ring):
         flag=0
-        temp=[[],[]];
+        temp=np.zeros(400)
         while True :
             data=self.__RingBufferWrite_queue.get()
             ring.extend(data)
             if flag==2 :
                 for i in range(0,2):
-                    temp[i] =ring.get()
+                    temp.append(ring.get().tolist())
             else :
                 flag+=1
-                temp[:]=np.zeros(200)
+                temp=np.zeros(400)
+           # print "temp is " ,temp
             self.__RingBufferRead_queue.put(temp)
+            temp=[]
 
     def RingBufferWrite(self,data):
         self.__RingBufferWrite_queue.put(data)
@@ -149,7 +157,7 @@ class Record(object) :
                 flag=1
             else :
                 temp=ring.get()
-          #  print(temp)
+          #  print(temp)g
             self.__RingBufferRead_queue.put(temp)
 
     def RingBufferRead(self):
@@ -159,6 +167,8 @@ class Record(object) :
 if __name__=='__main__' :
     audio= Record()
     mfcc = mfcc.MFCC()
+    entropy = spectral_entropy.SPECTRAL_ENTROPY()
+    buff=mfccbuffer.MFFCsRingBuffer()
     RingLength=24650
     window_sample=200
     step_sample=85
@@ -169,13 +179,64 @@ if __name__=='__main__' :
     i=0 
     c=[[],[]]
     d=[[],[]]
+    j=0
+    fl="out"
+    count=0
+    c=[]
+    d=[[],[]]
+    f=[]
+    e=np.array([[0.9 , 1 , 2 , 0.3 , 6 , 4 , 8],[5,7,0.2,0.6,0.9,0.8,0.4],[1,2,3,4,5,6,7]]).T
+    g=np.empty((26,200),'f')
+    spectral_entropy=np.empty(2,'f')
+    th=[[],[]]
+    endpoint=np.empty(2,'f')
+    corr=[[],[]]
     flag=0
     while True :
+
         data, length = audio.read()
         pdata=audio.pseudonymize(data)
-        ndata=DSP.normalize(pdata,0xFFFF)
+        ndata=DSP.normalize(pdata,0xFF)
         audio.RingBufferWrite(ndata)
         c=audio.RingBufferRead()
+        if (c==[]) :
+            c=audio.RingBufferRead()
+        else :
+            print ("Overwrite")
+            break
+        #print(c[0])
+        if flag < 3:
+            flag+=1
+        if flag ==3:
+            for i in range(0,2) :
+                d[i]=mfcc.frame2s2mfc(np.array(c[i]))
+                spectral_entropy[i]=entropy.SpectralEntropy(np.array(c[i]))
+                if j==0:
+                    j+=1
+                    f=np.array(d[0])
+                
+                corr[i]=function.correlation_1D(np.array(d[i]),f)
+                if j==1 :
+                  f=function.updateMFCCsNoise(np.array(d[i]),f, 0.9)
+                  th[i]=function.sigmoid(1,corr[i])
+                else :
+                    th[i]=0.001
+                fl=buff.flag(corr[i],th[i],d[i])
+                if fl=="admit" :
+                    g=buff.get()
+                    print(g)
+                    print "size of mfcc is :", g.size, "length is : " , len(g)
+                    print("  ##################################################################")
+                    print( " __________________________OVER ___________________________________")
+                    print("  ##################################################################")
+
+        print ( " _____________________________NEW ________________________________")
+       # print "entropy : " ,spectral_entropy
+        print "flag is : " , fl
+       # print "distance is : ", corr
+        #print "seuil est de ;" ,th
+        c=[]
+        endpoint=[[],[]]
         ndata=audio.depseudonymize(pdata)
         audio.write(ndata)
 #

@@ -29,6 +29,7 @@ class MFCC(object):
                  lowerf=300, upperf=3700, alpha=0.97,
                  samprate=8000, frate=100, wlen=0.025,
                  nfft=256):
+
         # Store parameters
         self.lowerf = lowerf
         self.upperf = upperf

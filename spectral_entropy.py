@@ -9,17 +9,19 @@ __date__ ="07.04.2017"
 import numpy as np
 import numpy.fft
 from scipy import signal
-import math 
+import math
+import time
 
 
 class SPECTRAL_ENTROPY(object):
-    def __init__(self, wlen=0.015, wshift=0.005, samplerate=16000,
+    def __init__(self, wlen=0.025, wshift=0.001, samplerate=8000,
                  nfft=256, p=0.96, alpha=0.96):
         # store parameter
         self.wlen = int(wlen * samplerate)
         self.wshift = int(wshift * samplerate)
         self.p = p
         self.nfft = nfft
+
         self.samplerate = samplerate
 
         # build hanning window
@@ -37,8 +39,9 @@ class SPECTRAL_ENTROPY(object):
         for i in range(1, len(frame)):
             outfr[i] = frame[i] - self.alpha * frame[i - 1]
         self.prior = frame[-1]
+        print "frame" , frame , "value", outfr
         return outfr
-
+    
     def frame2periodogram(self, frame):
 
         """Calculate Power Spectral Density of the frame via squaring its amplitude and 
@@ -48,15 +51,26 @@ class SPECTRAL_ENTROPY(object):
 
         # Normalize the calculated PSD do that it can be viewed as a probability Density function (equal to 1)
         Normalize_PSD = Pxx_den / np.sum(Pxx_den)
-
+        log_p = numpy.empty(len(Normalize_PSD), 'd')
+        p = numpy.empty(len(Normalize_PSD), 'd')
         # Power Spectral Entropy
         eps = 2.220446049250313e-16
-        log_p = math.log(Normalize_PSD+eps)
-        p=Normalize_PSD+eps
-        return -np.sum(p * log_p)
+        entropy=0
+        for i in range(0,len(Normalize_PSD)) :
+            log_p[i] = math.log(Normalize_PSD[i]+eps,2)
+            p[i]=Normalize_PSD[i]+eps
+            entropy+=p[i]*log_p[i]
+        return -entropy
 
-    def euclideandistance(self, frame_noise,frame):
-        """ Calculate the difference between background entropy value and current entropy value"""
-        return self.frame2periodogram(frame)-frame_noise
-         # need to ask to Ulysse why I have a mistake when I print value first
+    def SpectralEntropy(self,x, numberOfBlock=100,eps = 2.220446049250313e-16):
+        L=len(x)
+        EoL=np.sum(np.power(x,2))
+        subWin = int(np.floor(L/numberOfBlock))
+        if L!=subWin*numberOfBlock :
+            print("correct length or number of block please")
+        subWindows=x.reshape(subWin,numberOfBlock,order='F').copy()
+        s=np.sum(subWindows**2, axis=0)/(EoL+eps)
+        En=-np.sum(s*np.log2(s+eps))
+        return En
 
+   
