@@ -17,14 +17,14 @@ __version__="1.0-dev"
 class MFFCsRingBuffer(object):
         """ Initialize the ring buffer"""
         def __init__(self):
-            self.__data=np.zeros(3900)
-            self.__length=3900
+            self.__data=np.zeros(1300*2)
+            self.__length=1300*2
             self.__index=0
             self.__tail=0
             self.__count=0
             self.__flag="out"
-            self.__numberOfWindowRejection=20 # 1600 samples
-            self.__lengthOfWindowMinima=130  # need to adapt this value 10*39 
+            self.__numberOfWindowRejection=30 # 1600 samples -> need to ;odify it eventually
+            self.__lengthOfWindowMinima=130  # need to adapt this value 10*13
 
 
         def extend(self,data):
@@ -32,15 +32,16 @@ class MFFCsRingBuffer(object):
             if np.all(self.__data[data_index]==np.zeros(len(data_index))) :
                     self.__data[data_index]=data
                     self.__index=data_index[-1]+1
-                    self.__index=self.__index%self.__length
+                    if self.__index >= self.__length :
+                            print("fatal Error : segment too long")
             else :
                     print("Error : RingBuffer is overwritten ")
 
         def get(self):
-                temp=self.__data
-                self.__data=np.zeros(3900)
+                temp=np.array(self.__data).reshape((200,13))
+                self.__data=np.zeros(1300*2)
                 self.__out="out"
-                return temp
+                return temp.T
 
         def flag(self,data,threshold,coeff):
                 # first case
@@ -76,16 +77,15 @@ class MFFCsRingBuffer(object):
                                 self.__data[delete_index]=0.
                                 self.__count=0
                                 self.__flag="done"
-                                print "_____ TAIL ___________", self.__tail , " ____ HERE ____", " ____INDEX _____", self.__index
                                 self.__index=0
 
                 if self.__flag=="done" :
                         if self.__tail< self.__lengthOfWindowMinima :
                                 self.__flag="rejeted"
-                                self.__data=np.zeros(3900)
+                                self.__data=np.zeros(1300*2)
                         else :
                                 self.__flag="admit"
-                                self.__data=np.zeros(3900) # delete it when function is in main
+                               # self.__data=np.zeros(1300) # delete it when function is in main
                 return self.__flag
                                 
                 
