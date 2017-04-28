@@ -17,42 +17,75 @@ __version__="1.0-dev"
 class MFFCsRingBuffer(object):
         """ Initialize the ring buffer"""
         def __init__(self):
-            self.__data=np.zeros((13,800))
-            self.__length=800
+            self.__data=np.zeros(3900)
+            self.__length=3900
             self.__index=0
-            self.__head=0
             self.__tail=0
-            self.__sustain=0
             self.__count=0
             self.__flag="out"
-            self.__numberOfWindowRejection=17 # 1600 samples
+            self.__numberOfWindowRejection=20 # 1600 samples
+            self.__lengthOfWindowMinima=130  # need to adapt this value 10*39 
 
 
         def extend(self,data):
-            data_index=(np.arange(data.size))
-            if np.all(self.__data[data_index,self.__index]==np.zeros(len(data_index))) :
-                    self.__data[data_index,self.__index]=data.T
-                    self.__index+=1
+            data_index=(self.__index+np.arange(data.size))
+            if np.all(self.__data[data_index]==np.zeros(len(data_index))) :
+                    self.__data[data_index]=data
+                    self.__index=data_index[-1]+1
                     self.__index=self.__index%self.__length
             else :
-                print("Error : RingBuffer is overwritten ")
+                    print("Error : RingBuffer is overwritten ")
 
         def get(self):
-                data_index=(self.__head+np.arange(self.__tail))
-                return self.__data[:,data_index]
+                temp=self.__data
+                self.__data=np.zeros(3900)
+                self.__out="out"
+                return temp
 
-        def segmentation(self,data,threshold,coeff):
-                # first case 
-                if data >= thresold and flag=="out" :
-                        self.__flag="in"
-                        self.__tail+=1
+        def flag(self,data,threshold,coeff):
+                # first case
+                if data<threshold and self.__flag=="rejeted" :
+                        self.__flag="out"
                         
-                if data<threshold and flag="in" :
-                        self.__count+=1
+                if data<threshold and self.__flag=="admit" :
+                        self.__flag="out"
+                        
+                if data >= threshold and self.__flag=="out" :
+                        self.__flag="in"
+                        
+                if data<threshold and self.__flag=="in" :
+                        self.__flag="io"
+
+                if data >= threshold and self.__flag=="io" :
+                        self.__flag="in"
+
+
+
+                if self.__flag=="in" :
+                        self.__tail=self.__index
                         self.extend(coeff)
-                        if self.__count >=self.__numberOfWindowRejection:
-                                return self.__get()
-                
-                                
+                        self.__count=0
+                        
+                if self.__flag=="io" :
+
+                        if self.__count <=self.__numberOfWindowRejection :
+                                self.__count+=1
+                                self.extend(coeff)
+                        else :
+                                delete_index=(self.__tail+np.arange(self.__index-self.__tail))
+                                self.__data[delete_index]=0.
+                                self.__count=0
+                                self.__flag="done"
+                                print "_____ TAIL ___________", self.__tail , " ____ HERE ____", " ____INDEX _____", self.__index
+                                self.__index=0
+
+                if self.__flag=="done" :
+                        if self.__tail< self.__lengthOfWindowMinima :
+                                self.__flag="rejeted"
+                                self.__data=np.zeros(3900)
+                        else :
+                                self.__flag="admit"
+                                self.__data=np.zeros(3900) # delete it when function is in main
+                return self.__flag
                                 
                 
