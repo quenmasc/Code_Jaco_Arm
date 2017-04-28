@@ -45,7 +45,7 @@ class MFFCsRingBuffer(object):
                 mfccs=np.concatenate((temp,delta,deltaDelta),axis=0)
                 self.__data=np.zeros(1300*2)
                 self.__out="out"
-                return mfccs
+                return mfccs.reshape(mfccs.size,order='F')
 
         def flag(self,data,threshold,coeff):
                 # first case
