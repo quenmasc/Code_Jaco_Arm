@@ -176,6 +176,9 @@ if __name__=='__main__' :
     audio.run()
     cur=0
     tail=0
+    i=0 
+    c=[[],[]]
+    d=[[],[]]
     j=0
     fl="out"
     count=0
