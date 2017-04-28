@@ -203,7 +203,6 @@ if __name__=='__main__' :
         else :
             print ("Overwrite")
             break
-        #print(c[0])
         if flag < 3:
             flag+=1
         if flag ==3:
