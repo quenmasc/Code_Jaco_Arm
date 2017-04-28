@@ -177,6 +177,7 @@ if __name__=='__main__' :
     cur=0
     tail=0
     j=0
+    fl="out"
     count=0
     c=[]
     d=[[],[]]
@@ -187,6 +188,7 @@ if __name__=='__main__' :
     corr=[[],[]]
     flag=0
     while True :
+
         data, length = audio.read()
         pdata=audio.pseudonymize(data)
         ndata=DSP.normalize(pdata,0xFF)
@@ -213,14 +215,20 @@ if __name__=='__main__' :
                   th[i]=function.sigmoid(1,corr[i])
                 else :
                     th[i]=0.001
-                if corr[i]>=th[i]:
-                    count +=1
-                    print "_________________OVER _______________", " window" , count
-                else :
-                    count =0
+                fl=buff.flag(corr[i],th[i],d[i])
+                if fl=="admit" :
+                    print("  ##################################################################")
+                    print( " __________________________OVER ___________________________________")
+                    print("  ##################################################################")
+               # if corr[i]>=th[i]:
+               #     count +=1
+               #     print "_________________OVER _______________", " window" , count
+              #  else :
+               #     count =0
+            
         print ( " _____________________________NEW ________________________________")
         print "entropy : " ,spectral_entropy
-      #  print "background" , f
+        print "flag is : " , fl
         print "distance is : ", corr
         print "seuil est de ;" ,th
         c=[]
