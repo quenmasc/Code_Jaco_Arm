@@ -7,6 +7,7 @@ import time
 import DSP
 import wave
 import os
+import function
 
 __author__="Quentin MASCRET <quentin.mascret.1@ulaval.ca>"
 __date__="2017-04-27"
@@ -38,10 +39,13 @@ class MFFCsRingBuffer(object):
                     print("Error : RingBuffer is overwritten ")
 
         def get(self):
-                temp=np.array(self.__data).reshape((200,13))
+                temp=np.array(self.__data).reshape((200,13)).T
+                delta=function.deltaMFCCs(temp,9)
+                deltaDelta=function.deltaMFCCs(delta,9)
+                mfccs=np.concatenate((temp,delta,deltaDelta),axis=0)
                 self.__data=np.zeros(1300*2)
                 self.__out="out"
-                return temp.T
+                return mfccs
 
         def flag(self,data,threshold,coeff):
                 # first case
@@ -85,7 +89,7 @@ class MFFCsRingBuffer(object):
                                 self.__data=np.zeros(1300*2)
                         else :
                                 self.__flag="admit"
-                               # self.__data=np.zeros(1300) # delete it when function is in main
+
                 return self.__flag
                                 
                 
