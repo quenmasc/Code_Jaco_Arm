@@ -26,7 +26,7 @@ class MFFCsRingBuffer(object):
             self.__flag="out"
             self.__numberOfWindowRejection=30 # 1600 samples -> need to ;odify it eventually
             self.__lengthOfWindowMinima=130  # need to adapt this value 10*13
-
+            self.__EnergyCoeffArray=np.empty(13,'f')
 
         def extend(self,data):
             data_index=(self.__index+np.arange(data.size))
@@ -47,7 +47,7 @@ class MFFCsRingBuffer(object):
                 self.__out="out"
                 return mfccs.reshape(mfccs.size,order='F')
 
-        def flag(self,data,threshold,coeff):
+        def flag(self,data,threshold,coeff,energy):
                 # first case
                 if data<threshold and self.__flag=="rejeted" :
                         self.__flag="out"
@@ -64,18 +64,21 @@ class MFFCsRingBuffer(object):
                 if data >= threshold and self.__flag=="io" :
                         self.__flag="in"
 
+                if self.__flag=="in" or self.__flag=="io" :
+                        self.__EnergyCoeffArray[0]=energy
+                        self.__EnergyCoeffArray[1+np.arange(12)]=coeff[1+np.arange(12)]
 
 
                 if self.__flag=="in" :
                         self.__tail=self.__index
-                        self.extend(coeff)
+                        self.extend( self.__EnergyCoeffArray)
                         self.__count=0
                         
                 if self.__flag=="io" :
 
                         if self.__count <=self.__numberOfWindowRejection :
                                 self.__count+=1
-                                self.extend(coeff)
+                                self.extend( self.__EnergyCoeffArray)
                         else :
                                 delete_index=(self.__tail+np.arange(self.__index-self.__tail))
                                 self.__data[delete_index]=0.
