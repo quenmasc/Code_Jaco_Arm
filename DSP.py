@@ -38,7 +38,7 @@ def threshold(snd_data):
 
 def logEnergy(frame):
     nfft=256 # the nextpow of 200 samples
-    fft = numpy.fft.rfft(frame, self.nfft)
+    fft = numpy.fft.rfft(frame, nfft)
     # Square of absolute value
     power = fft.real * fft.real + fft.imag * fft.imag
     return np.log(power)
