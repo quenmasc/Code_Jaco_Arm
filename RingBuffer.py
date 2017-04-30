@@ -28,7 +28,10 @@ class RingBuffer(object):
         self.__step=step_sample
         self.__shift=0 # index for get
         self.__clean=0
+        self.__flag=0
+        self.__offsetIndex=((window_sample-step_sample)+np.arange(step_sample))
 
+        
     """ Add data to the ring buffer -> data is anarray of float I suppose """
     def extend(self,data):
         data_index=(self.__index + np.arange(data.size))
@@ -38,8 +41,20 @@ class RingBuffer(object):
             self.__index=self.__index%self.__length
         else :
             print("Error : RingBuffer is overwritten ")
-            
-        
+
+    def extendSegments(self,data):
+        if self.__flag==0 :
+            self.__flag+=1
+            data_index=(self.__index+np.arange(data.size))
+        else :
+            data_index=(self.__index+np.arange(self.__step))
+        if np.all(self.__data[data_index]==np.zeros(len(data_index))) :
+            if self.__flag==0:
+                self.__data[data_index]=data
+            else :
+                self.__data[data_index]=data[self.__offsetIndex]
+        self.__index=data_index[-1]+1
+                
     """ get data from ring buffer FIFO -> idea : get working window at each time"""
     def get(self):
         idx=(self.__shift + np.arange(self.__window))
@@ -58,20 +73,11 @@ class RingBuffer(object):
         self.__data[idx_clean]=np.zeros(self.__step)
         return temp
 
+    def getSegments(self,tail):
+        return_Index=(0+np.arange((self.__window+(tail-1)*self.__step)))
+        return self.__data[return_Index]
+
     def index(self):
         return self.__index
 
 
-# DATASET TO SAVE WORKING WINDOW
-class WaitingBuffer(object):
-
-    """ Initialzation -> define the size of the array """
-    def __init__(self,size,window_sample):
-        self.__size=size
-        self.__storeArray=np.ndarray((window_sample,size), dtype='f')
-        self.__storeArray[:]=0.
-        print(self.__storeArray)
-        self.__index=0
-        
-   # def store(self,DataArray) :
-    #    for i in range(len(DataArray)):
