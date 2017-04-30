@@ -41,7 +41,7 @@ def logEnergy(frame):
     fft = numpy.fft.rfft(frame, nfft)
     # Square of absolute value
     power = fft.real * fft.real + fft.imag * fft.imag
-    return np.log(power)
+    return np.log(np.sum(power))
 
     """
     Denormalize the data from an array of floats with unity level into an array of integers.
