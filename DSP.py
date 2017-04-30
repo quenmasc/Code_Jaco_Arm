@@ -6,6 +6,9 @@ import math
 import struct
 import array
 import time
+import numpy.fft
+
+
 __author__="Quentin MASCRET <quentin.mascret.1 ulaval.ca>"
 __date__="2017-04-14"
 __version__="1.0-dev"
@@ -33,7 +36,12 @@ def threshold(snd_data):
     # return 'true' if below the 'silent' threshold
     return np.max(snd_data) > THRESHOLD
 
-
+def logEnergy(frame):
+    nfft=256 # the nextpow of 200 samples
+    fft = numpy.fft.rfft(frame, self.nfft)
+    # Square of absolute value
+    power = fft.real * fft.real + fft.imag * fft.imag
+    return np.log(power)
 
     """
     Denormalize the data from an array of floats with unity level into an array of integers.
