@@ -64,7 +64,7 @@ class Record(object) :
             self.__read_frame.put(frame_count) # put length -> over 0 data else None
 
     def __write(self):
-        card='sysdefault:CARD=Device'
+        card='sysdefault:CARD=Device_1'
 
         outp = alsa.PCM(alsa.PCM_PLAYBACK, alsa.PCM_NORMAL,card)
         outp.setchannels(1)
@@ -184,8 +184,8 @@ if __name__=='__main__' :
     count=0
     c=[]
     d=[[],[]]
+    energy=[[],[]]
     f=[]
-    e=np.array([[0.9 , 1 , 2 , 0.3 , 6 , 4 , 8],[5,7,0.2,0.6,0.9,0.8,0.4],[1,2,3,4,5,6,7]]).T
     g=np.empty((26,200),'f')
     spectral_entropy=np.empty(2,'f')
     th=[[],[]]
@@ -208,6 +208,7 @@ if __name__=='__main__' :
         if flag ==3:
             for i in range(0,2) :
                 d[i]=mfcc.frame2s2mfc(np.array(c[i]))
+                energy[i]=DSP.logEnergy(np.array(c[i]))
                 spectral_entropy[i]=entropy.SpectralEntropy(np.array(c[i]))
                 if j==0:
                     j+=1
@@ -219,14 +220,14 @@ if __name__=='__main__' :
                   th[i]=function.sigmoid(1,corr[i])
                 else :
                     th[i]=0.001
-                fl=buff.flag(corr[i],th[i],d[i])
+                fl=buff.flag(corr[i],th[i],d[i],energy[i])
                 if fl=="admit" :
                     g=buff.get()
-                    print(g)
-                    print "size of mfcc is :", g.size, "length is : " , len(g)
-                    print("  ##################################################################")
-                    print( " __________________________OVER ___________________________________")
-                    print("  ##################################################################")
+                  #  print(g)
+                  #  print "size of mfcc is :", g.size, "length is : " , len(g)
+                    print("  ##########################################################################################")
+                    print( " _________________________________________OVER ___________________________________________")
+                    print("  ##########################################################################################")
 
         print ( " _____________________________NEW ________________________________")
        # print "entropy : " ,spectral_entropy
