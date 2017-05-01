@@ -64,7 +64,7 @@ class Record(object) :
             self.__read_frame.put(frame_count) # put length -> over 0 data else None
 
     def __write(self):
-        card='sysdefault:CARD=Device_1'
+        card='sysdefault:CARD=Device'
 
         outp = alsa.PCM(alsa.PCM_PLAYBACK, alsa.PCM_NORMAL,card)
         outp.setchannels(1)
