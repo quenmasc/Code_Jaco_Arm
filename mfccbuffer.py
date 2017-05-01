@@ -8,6 +8,7 @@ import DSP
 import wave
 import os
 import function
+import RingBuffer
 
 __author__="Quentin MASCRET <quentin.mascret.1@ulaval.ca>"
 __date__="2017-04-27"
@@ -27,6 +28,7 @@ class MFFCsRingBuffer(object):
             self.__numberOfWindowRejection=30 # 1600 samples -> need to ;odify it eventually
             self.__lengthOfWindowMinima=130  # need to adapt this value 10*13
             self.__EnergyCoeffArray=np.empty(13,'f')
+            self.__SampleRingBuffer=RingBuffer.RingBuffer(8000,200,85)
 
         def extend(self,data):
             data_index=(self.__index+np.arange(data.size))
@@ -45,9 +47,9 @@ class MFFCsRingBuffer(object):
                 mfccs=np.concatenate((temp,delta,deltaDelta),axis=0)
                 self.__data=np.zeros(1300*2)
                 self.__out="out"
-                return mfccs.reshape(mfccs.size,order='F')
+                return mfccs.reshape(mfccs.size,order='F'),self.__SampleRingBuffer.getSegments(self.__tail)
 
-        def flag(self,data,threshold,coeff,energy):
+        def flag(self,data,threshold,coeff,energy, AudioSample):
                 # first case
                 if data<threshold and self.__flag=="rejeted" :
                         self.__flag="out"
@@ -71,7 +73,8 @@ class MFFCsRingBuffer(object):
 
                 if self.__flag=="in" :
                         self.__tail=self.__index
-                        self.extend( self.__EnergyCoeffArray)
+                        self.extend(self.__EnergyCoeffArray)
+                        self.__SampleRingBuffer.extendSegments(AudioSample)
                         self.__count=0
                         
                 if self.__flag=="io" :
@@ -79,6 +82,7 @@ class MFFCsRingBuffer(object):
                         if self.__count <=self.__numberOfWindowRejection :
                                 self.__count+=1
                                 self.extend( self.__EnergyCoeffArray)
+                                self.__SampleRingBuffer.extendSegments(AudioSample)
                         else :
                                 delete_index=(self.__tail+np.arange(self.__index-self.__tail))
                                 self.__data[delete_index]=0.
