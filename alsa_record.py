@@ -228,10 +228,12 @@ if __name__=='__main__' :
                 fl=buff.flag(corr[i],th[i],d[i],energy[i],np.array(c[i]))
                 if fl=="admit" :
                     mfc,audioData=buff.get()
+                    ### playback
                     file=wave.open('test.wav','wb')
                     file.setparams((1,2,8000,len(audioData),"NONE","not compressed"))
                     file.writeframes(audio.depseudonymize(DSP.denormalize(audioData,0xff)))
                     file.close()
+                    ### end of playback
                     print("  ##########################################################################################")
                     print( " _________________________________________OVER ___________________________________________")
                     print("  ##########################################################################################")
