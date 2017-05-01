@@ -75,7 +75,11 @@ class RingBuffer(object):
 
     def getSegments(self,tail):
         return_Index=(0+np.arange((self.__window+(tail-1)*self.__step)))
-        return self.__data[return_Index]
+        self.__flag=0
+        self.__index=0
+        temp=self.__data[return_Index]
+        self.__data=np.zeros(self.__length)
+        return temp
 
     def index(self):
         return self.__index
