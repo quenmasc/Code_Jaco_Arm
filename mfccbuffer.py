@@ -9,6 +9,7 @@ import wave
 import os
 import function
 import RingBuffer
+from scipy.signal import hilbert
 
 __author__="Quentin MASCRET <quentin.mascret.1@ulaval.ca>"
 __date__="2017-04-27"
@@ -24,12 +25,14 @@ class MFFCsRingBuffer(object):
             self.__index=0
             self.__tail=0
             self.__count=0
+            self.__cond=0# condition in EndSegments
             self.__flag="out"
-            self.__numberOfWindowRejection=30 # 1600 samples -> need to ;odify it eventually
+            self.__numberOfWindowRejection=40 # 1600 samples -> need to ;odify it eventually
             self.__lengthOfWindowMinima=130  # need to adapt this value 10*13
             self.__EnergyCoeffArray=np.empty(13,'f')
             self.__SampleRingBuffer=RingBuffer.RingBuffer(24000,200,85)
-
+            self.__previous_amplitude_envelope=0.
+                
         def extend(self,data):
             data_index=(self.__index+np.arange(data.size))
             if np.all(self.__data[data_index]==np.zeros(len(data_index))) :
@@ -47,7 +50,7 @@ class MFFCsRingBuffer(object):
                 mfccs=np.concatenate((temp,delta,deltaDelta),axis=0)
                 self.__data=np.zeros(1300*2)
                 self.__out="out"
-                print "tail :" ,self.__tail , "new value ;" , self.__tail/13
+                print "tail :" ,self.__tail , "new value ;" , self.__tail/13 
                 return mfccs.reshape(mfccs.size,order='F'),self.__SampleRingBuffer.getSegments(self.__tail/13)
 
         def flag(self,data,threshold,coeff,energy, AudioSample):
@@ -71,15 +74,18 @@ class MFFCsRingBuffer(object):
                 if self.__flag=="in" or self.__flag=="io" :
                         self.__EnergyCoeffArray[0]=energy
                         self.__EnergyCoeffArray[1+np.arange(12)]=coeff[1+np.arange(12)]
-
+                        
 
                 if self.__flag=="in" :
                         self.__tail=self.__index
                         self.extend(self.__EnergyCoeffArray)
                         self.__SampleRingBuffer.extendSegments(AudioSample)
                         self.__count=0
+                        self.__cond=0
+                        self.__previous_amplitude_envelope=np.sum(np.abs(hilbert(AudioSample)))
                         
                 if self.__flag=="io" :
+                        self.__cond,self.__tail,self.__previous_amplitude_envelope =DSP.EndSegments(self.__cond,self.__previous_amplitude_envelope,self.__index,self.__tail, AudioSample)
 
                         if self.__count <=self.__numberOfWindowRejection :
                                 self.__count+=1
@@ -89,6 +95,7 @@ class MFFCsRingBuffer(object):
                                 delete_index=(self.__tail+np.arange(self.__index-self.__tail))
                                 self.__data[delete_index]=0.
                                 self.__count=0
+                                print(self.__index)
                                 self.__flag="done"
                                 self.__index=0
 
