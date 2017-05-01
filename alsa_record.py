@@ -114,6 +114,7 @@ __version__="1.0-dev" get all data from audiuo devices """
         self.__write_queue.put(data)
 
 
+
     # Pseudonymize the audio samples from a binary string into an array of integers
     def pseudonymize(self, s):
 
@@ -157,7 +158,8 @@ __version__="1.0-dev" get all data from audiuo devices """
                 flag=1
             else :
                 temp=ring.get()
-          #  print(temp)g
+          #  print(temp)
+
             self.__RingBufferRead_queue.put(temp)
 
     def RingBufferRead(self):
@@ -172,6 +174,7 @@ if __name__=='__main__' :
     RingLength=24650
     window_sample=200
     step_sample=85
+
    # store=RingBuffer.WaitingBuffer(10,window_sample)
     audio.run()
     cur=0
@@ -183,6 +186,7 @@ if __name__=='__main__' :
     fl="out"
     count=0
     c=[]
+
     d=[[],[]]
     energy=[[],[]]
     f=[]
@@ -197,7 +201,7 @@ if __name__=='__main__' :
 
         data, length = audio.read()
         pdata=audio.pseudonymize(data)
-        ndata=DSP.normalize(pdata,32768)
+        ndata=DSP.normalize(pdata,0xff)
         audio.RingBufferWrite(ndata)
         if (c==[]) :
             c=audio.RingBufferRead()
@@ -220,19 +224,21 @@ if __name__=='__main__' :
                   f=function.updateMFCCsNoise(np.array(d[i]),f, 0.9)
                   th[i]=function.sigmoid(1,corr[i])
                 else :
-                    th[i]=0.0001
+                    th[i]=0.000001
                 fl=buff.flag(corr[i],th[i],d[i],energy[i],np.array(c[i]))
                 if fl=="admit" :
                     mfc,audioData=buff.get()
+                    file=wave.open('test.wav','wb')
+                    file.setparams((1,2,8000,len(audioData),"NONE","not compressed"))
+                    file.writeframes(audio.depseudonymize(DSP.denormalize(audioData,0xff)))
+                    file.close()
                     print("  ##########################################################################################")
                     print( " _________________________________________OVER ___________________________________________")
                     print("  ##########################################################################################")
-                    print "MFCC matrix :" ,mfc
-                    print "AudioData vector : ", audioData
-                    print (len(audioData))
-                    print("  ##########################################################################################")
-                    print( " _________________________________________OVER ___________________________________________")
-                    print("  ##########################################################################################")
+                 #   print "MFCC matrix :" ,mfc
+                 #   print("  ##########################################################################################")
+                 #   print( " _________________________________________OVER ___________________________________________")
+                 #   print("  ##########################################################################################")
 
         print ( " _____________________________NEW ________________________________")
        # print "entropy : " ,spectral_entropy
