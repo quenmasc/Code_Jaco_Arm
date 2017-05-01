@@ -27,7 +27,7 @@ def subframe(data,window_ms=0.025,step_ms=0.01, rate=16000) :
     step_sample= int(step_ms*rate)
     nbFrame=int((len(data)-window_sample)/step_sample)
     print(nbFrame)
-    for i in range(0,(nbFrame+1)) : # 197 frames
+    for i in range(0,(nbFrame+1)) : 
         vector= data[1+(i-1)*step_sample:1+(i-1)*step_sample+window_sample]
         yield vector
     
@@ -39,7 +39,7 @@ def threshold(snd_data):
 def EndSegments(cond,previous_amplitude_envelope,currIndex,tail, AudioSample):
     current_amplitude_envelope=np.sum(np.abs(hilbert(AudioSample)))
     print "prev", previous_amplitude_envelope , "curr" , current_amplitude_envelope
-    if  previous_amplitude_envelope >= current_amplitude_envelope and cond<=3:
+    if  previous_amplitude_envelope >= current_amplitude_envelope and cond<=3: # need cond three times to have good portion of data
         print("true")
         currTail=currIndex
     else :
