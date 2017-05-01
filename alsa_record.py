@@ -186,7 +186,7 @@ if __name__=='__main__' :
     d=[[],[]]
     energy=[[],[]]
     f=[]
-    mfcc=np.empty((26,200),'f')
+    mfc=np.empty((26,200),'d')
     audioData=[]
     spectral_entropy=np.empty(2,'f')
     th=[[],[]]
@@ -197,7 +197,7 @@ if __name__=='__main__' :
 
         data, length = audio.read()
         pdata=audio.pseudonymize(data)
-        ndata=DSP.normalize(pdata,0xFF)
+        ndata=DSP.normalize(pdata,32768)
         audio.RingBufferWrite(ndata)
         if (c==[]) :
             c=audio.RingBufferRead()
@@ -211,7 +211,7 @@ if __name__=='__main__' :
                 d[i]=mfcc.frame2s2mfc(np.array(c[i]))
                 energy[i]=DSP.logEnergy(np.array(c[i]))
                 spectral_entropy[i]=entropy.SpectralEntropy(np.array(c[i]))
-                if j==0:
+                if j==0 :
                     j+=1
                     f=np.array(d[0])
                 
@@ -220,14 +220,14 @@ if __name__=='__main__' :
                   f=function.updateMFCCsNoise(np.array(d[i]),f, 0.9)
                   th[i]=function.sigmoid(1,corr[i])
                 else :
-                    th[i]=0.001
-                fl=buff.flag(corr[i],th[i],d[i],energy[i])
+                    th[i]=0.0001
+                fl=buff.flag(corr[i],th[i],d[i],energy[i],np.array(c[i]))
                 if fl=="admit" :
-                    mfcc,audioData=buff.get()
+                    mfc,audioData=buff.get()
                     print("  ##########################################################################################")
                     print( " _________________________________________OVER ___________________________________________")
                     print("  ##########################################################################################")
-                    print "MFCC matrix :" ,mfcc
+                    print "MFCC matrix :" ,mfc
                     print "AudioData vector : ", audioData
                     print (len(audioData))
                     print("  ##########################################################################################")
@@ -237,10 +237,11 @@ if __name__=='__main__' :
         print ( " _____________________________NEW ________________________________")
        # print "entropy : " ,spectral_entropy
         print "flag is : " , fl
-       # print "distance is : ", corr
-        #print "seuil est de ;" ,th
+      #  print "distance is : ", corr
+      #  print "seuil est de ;" ,th
         c=[]
         endpoint=[[],[]]
+       # ndata=DSP.denormalize(pdata,0xFF)
         ndata=audio.depseudonymize(pdata)
         audio.write(ndata)
 #
