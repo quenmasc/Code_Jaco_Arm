@@ -28,7 +28,7 @@ class MFFCsRingBuffer(object):
             self.__numberOfWindowRejection=30 # 1600 samples -> need to ;odify it eventually
             self.__lengthOfWindowMinima=130  # need to adapt this value 10*13
             self.__EnergyCoeffArray=np.empty(13,'f')
-            self.__SampleRingBuffer=RingBuffer.RingBuffer(8000,200,85)
+            self.__SampleRingBuffer=RingBuffer.RingBuffer(24000,200,85)
 
         def extend(self,data):
             data_index=(self.__index+np.arange(data.size))
@@ -47,7 +47,8 @@ class MFFCsRingBuffer(object):
                 mfccs=np.concatenate((temp,delta,deltaDelta),axis=0)
                 self.__data=np.zeros(1300*2)
                 self.__out="out"
-                return mfccs.reshape(mfccs.size,order='F'),self.__SampleRingBuffer.getSegments(self.__tail)
+                print "tail :" ,self.__tail , "new value ;" , self.__tail/13
+                return mfccs.reshape(mfccs.size,order='F'),self.__SampleRingBuffer.getSegments(self.__tail/13)
 
         def flag(self,data,threshold,coeff,energy, AudioSample):
                 # first case
@@ -59,6 +60,7 @@ class MFFCsRingBuffer(object):
                         
                 if data >= threshold and self.__flag=="out" :
                         self.__flag="in"
+                        self.__SampleRingBuffer.initialize()
                         
                 if data<threshold and self.__flag=="in" :
                         self.__flag="io"
