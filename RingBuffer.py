@@ -84,4 +84,5 @@ class RingBuffer(object):
     def index(self):
         return self.__index
 
-
+    def initialize(self):
+        self.__data=np.zeros(self.__length)
