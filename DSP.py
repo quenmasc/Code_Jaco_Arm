@@ -22,16 +22,6 @@ def normalize(data,max_value) :
     data=fac * (data)#- biais )
     return data
 
-def subframe(data,window_ms=0.025,step_ms=0.01, rate=16000) :
-    window_sample=int(window_ms*rate)
-    step_sample= int(step_ms*rate)
-    nbFrame=int((len(data)-window_sample)/step_sample)
-    print(nbFrame)
-    for i in range(0,(nbFrame+1)) : 
-        vector= data[1+(i-1)*step_sample:1+(i-1)*step_sample+window_sample]
-        yield vector
-    
-
 def threshold(snd_data):
     # return 'true' if below the 'silent' threshold
     return np.max(snd_data) > THRESHOLD
