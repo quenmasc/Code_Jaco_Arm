@@ -15,6 +15,7 @@ import mfcc
 import spectral_entropy
 import function
 import mfccbuffer
+import MFCC
 
 __author__="Quentin MASCRET <quentin.mascret.1@ulaval.ca>"
 __date__="2017-04-14"
@@ -168,7 +169,7 @@ __version__="1.0-dev" get all data from audiuo devices """
 
 if __name__=='__main__' :
     audio= Record()
-    mfcc = mfcc.MFCC()
+    mfcc = MFCC.MFCCs()
     entropy = spectral_entropy.SPECTRAL_ENTROPY()
     buff=mfccbuffer.MFFCsRingBuffer()
     RingLength=24650
@@ -186,22 +187,23 @@ if __name__=='__main__' :
     fl="out"
     count=0
     c=[]
-
-    d=[[],[]]
+    x=np.array((15.2924,-1.7252,1.7602,13.4568,-9.5609,-1.0310,-0.6703,-10.1049,3.7639,-0.8737,-9.9006,1.9005,-2.2393))
+    y=np.array((15.9894,9.4807,16.1784,38.3107,-23.5673,-26.1322,7.3991,-28.6781,18.7506,-29.2093,19.1941,-17.7696,-0.8033))
+    d=np.empty((2,13),'d')
     energy=[[],[]]
     f=[]
     mfc=np.empty((26,200),'d')
     audioData=[]
     spectral_entropy=np.empty(2,'f')
     th=[[],[]]
-    endpoint=np.empty(2,'f')
-    corr=[[],[]]
+    endpoint=np.empty(2,'d')
+    corr=np.empty((2,1),'d')
     flag=0
     while True :
-
         data, length = audio.read()
         pdata=audio.pseudonymize(data)
-        ndata=DSP.normalize(pdata,0xff)
+        ndata=DSP.normalize(pdata,32767.0)
+       # print(ndata)
         audio.RingBufferWrite(ndata)
         if (c==[]) :
             c=audio.RingBufferRead()
@@ -212,26 +214,24 @@ if __name__=='__main__' :
             flag+=1
         if flag ==3:
             for i in range(0,2) :
-                d[i]=mfcc.frame2s2mfc(np.array(c[i]))
+                d[i]=mfcc.MFCC(np.array(c[i]))
                 energy[i]=DSP.logEnergy(np.array(c[i]))
                 spectral_entropy[i]=entropy.SpectralEntropy(np.array(c[i]))
                 if j==0 :
                     j+=1
                     f=np.array(d[0])
-                
-                corr[i]=function.correlation_1D(np.array(d[i]),f)
-                if j==1 :
-                  f=function.updateMFCCsNoise(np.array(d[i]),f, 0.9)
-                  th[i]=function.sigmoid(1,corr[i])
-                else :
                     th[i]=0.000001
+                else :
+                    f=function.updateMFCCsNoise(np.array(d[i]),f, 0.9)
+                    corr[i]=function.correlation_1D(np.array(d[i]),f)
+                    th[i]=function.sigmoid(10,corr[i])
                 fl=buff.flag(corr[i],th[i],d[i],energy[i],np.array(c[i]))
                 if fl=="admit" :
                     mfc,audioData=buff.get()
                     ### playback
                     file=wave.open('test.wav','wb')
                     file.setparams((1,2,8000,len(audioData),"NONE","not compressed"))
-                    file.writeframes(audio.depseudonymize(DSP.denormalize(audioData,0xff)))
+                    file.writeframes(audio.depseudonymize(DSP.denormalize(audioData,32767.)))
                     file.close()
                     ### end of playback
                     print("  ##########################################################################################")
@@ -239,6 +239,10 @@ if __name__=='__main__' :
                     print("  ##########################################################################################")
         print ( " _____________________________NEW ________________________________")
         print "flag is : " , fl
+       # print "f" , f
+        #print "mfcc : " , d
+      #  print "distance : " , corr
+      #  print "threshold : " , th
         c=[]
         endpoint=[[],[]]
        # ndata=DSP.denormalize(pdata,0xFF)
