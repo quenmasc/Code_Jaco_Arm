@@ -38,9 +38,7 @@ def threshold(snd_data):
 
 def EndSegments(cond,previous_amplitude_envelope,currIndex,tail, AudioSample):
     current_amplitude_envelope=np.sum(np.abs(hilbert(AudioSample)))
-    print "prev", previous_amplitude_envelope , "curr" , current_amplitude_envelope
     if  previous_amplitude_envelope >= current_amplitude_envelope and cond<=3: # need cond three times to have good portion of data
-        print("true")
         currTail=currIndex
     else :
         currTail=tail

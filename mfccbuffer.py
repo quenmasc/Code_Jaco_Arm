@@ -28,7 +28,7 @@ class MFFCsRingBuffer(object):
             self.__cond=0# condition in EndSegments
             self.__flag="out"
             self.__numberOfWindowRejection=40 # 1600 samples -> need to ;odify it eventually
-            self.__lengthOfWindowMinima=130  # need to adapt this value 10*13
+            self.__lengthOfWindowMinima=150  # need to adapt this value 10*13
             self.__EnergyCoeffArray=np.empty(13,'f')
             self.__SampleRingBuffer=RingBuffer.RingBuffer(24000,200,85)
             self.__previous_amplitude_envelope=0.
