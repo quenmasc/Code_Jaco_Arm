@@ -17,7 +17,7 @@ __date__="2017-04-26"
 __version__="1.0-dev"
 
 def sigmoid(Lambda,x):
-       return 1/(5+math.exp(-Lambda*x)) # expit also allows it faster than mine.
+       return 1/(8+math.exp(-Lambda*x)) # expit also allows it faster than mine.
 
     
 def correlation_1D(x,x_noise):
