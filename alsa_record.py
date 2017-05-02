@@ -182,7 +182,6 @@ if __name__=='__main__' :
     tail=0
     i=0 
     c=[[],[]]
-    d=[[],[]]
     j=0
     fl="out"
     count=0
@@ -194,8 +193,11 @@ if __name__=='__main__' :
     mfc=np.empty((26,200),'d')
     # entropy
     SEntropy=np.zeros(13)
-    entropyNoise=np.zeros(13)
-
+    entropyNoise=0
+         # threshold
+    entropyData = np.zeros(20)
+    entropyThreshNoise=0
+    entropyThresh = 0
     #audio 
     audioData=[]
     
@@ -216,39 +218,37 @@ if __name__=='__main__' :
             break
         if flag < 3:
             flag+=1
-        if flag ==3:
+        else :
             for i in range(0,2) :
                 coeff=mfcc.MFCC(np.array(c[i]))
                 energy[i]=DSP.logEnergy(np.array(c[i]))
-                SEntropy=entropy.SpectralEntropy(np.array(c[i]))
+              #  SEntropy=entropy.SpectralEntropy(np.array(c[i]))
                 if j<20 :
-                    j+=1
                     mfccNoise+=np.array(coeff)
-                    entropyNoise+=np.array(SEntropy)
+                  #  entropyNoise+=np.array(SEntropy)
+                    j+=1
                     if j==20 :
                         mfccNoise=mfccNoise/20
-                        entropyNoise=entropyNoise/20
+                     #   entropyNoise=entropyNoise/20
+                    
                 else :
-                    f=function.updateMFCCsNoise(np.array(coeff),mfccNoise, 0.9)
-                    corr[i]=function.correlation_1D(np.array(d),mfccNoise)
-                    th[i]=function.sigmoid(10,corr[i])
+                    mfccNoise=function.updateMFCCsNoise(np.array(coeff),mfccNoise, 0.9)
+                 #   entropyNoise=function.updateEntropyNoise(np.array(SEntropy),entropyNoise, 0.95)
+                    corr[i]=function.correlation_1D(np.array(coeff),mfccNoise)
+                   # print(corr[i])
+                    th[i]=function.sigmoid(100,corr[i])
+                   # print "th : " , th[i]
                     fl=buff.flag(corr[i],th[i],coeff,energy[i],np.array(c[i]))
                     if fl=="admit" :
                         mfc,audioData=buff.get()
-                        np.savetxt('mfcc.out',mfc)
                     ### playback
                         file=wave.open('test.wav','wb')
                         file.setparams((1,2,8000,len(audioData),"NONE","not compressed"))
                         file.writeframes(audio.depseudonymize(DSP.denormalize(audioData,32767.)))
                         file.close()
                     ### end of playback
-                        print("  ##########################################################################################")
-      #  print ( " _____________________________NEW ________________________________")
+                        print("  #############################")
         print "flag is : " , fl
-       # print "f" , f
-        #print "mfcc : " , d
-      #  print "distance : " , corr
-      #  print "threshold : " , th
         c=[]
        # ndata=DSP.denormalize(pdata,0xFF)
         ndata=audio.depseudonymize(pdata)
