@@ -27,8 +27,8 @@ class MFFCsRingBuffer(object):
             self.__count=0
             self.__cond=0# condition in EndSegments
             self.__flag="out"
-            self.__numberOfWindowRejection=20 # 1600 samples -> need to ;odify it eventually
-            self.__lengthOfWindowMinima=200  # need to adapt this value 10*13
+            self.__numberOfWindowRejection=40 # 1600 samples -> need to ;odify it eventually
+            self.__lengthOfWindowMinima=130 # need to adapt this value 10*13
             self.__EnergyCoeffArray=np.empty(13,'f')
             self.__SampleRingBuffer=RingBuffer.RingBuffer(24000,200,85)
             self.__previous_amplitude_envelope=0.
@@ -55,10 +55,10 @@ class MFFCsRingBuffer(object):
 
         def flag(self,data,threshold,entropyDistance,entropyThresh,coeff,energy, AudioSample):
                 # first case
-                if (data<threshold and entropyDistance<entropyThresh)  and self.__flag=="rejeted" :
+                if (data<threshold or entropyDistance<entropyThresh)  and self.__flag=="rejeted" :
                         self.__flag="out"
                         
-                if (data<threshold and entropyDistance<entropyThresh) and self.__flag=="admit" :
+                if (data<threshold or entropyDistance<entropyThresh) and self.__flag=="admit" :
                         self.__flag="out"
                         
                 if (data>=threshold and entropyDistance>=entropyThresh) and self.__flag=="out" :
@@ -68,7 +68,7 @@ class MFFCsRingBuffer(object):
                 if (data<threshold and entropyDistance<entropyThresh) and self.__flag=="in" :
                         self.__flag="io"
 
-                if (data>=threshold or entropyDistance>=entropyThresh) and self.__flag=="io" :
+                if (data>=threshold and entropyDistance>=entropyThresh) and self.__flag=="io" :
                         self.__flag="in"
 
                 if self.__flag=="in" or self.__flag=="io" :
@@ -86,8 +86,8 @@ class MFFCsRingBuffer(object):
                         
                 if self.__flag=="io" :
                         self.__cond,self.__tail,self.__previous_amplitude_envelope =DSP.EndSegments(self.__cond,self.__previous_amplitude_envelope,self.__index,self.__tail, AudioSample)
-                       # print(self.__tail)
-                       # print(self.__previous_amplitude_envelope)
+                        #print(self.__tail)
+                        #print(self.__previous_amplitude_envelope)
                         if self.__count <=self.__numberOfWindowRejection :
                                 self.__count+=1
                                 self.extend( self.__EnergyCoeffArray)
