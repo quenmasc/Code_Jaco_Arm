@@ -233,7 +233,6 @@ if __name__=='__main__' :
                 # return MFCC and spectral entropy
                 coeff,energy=mfcc.MFCC(np.array(c[i]))
                 SEntropy=entropy.frame2periodogram(np.array(c[i]))
-
                 if j<20 :
                     mfccNoise+=np.array(coeff)
                     entropyData.append(SEntropy)
@@ -248,7 +247,7 @@ if __name__=='__main__' :
                         entropyThreshNoise =function.MeanStandardDeviation(entropyData,3)
                 else :
                     # return MFCC and Spectral Entropy background noise
-                    mfccNoise=function.updateMFCCsNoise(np.array(coeff),mfccNoise, 0.95)
+                    mfccNoise=function.updateMFCCsNoise(np.array(coeff),mfccNoise, 0.90)
                     entropyNoise=function.updateEntropyNoise(SEntropy,entropyNoise, 0.95)
                     
                     # return correlation and distance of MFCC and Entropy
@@ -261,7 +260,7 @@ if __name__=='__main__' :
                     
                     # update threshold 
                     th[i]=function.sigmoid(10,corr[i])
-                    entropyThreshNoise=function.EntropyThresholdUpdate(entropyData, entropyThreshNoise,0.99)
+                    entropyThreshNoise=function.EntropyThresholdUpdate(entropyData, entropyThreshNoise,0.96)
                     
                    # print(entropyThreshNoise)
                     if entropyDistance >= entropyThreshNoise :
