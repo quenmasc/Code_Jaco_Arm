@@ -16,8 +16,8 @@ __author__="Quentin MASCRET <quentin.mascret.1@ulaval.ca>"
 __date__="2017-04-26"
 __version__="1.0-dev"
 
-def sigmoid(Lambda,x):
-       return 1/(6+math.exp(-Lambda*x)) # expit also allows it faster than mine.
+def sigmoid(Lambda,denum,x):
+       return 1/(denum+math.exp(-Lambda*x)) # expit also allows it faster than mine.
 
     
 def correlation_1D(x,x_noise):
