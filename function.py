@@ -17,23 +17,28 @@ __date__="2017-04-26"
 __version__="1.0-dev"
 
 def sigmoid(Lambda,x):
-       return 1/(8+math.exp(-Lambda*x)) # expit also allows it faster than mine.
+       return 1/(6+math.exp(-Lambda*x)) # expit also allows it faster than mine.
 
     
 def correlation_1D(x,x_noise):
     return scipy.spatial.distance.correlation(x,x_noise)
 
 def distance(x,x_noise):
-    return math.fabs(x-x_noise)
+    return np.abs((x-x_noise))
 
 def updateMFCCsNoise(x,x_noise, p):
     # x and x_noise need to be an np.array
       return p*x_noise+(1-p)*x
 
+def updateEntropyNoise(x,x_noise, p):
+    # x and x_noise need to be an np.array
+      return p*x_noise+(1-p)*x
 
 def MeanStandardDeviation(x, Lambda):
     return np.mean(x)+Lambda*np.std(x)
 
+def EntropyThresholdUpdate(entropyBuffer, lastThreshold, p) :
+       return p*lastThreshold + (1-p)*MeanStandardDeviation(entropyBuffer,2)
 
 def deltaMFCCs(MFCCs,w):
        hlen=int(np.floor(w/2))
