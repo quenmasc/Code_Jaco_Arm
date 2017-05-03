@@ -17,11 +17,12 @@ import numpy, numpy.fft
 
 
 def mel(f):
-    return 2595. * numpy.log10(1. + f / 700.)
+
+    return 1127. * numpy.log10(1. + f / 700.)
 
 
 def melinv(m):
-    return 700. * (numpy.power(10., m / 2595.) - 1.)
+    return 700. * (numpy.power(10., m / 1127.) - 1.)
 
 
 class MFCC(object):
@@ -37,7 +38,7 @@ class MFCC(object):
         self.ncep = ncep
         self.nfilt = nfilt
         self.frate = frate
-        self.fshift = float(samprate) / frate
+        self.fshift =85
 
         # Build Hamming window
         self.wlen = int(wlen * samprate)
@@ -51,8 +52,7 @@ class MFCC(object):
         self.filters = numpy.zeros((nfft // 2 + 1, nfilt), 'd')
         dfreq = float(samprate) / nfft
         if upperf > samprate / 2:
-            raise (Exception,
-                   "Upper frequency %f exceeds Nyquist %f" % (upperf, samprate / 2))
+            raise (Exception,"Upper frequency %f exceeds Nyquist %f" % (upperf, samprate / 2))
         melmax = mel(upperf)
         melmin = mel(lowerf)
         dmelbw = (melmax - melmin) / (nfilt + 1)
@@ -61,6 +61,7 @@ class MFCC(object):
 
         for whichfilt in range(0, nfilt):
             # Filter triangles, in DFT points
+
             leftfr = round(filt_edge[whichfilt] / dfreq)
             centerfr = round(filt_edge[whichfilt + 1] / dfreq)
             rightfr = round(filt_edge[whichfilt + 2] / dfreq)
@@ -160,7 +161,8 @@ def logspec2s2mfc(logspec, ncep=13):
 
 
 def dctmat(N, K, freqstep, orthogonalize=True):
-    """Return the orthogonal DCT-II/DCT-III matrix of size NxK.
+    """Return the orthogonal DCT-II/DCT-III 
+matrix of size NxK.
     For computing or inverting MFCCs, N is the number of
     log-power-spectrum bins while K is the number of cepstra."""
     cosmat = numpy.zeros((N, K), 'double')

@@ -15,6 +15,9 @@ import mfcc
 import spectral_entropy
 import function
 import mfccbuffer
+import MFCC
+from collections import deque
+import matplotlib.pyplot as plt
 
 __author__="Quentin MASCRET <quentin.mascret.1@ulaval.ca>"
 __date__="2017-04-14"
@@ -63,6 +66,7 @@ class Record(object) :
             self.__read_queue.put(data) # put data in queue -> string type
             self.__read_frame.put(frame_count) # put length -> over 0 data else None
 
+
     def __write(self):
         card='sysdefault:CARD=Device'
 
@@ -77,8 +81,6 @@ class Record(object) :
             data = self.__write_queue.get()
 
             outp.write(data)
-
-
 
 
     def __pre_post_data(self):
@@ -102,16 +104,15 @@ class Record(object) :
         RingBuffer_write_process.start()
         write_process.start()
         
-        
-    """__author__="Quentin MASCRET <quentin.mascret.1@ulaval.ca>"
-__date__="2017-04-14"
-__version__="1.0-dev" get all data from audiuo devices """
+
     def read(self):
 
         return self.__read_queue.get() , self.__read_frame.get()     
 
     def write(self, data):
+
         self.__write_queue.put(data)
+
 
 
     # Pseudonymize the audio samples from a binary string into an array of integers
@@ -124,6 +125,7 @@ __version__="1.0-dev" get all data from audiuo devices """
     def depseudonymize(self, a):
         s = ""
         for elem in a:
+
             s += struct.pack('h', elem)
 
         return s
@@ -151,13 +153,15 @@ __version__="1.0-dev" get all data from audiuo devices """
     def __RingBufferRead(self,ring):
         flag=0
         while True :
+
            # print("in")
             if flag==0:
                 temp=0
                 flag=1
             else :
                 temp=ring.get()
-          #  print(temp)g
+          #  print(temp)
+
             self.__RingBufferRead_queue.put(temp)
 
     def RingBufferRead(self):
@@ -166,37 +170,50 @@ __version__="1.0-dev" get all data from audiuo devices """
 
 if __name__=='__main__' :
     audio= Record()
-    mfcc = mfcc.MFCC()
+
+    mfcc = MFCC.MFCCs()
     entropy = spectral_entropy.SPECTRAL_ENTROPY()
     buff=mfccbuffer.MFFCsRingBuffer()
     RingLength=24650
     window_sample=200
     step_sample=85
+
    # store=RingBuffer.WaitingBuffer(10,window_sample)
     audio.run()
     cur=0
     tail=0
     i=0 
     c=[[],[]]
-    d=[[],[]]
     j=0
     fl="out"
     count=0
-    c=[]
-    d=[[],[]]
-    f=[]
-    e=np.array([[0.9 , 1 , 2 , 0.3 , 6 , 4 , 8],[5,7,0.2,0.6,0.9,0.8,0.4],[1,2,3,4,5,6,7]]).T
-    g=np.empty((26,200),'f')
-    spectral_entropy=np.empty(2,'f')
+    coeff=np.empty(13,'d')
+    energy=np.zeros(1)
+    # mfcc
+    mfccNoise=np.zeros(13)
+    mfc=np.empty((26,200),'d')
+    # entropy
+    SEntropy=np.zeros(13)
+    entropyNoise=0
+    entropyDistance =0
+         # threshold
+
+    entropyData =deque([])
+    entropyThreshNoise=0
+    entropyThresh = 0
+    #audio 
+    audioData=[]
+    
     th=[[],[]]
-    endpoint=np.empty(2,'f')
-    corr=[[],[]]
+    endpoint=np.empty(2,'d')
+    corr=np.empty((2,1),'d')
     flag=0
     while True :
-
         data, length = audio.read()
         pdata=audio.pseudonymize(data)
-        ndata=DSP.normalize(pdata,0xFF)
+      #  print(pdata)
+        ndata=DSP.normalize(pdata,32767.0)
+      #  print(ndata)
         audio.RingBufferWrite(ndata)
         c=audio.RingBufferRead()
         if (c==[]) :
@@ -204,39 +221,61 @@ if __name__=='__main__' :
         else :
             print ("Overwrite")
             break
-        #print(c[0])
         if flag < 3:
             flag+=1
-        if flag ==3:
+        else :
             for i in range(0,2) :
-                d[i]=mfcc.frame2s2mfc(np.array(c[i]))
-                spectral_entropy[i]=entropy.SpectralEntropy(np.array(c[i]))
-                if j==0:
+                # return MFCC and spectral entropy
+                coeff,energy=mfcc.MFCC(np.array(c[i]))
+                SEntropy=entropy.SpectralEntropy(np.array(c[i]))
+                if j<20 :
+                    mfccNoise+=np.array(coeff)
+                    entropyData.append(SEntropy)
                     j+=1
-                    f=np.array(d[0])
-                
-                corr[i]=function.correlation_1D(np.array(d[i]),f)
-                if j==1 :
-                  f=function.updateMFCCsNoise(np.array(d[i]),f, 0.9)
-                  th[i]=function.sigmoid(1,corr[i])
+                    if j==20 :
+                        mfccNoise=mfccNoise/20
+                        entropyNoise = np.mean(entropyData)
+                        Data=entropyData
+                        entropyData=deque([])
+                        for k in range(0,len(Data)) :
+                            entropyData.append(function.distance(Data[k],entropyNoise))
+                        entropyThreshNoise =function.MeanStandardDeviation(entropyData,3)
                 else :
-                    th[i]=0.001
-                fl=buff.flag(corr[i],th[i],d[i])
-                if fl=="admit" :
-                    g=buff.get()
-                    print(g)
-                    print "size of mfcc is :", g.size, "length is : " , len(g)
-                    print("  ##################################################################")
-                    print( " __________________________OVER ___________________________________")
-                    print("  ##################################################################")
-
-        print ( " _____________________________NEW ________________________________")
-       # print "entropy : " ,spectral_entropy
+                    # return MFCC and Spectral Entropy background noise
+                    mfccNoise=function.updateMFCCsNoise(np.array(coeff),mfccNoise, 0.90)
+                    entropyNoise=function.updateEntropyNoise(SEntropy,entropyNoise, 0.95)
+                    
+                    # return correlation and distance of MFCC and Entropy
+                    corr[i]=function.correlation_1D(np.array(coeff),mfccNoise)
+                    entropyDistance=function.distance(SEntropy,entropyNoise)
+                    
+                    # rotate value in entropyData buffer
+                    entropyData.rotate(-1)
+                    entropyData[9]=entropyDistance
+                    
+                    # update threshold 
+                    th[i]=function.sigmoid(10,corr[i])
+                    entropyThreshNoise=function.EntropyThresholdUpdate(entropyData, entropyThreshNoise,0.5)
+                    
+                   # print(entropyThreshNoise)
+                    if entropyDistance >= entropyThreshNoise :
+                        print "##### true ######" , entropyDistance , "th" , entropyThreshNoise
+                        
+                    # flag "over" or "under" 
+                    fl=buff.flag(corr[i],th[i],entropyDistance,entropyThreshNoise,coeff,energy,np.array(c[i]))
+                    if fl=="admit" :
+                        mfc,audioData=buff.get()
+                    ### playback
+                        np.savetxt('coeff.out',mfc)
+                        file=wave.open('test.wav','wb')
+                        file.setparams((1,2,8000,len(audioData),"NONE","not compressed"))
+                        file.writeframes(audio.depseudonymize(DSP.denormalize(audioData,32767.)))
+                        file.close()
+                    ### end of playback
+                        print("  #############################")
         print "flag is : " , fl
-       # print "distance is : ", corr
-        #print "seuil est de ;" ,th
         c=[]
-        endpoint=[[],[]]
+       # ndata=DSP.denormalize(pdata,0xFF)
         ndata=audio.depseudonymize(pdata)
         audio.write(ndata)
 #

@@ -39,7 +39,7 @@ class SPECTRAL_ENTROPY(object):
         for i in range(1, len(frame)):
             outfr[i] = frame[i] - self.alpha * frame[i - 1]
         self.prior = frame[-1]
-        print "frame" , frame , "value", outfr
+       # print "frame" , frame , "value", outfr
         return outfr
     
     def frame2periodogram(self, frame):
