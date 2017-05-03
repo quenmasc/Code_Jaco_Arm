@@ -19,12 +19,17 @@ def normalize(data,max_value) :
     data=np.array(data)
     #biais=int(0.5 * max_value)
     fac=1.0/(max_value)
-    data=fac * (data-np.mean(data))#- biais )
+    data=fac * (data)#- biais )
     return data
 
-def threshold(snd_data):
+def threshold(data):
     # return 'true' if below the 'silent' threshold
-    return np.max(snd_data) > THRESHOLD
+    data=np.array(data)
+    for i in range (0,len(data)) :
+        if data[i]<= 200 and data[i]>=-200 :
+            data[i]=0.
+    return data
+  #  print(data)
 
 def EndSegments(cond,previous_amplitude_envelope,currIndex,tail, AudioSample):
     current_amplitude_envelope=np.sum(np.abs(hilbert(AudioSample)))
@@ -54,3 +59,5 @@ def denormalize(data, max_val):
         data = np.array(data)
         data = (fac * data)#.astype('H') + bias
         return data
+
+
