@@ -244,7 +244,7 @@ if __name__=='__main__' :
                         entropyData=deque([])
                         for k in range(0,len(Data)) :
                             entropyData.append(function.distance(Data[k],entropyNoise))
-                        entropyThreshNoise =function.MeanStandardDeviation(entropyData,3)
+                        entropyThreshNoise =function.MeanStandardDeviation(entropyData,2)
                 else :
                     # return MFCC and Spectral Entropy background noise
                     mfccNoise=function.updateMFCCsNoise(np.array(coeff),mfccNoise, 0.90)
@@ -260,7 +260,7 @@ if __name__=='__main__' :
                     
                     # update threshold 
                     th[i]=function.sigmoid(10,corr[i])
-                    entropyThreshNoise=function.EntropyThresholdUpdate(entropyData, entropyThreshNoise,0.96)
+                    entropyThreshNoise=function.EntropyThresholdUpdate(entropyData, entropyThreshNoise,0.9)
                     
                    # print(entropyThreshNoise)
                     if entropyDistance >= entropyThreshNoise :
@@ -271,6 +271,7 @@ if __name__=='__main__' :
                     if fl=="admit" :
                         mfc,audioData=buff.get()
                     ### playback
+                        np.savetxt('coeff.out',mfc)
                         file=wave.open('test.wav','wb')
                         file.setparams((1,2,8000,len(audioData),"NONE","not compressed"))
                         file.writeframes(audio.depseudonymize(DSP.denormalize(audioData,32767.)))
