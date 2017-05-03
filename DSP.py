@@ -19,7 +19,7 @@ def normalize(data,max_value) :
     data=np.array(data)
     #biais=int(0.5 * max_value)
     fac=1.0/(max_value)
-    data=fac * (data)#- biais )
+    data=fac * (data-np.mean(data))#- biais )
     return data
 
 def threshold(snd_data):

@@ -218,8 +218,9 @@ if __name__=='__main__' :
     while True :
         data, length = audio.read()
         pdata=audio.pseudonymize(data)
+      #  print(pdata)
         ndata=DSP.normalize(pdata,32767.0)
-       # print(ndata)
+      #  print(ndata)
         audio.RingBufferWrite(ndata)
         if (c==[]) :
             c=audio.RingBufferRead()
@@ -232,7 +233,7 @@ if __name__=='__main__' :
             for i in range(0,2) :
                 # return MFCC and spectral entropy
                 coeff,energy=mfcc.MFCC(np.array(c[i]))
-                SEntropy=entropy.frame2periodogram(np.array(c[i]))
+                SEntropy=entropy.SpectralEntropy(np.array(c[i]))
                 if j<20 :
                     mfccNoise+=np.array(coeff)
                     entropyData.append(SEntropy)
@@ -244,7 +245,7 @@ if __name__=='__main__' :
                         entropyData=deque([])
                         for k in range(0,len(Data)) :
                             entropyData.append(function.distance(Data[k],entropyNoise))
-                        entropyThreshNoise =function.MeanStandardDeviation(entropyData,2)
+                        entropyThreshNoise =function.MeanStandardDeviation(entropyData,3)
                 else :
                     # return MFCC and Spectral Entropy background noise
                     mfccNoise=function.updateMFCCsNoise(np.array(coeff),mfccNoise, 0.90)
@@ -260,7 +261,7 @@ if __name__=='__main__' :
                     
                     # update threshold 
                     th[i]=function.sigmoid(10,corr[i])
-                    entropyThreshNoise=function.EntropyThresholdUpdate(entropyData, entropyThreshNoise,0.9)
+                    entropyThreshNoise=function.EntropyThresholdUpdate(entropyData, entropyThreshNoise,0.5)
                     
                    # print(entropyThreshNoise)
                     if entropyDistance >= entropyThreshNoise :
