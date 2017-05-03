@@ -220,9 +220,7 @@ if __name__=='__main__' :
     while True :
         data, length = audio.read()
         pdata=audio.pseudonymize(data)
-    #    print(DSP.threshold(pdata))
         ndata=DSP.normalize(pdata,32767.0)
-  #      print(ndata)from scipy.signal import hilbert
         audio.RingBufferWrite(ndata)
         if (c==[]) :
             c=audio.RingBufferRead()
@@ -265,17 +263,13 @@ if __name__=='__main__' :
                     
                     # update threshold 
                     th[i]=function.sigmoid(10,5,corr[i])
-                   # print "dist" , corr[i], "th " , th[i]
-                    s=np.sum(np.abs(hilbert(c[i])))
-                 #   print(entropyData)
                     entropyThresh=function.EntropyThresholdUpdate(entropyData, entropyThreshNoise,0.96)
                     
                    # print(entropyThreshNoise)
                     if entropyDistance >=  entropyThreshNoise:
                         print "dist" , entropyDistance , "th" , entropyThresh
-                  #  if corr[i] >=  th[i]:
-                  #      print "dist mfcc" , corr[i] , "th" , th[i]    
-                    # flag "over" or "under" 
+
+                    # flag
                     fl=buff.flag(corr[i],th[i],entropyDistance,entropyThresh,coeff,energy,np.array(c[i]))
                     if fl=="admit" :
                         mfc,audioData=buff.get()
