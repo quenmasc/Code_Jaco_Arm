@@ -183,7 +183,7 @@ if __name__=='__main__' :
     cur=0
     tail=0
     i=0 
-    c=[[],[]]
+    c=[]
     j=0
     fl="out"
     count=0
@@ -208,6 +208,7 @@ if __name__=='__main__' :
     endpoint=np.empty(2,'d')
     corr=np.empty((2,1),'d')
     flag=0
+    
     while True :
         data, length = audio.read()
         pdata=audio.pseudonymize(data)
@@ -215,7 +216,6 @@ if __name__=='__main__' :
         ndata=DSP.normalize(pdata,32767.0)
       #  print(ndata)
         audio.RingBufferWrite(ndata)
-        c=audio.RingBufferRead()
         if (c==[]) :
             c=audio.RingBufferRead()
         else :
