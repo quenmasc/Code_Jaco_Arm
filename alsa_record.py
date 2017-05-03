@@ -17,7 +17,7 @@ import function
 import mfccbuffer
 import MFCC
 from collections import deque
-import matplotlib.pyplot as plt
+from scipy.signal import hilbert
 
 __author__="Quentin MASCRET <quentin.mascret.1@ulaval.ca>"
 __date__="2017-04-14"
@@ -197,12 +197,14 @@ if __name__=='__main__' :
     coeff=np.empty(13,'d')
     energy=np.zeros(1)
     # mfcc
+    mfccN=np.zeros(13)
     mfccNoise=np.zeros(13)
     mfc=np.empty((26,200),'d')
     # entropy
     SEntropy=np.zeros(13)
     entropyNoise=0
     entropyDistance =0
+    entropyN=0
          # threshold
 
     entropyData =deque([])
@@ -210,7 +212,7 @@ if __name__=='__main__' :
     entropyThresh = 0
     #audio 
     audioData=[]
-    
+    s=0
     th=[[],[]]
     endpoint=np.empty(2,'d')
     corr=np.empty((2,1),'d')
@@ -218,9 +220,9 @@ if __name__=='__main__' :
     while True :
         data, length = audio.read()
         pdata=audio.pseudonymize(data)
-      #  print(pdata)
+    #    print(DSP.threshold(pdata))
         ndata=DSP.normalize(pdata,32767.0)
-      #  print(ndata)
+  #      print(ndata)from scipy.signal import hilbert
         audio.RingBufferWrite(ndata)
         if (c==[]) :
             c=audio.RingBufferRead()
@@ -229,8 +231,10 @@ if __name__=='__main__' :
             break
         if flag < 3:
             flag+=1
+
         else :
             for i in range(0,2) :
+
                 # return MFCC and spectral entropy
                 coeff,energy=mfcc.MFCC(np.array(c[i]))
                 SEntropy=entropy.SpectralEntropy(np.array(c[i]))
@@ -248,27 +252,31 @@ if __name__=='__main__' :
                         entropyThreshNoise =function.MeanStandardDeviation(entropyData,3)
                 else :
                     # return MFCC and Spectral Entropy background noise
-                    mfccNoise=function.updateMFCCsNoise(np.array(coeff),mfccNoise, 0.90)
-                    entropyNoise=function.updateEntropyNoise(SEntropy,entropyNoise, 0.95)
+                    mfccN=function.updateMFCCsNoise(np.array(coeff),mfccNoise, 0.90)
+                    entropyN=function.updateEntropyNoise(SEntropy,entropyNoise, 0.95)
                     
                     # return correlation and distance of MFCC and Entropy
-                    corr[i]=function.correlation_1D(np.array(coeff),mfccNoise)
-                    entropyDistance=function.distance(SEntropy,entropyNoise)
+                    corr[i]=function.correlation_1D(np.array(coeff),mfccN)
+                    entropyDistance=function.distance(SEntropy,entropyN)
                     
                     # rotate value in entropyData buffer
                     entropyData.rotate(-1)
-                    entropyData[9]=entropyDistance
+                    entropyData[19]=entropyDistance
                     
                     # update threshold 
-                    th[i]=function.sigmoid(10,corr[i])
-                    entropyThreshNoise=function.EntropyThresholdUpdate(entropyData, entropyThreshNoise,0.5)
+                    th[i]=function.sigmoid(10,5,corr[i])
+                   # print "dist" , corr[i], "th " , th[i]
+                    s=np.sum(np.abs(hilbert(c[i])))
+                 #   print(entropyData)
+                    entropyThresh=function.EntropyThresholdUpdate(entropyData, entropyThreshNoise,0.96)
                     
                    # print(entropyThreshNoise)
-                    if entropyDistance >= entropyThreshNoise :
-                        print "##### true ######" , entropyDistance , "th" , entropyThreshNoise
-                        
+                    if entropyDistance >=  entropyThreshNoise:
+                        print "dist" , entropyDistance , "th" , entropyThresh
+                  #  if corr[i] >=  th[i]:
+                  #      print "dist mfcc" , corr[i] , "th" , th[i]    
                     # flag "over" or "under" 
-                    fl=buff.flag(corr[i],th[i],entropyDistance,entropyThreshNoise,coeff,energy,np.array(c[i]))
+                    fl=buff.flag(corr[i],th[i],entropyDistance,entropyThresh,coeff,energy,np.array(c[i]))
                     if fl=="admit" :
                         mfc,audioData=buff.get()
                     ### playback
