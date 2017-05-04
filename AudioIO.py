@@ -4,6 +4,8 @@ import os
 import numpy as np
 from pydub import AudioSegment
 import inspect 
+import mfccbuffer
+import MFCC
 
 __author__="Quentin MASCRET <quentin.mascret.1 ulaval.ca>"
 __date__="2017-05-03"
@@ -26,7 +28,17 @@ def FindWavFile():
     listdirectory = os.listdir(".")
     for filename in listdirectory :
         if filename.endswith(".wav"):
+	    fs,data=ReadAudioFile(filename)
+	    Subframe(data)
             print(filename)
 
+def Subframe(data,window_sample=200,window_shift=85):
+     buff=mfccbuffer.MFFCsRingBuffer()    
+     mfcc=MFCC.MFCCs()
+     nbFrame=(len(data)-window_sample)/window_shift
+     for i in xrange(nbFrame):
+	signal=data[(i*window_shift+np.arange(window_sample))]
+	buff.extend(mfcc.MFCC2(signal))	
+     mfccs, fl=buff.get()
+     print(mfccs)
 FindWavFile()
-#def Subframe(data, 
