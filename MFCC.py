@@ -65,35 +65,28 @@ class MFCCs(object):
         self.__win=np.hamming(200)
         
     def magnitude(self, frame):
-        frame = self.pre_emphasis(frame) * self.__win
-        fft = numpy.fft.rfft(frame, self.__nfft)
+        frame =self.pre_emphasis(frame) * self.__win
+        fft=numpy.fft.fft(frame, self.__nfft,axis=0)
         # Square of absolute value
-        return fft.real * fft.real + fft.imag * fft.imag
+        return fft 
 
-    def pre_emphasis(self, frame):
-        # FIXME: Do this with matrix multiplication
-        outfr = numpy.empty(len(frame), 'd')
-        outfr[0] = frame[0] - self.__alpha * self.__prior
-        for i in range(1, len(frame)):
-            outfr[i] = frame[i] - self.__alpha * frame[i - 1]
-        self.__prior = frame[-1]
-        return outfr
-
+    def pre_emphasis(self,frame):
+        return np.append(frame[0],frame[1:]-self.__alpha*frame[:-1])
+    
     def MFCC(self,frame):
-        magnitude=np.array(self.magnitude(frame))
-        logEnergy=np.log(np.sum(magnitude))
+        magnitude=np.absolute(self.magnitude(frame))
+        logEnergy=math.log(math.fsum((np.absolute(self.magnitude(frame*32768.0)))**2))
         # filterBannk application to the uniquee part of FFT
-        FBA= self.__FilterBank.dot(magnitude)
+        FBA= self.__FilterBank.dot(magnitude[(0+np.arange(self.__nfft/2+1))])
         CepstralCoeff=self.__dct.dot(np.log(FBA))
         LiftCepstralCoeff=np.diag(self.__LowFilterLift).dot(CepstralCoeff)
-       # LiftCepstralCoeff[0]=logEnergy
         return LiftCepstralCoeff,logEnergy
         
     def MFCC2(self, frame):
-	magnitude=np.array(self.magnitude(frame))
-        logEnergy=np.log(np.sum(magnitude))
+	magnitude=np.absolute(self.magnitude(frame))
+        logEnergy=math.log(math.fsum((np.absolute(self.magnitude(frame*32768.0)))**2))
         # filterBannk application to the uniquee part of FFT
-        FBA= self.__FilterBank.dot(magnitude)
+        FBA= self.__FilterBank.dot(magnitude[(0+np.arange(self.__nfft/2+1))])
         CepstralCoeff=self.__dct.dot(np.log(FBA))
         LiftCepstralCoeff=np.diag(self.__LowFilterLift).dot(CepstralCoeff)
         LiftCepstralCoeff[0]=logEnergy
