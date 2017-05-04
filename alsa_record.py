@@ -18,6 +18,7 @@ import mfccbuffer
 import MFCC
 from collections import deque
 from scipy.signal import hilbert
+import AudioIO
 
 __author__="Quentin MASCRET <quentin.mascret.1@ulaval.ca>"
 __date__="2017-04-14"
@@ -193,15 +194,16 @@ if __name__=='__main__' :
     j=0
     fl="out"
     count=0
-    c=[]
-    coeff=np.empty(13,'d')
+    c=[] 
+    coeff=np.empty(13,'f')
     energy=np.zeros(1)
     # mfcc
     mfccN=np.zeros(13)
     mfccNoise=np.zeros(13)
-    mfc=np.empty((26,200),'d')
+    mfc=np.empty((26,200),'f')
     # entropy
     SEntropy=np.zeros(13)
+
     entropyNoise=0
     entropyDistance =0
     entropyN=0
@@ -214,12 +216,13 @@ if __name__=='__main__' :
     audioData=[]
     s=0
     th=[[],[]]
-    endpoint=np.empty(2,'d')
-    corr=np.empty((2,1),'d')
+    endpoint=np.empty(2,'f')
+    corr=np.empty((2,1),'f')
     flag=0
     while True :
         data, length = audio.read()
         pdata=audio.pseudonymize(data)
+
         ndata=DSP.normalize(pdata,32767.0)
         audio.RingBufferWrite(ndata)
         if (c==[]) :
@@ -254,15 +257,15 @@ if __name__=='__main__' :
                     entropyN=function.updateEntropyNoise(SEntropy,entropyNoise, 0.95)
                     
                     # return correlation and distance of MFCC and Entropy
-                    corr[i]=function.correlation_1D(np.array(coeff),mfccN)
+                    corr=function.correlation_1D(np.array(coeff),mfccN)
                     entropyDistance=function.distance(SEntropy,entropyN)
                     
-                    # rotate value in entropyData buffer
+                    # rotate value in entropyData bufferT
                     entropyData.rotate(-1)
                     entropyData[19]=entropyDistance
                     
                     # update threshold 
-                    th[i]=function.sigmoid(10,5,corr[i])
+                    th[i]=function.sigmoid(10,5,corr)
                     entropyThresh=function.EntropyThresholdUpdate(entropyData, entropyThreshNoise,0.96)
                     
                    # print(entropyThreshNoise)
@@ -270,11 +273,13 @@ if __name__=='__main__' :
                         print "dist" , entropyDistance , "th" , entropyThresh
 
                     # flag
-                    fl=buff.flag(corr[i],th[i],entropyDistance,entropyThresh,coeff,energy,np.array(c[i]))
+                    fl=buff.flag(corr,th[i],entropyDistance,entropyThresh,coeff,energy,np.array(c[i]))
                     if fl=="admit" :
                         mfc,audioData=buff.get()
                     ### playback
                         np.savetxt('coeff.out',mfc)
+                        np.savetxt('data.out',audioData)
+                        np.savetxt('coeff2.out', AudioIO.Subframe(audioData))
                         file=wave.open('test.wav','wb')
                         file.setparams((1,2,8000,len(audioData),"NONE","not compressed"))
                         file.writeframes(audio.depseudonymize(DSP.denormalize(audioData,32767.)))
