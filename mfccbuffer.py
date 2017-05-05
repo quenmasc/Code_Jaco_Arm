@@ -45,8 +45,6 @@ class MFFCsRingBuffer(object):
             print(self.__index)
         def get(self):
                 temp=np.array(self.__data).reshape((200,13)).T
-                np.savetxt('tt.out',temp)
-                time.sleep(5)
                 delta=function.deltaMFCCs(temp,9)
                 deltaDelta=function.deltaMFCCs(delta,9)
                 mfccs=np.concatenate((temp,delta,deltaDelta),axis=0)

@@ -32,7 +32,7 @@ def ReadAudioFile(path):
 def FindWavFileAndStoreData():
     i=0
     os.chdir('.')
-    listdirectory = os.listdir(".")
+    listdirectory = os.listdir("speech/")
     for filename in listdirectory :
         if filename.endswith(".wav"):
             i+=1
