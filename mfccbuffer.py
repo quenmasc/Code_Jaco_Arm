@@ -42,13 +42,16 @@ class MFFCsRingBuffer(object):
                             print("fatal Error : segment too long")
             else :
                     print("Error : RingBuffer is overwritten ")
-
+            print(self.__index)
         def get(self):
                 temp=np.array(self.__data).reshape((200,13)).T
+                np.savetxt('tt.out',temp)
+                time.sleep(5)
                 delta=function.deltaMFCCs(temp,9)
                 deltaDelta=function.deltaMFCCs(delta,9)
                 mfccs=np.concatenate((temp,delta,deltaDelta),axis=0)
                 self.__data=np.zeros(1300*2)
+                self.__index=0
                 self.__out="out"
          #       print "tail :" ,self.__tail , "new value ;" , self.__tail/13 
                 return mfccs.reshape(mfccs.size,order='F'),self.__SampleRingBuffer.getSegments(self.__tail/13)
