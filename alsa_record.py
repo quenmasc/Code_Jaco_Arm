@@ -272,14 +272,14 @@ if __name__=='__main__' :
                     if entropyDistance >=  entropyThreshNoise:
                         print "dist" , entropyDistance , "th" , entropyThresh
 
-                    # flag
+                     # flag
                     fl=buff.flag(corr,th[i],entropyDistance,entropyThresh,coeff,energy,np.array(c[i]))
                     if fl=="admit" :
                         mfc,audioData=buff.get()
                     ### playback
                         np.savetxt('coeff.out',mfc)
-                        np.savetxt('data.out',audioData)
-                        np.savetxt('coeff2.out', AudioIO.Subframe(audioData))
+                    #    np.savetxt('data.out',audioData)
+                      #  np.savetxt('coeff2.out', AudioIO.Subframe(audioData))
                         file=wave.open('test.wav','wb')
                         file.setparams((1,2,8000,len(audioData),"NONE","not compressed"))
                         file.writeframes(audio.depseudonymize(DSP.denormalize(audioData,32767.)))

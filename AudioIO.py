@@ -9,8 +9,10 @@ import MFCC
 import DSP
 import struct
 import fnmatch
-import MachineLearning
 import wave
+import MachineLearning
+from sklearn.externals import joblib
+
 __author__="Quentin MASCRET <quentin.mascret.1 ulaval.ca>"
 __date__="2017-05-03"
 __version__="1.0-dev"
@@ -20,23 +22,23 @@ __version__="1.0-dev"
 def ReadAudioFile(path):
     extension=os.path.splitext(path)[1]
     if extension=='.wav':
-        audioFile=AudioSegment.from_wav(path)
-        data=np.fromstring(audioFile._data, np.int16)
-        fs=audioFile.frame_rate
+        f=open(path,'rb')
+        data=f.read()
+        data=np.fromstring(data, np.int16)
         x=np.array(data)
-        return fs, x
+        return  x
     else :
         print "Error in ReadAudioFile() : NO FILE TYPE"
         return (-1,-1)
 
 def FindWavFileAndStoreData():
     i=0
-    os.chdir('.')
-    listdirectory = os.listdir("speech/")
+    os.chdir('speech/')
+    listdirectory = os.listdir(".")
     for filename in listdirectory :
         if filename.endswith(".wav"):
             i+=1
-	    fs,data=ReadAudioFile(filename)
+	    data=ReadAudioFile(filename)
 	    mfccs=WAV2MFCCs(data)
             classLabel=ClassAttribution(filename)
             struct=[classLabel,mfccs]
@@ -49,12 +51,10 @@ def WAV2MFCCs(data,window_sample=200,window_shift=85):
      buff=mfccbuffer.MFFCsRingBuffer()    
      mfcc=MFCC.MFCCs()
      nbFrame=(len(data)-window_sample)/window_shift
-     print "len data  :" ,len(data)
-     print "frame :", nbFrame
      for i in range(0,nbFrame):
 	signal=np.array(data[(i*window_shift+np.arange(window_sample))])
 	m=mfcc.MFCC2(signal)
-	buff.extend(m)
+	buff.extend2(m)
      mfccs, fl=buff.get()
      return mfccs
 
@@ -89,7 +89,7 @@ def FeaturesSaved(struct):
         data=np.loadtxt(ClassDictionnaryFile(struct[0]))
         data=np.vstack([data,struct[1]])
         np.savetxt(ClassDictionnaryFile(struct[0]),data)
-    os.chdir('../AudioData')
+    os.chdir('../speech')
 
 def ClassDictionnaryFile(className):
     return {
@@ -114,26 +114,85 @@ def FolderClassDictionnary(listOfDirs):
         'Class_7' : 7,
         'Class_8' : 8,
         }.get(listOfDirs,0) # zero is default class
-    
+
+def FistSVMClass(listOfDirs):
+     return { 
+        'Class_1' : 1,
+        'Class_2' : 1,
+        'Class_3' : 2,
+        'Class_4' : 2,
+        'Class_5' : 2,
+        'Class_6' : 2,
+        'Class_7' : 1,
+        'Class_8' : 3,
+        }.get(listOfDirs,0) # zero is default class
+
 def ReadFeatureClass():
     listdirectory = os.listdir(".")
-    Features=np.array([]).reshape(7800,0)
-    ClassLabel=np.array([]).reshape(1,0)
+    Features=np.array([]).reshape(5850,0)
+    FeaturesLeft=np.array([]).reshape(5850,0)
+    FeaturesRight=np.array([]).reshape(3120,0)
+    ClassLeft=np.array([]).reshape(1,0)
+    ClassRight=np.array([]).reshape(1,0)
+    ClassFistLevel=np.array([]).reshape(1,0)
     for filename in listdirectory :
         if FolderClassDictionnary(filename)>0:
             os.chdir(filename)
             data=(np.loadtxt(os.listdir(".")[0])).T
-            classLabel=np.matlib.repmat(FolderClassDictionnary(filename),1,data.shape[1])
+            classFistLevel=np.matlib.repmat(FistSVMClass(filename),1,data.shape[1])
             os.chdir('../')
             Features=np.hstack([Features,data])
-            ClassLabel=np.hstack([ClassLabel,classLabel])
+            if (FistSVMClass(filename)==1):
+                classLeft=np.matlib.repmat(FolderClassDictionnary(filename),1,data.shape[1])
+                ClassLeft=np.hstack([ClassLeft,classLeft])
+                FeaturesLeft=np.hstack([FeaturesLeft,data])
+            if (FistSVMClass(filename)==2):
+                classRight=np.matlib.repmat(FolderClassDictionnary(filename),1,data.shape[1])
+                ClassRight=np.hstack([ClassRight,classRight])
+                FeaturesRight=np.hstack([FeaturesRight,data[(0+np.arange(3120))]])
+            ClassFistLevel=np.hstack([ClassFistLevel,classFistLevel])
     print "In AudioIO - ReadFeatureClass : all features have been read. size of features matrix :", Features.shape[0], Features.shape[1]
-    return Features , ClassLabel
+    return Features,FeaturesLeft, FeaturesRight , ClassLeft[0],ClassRight[0],ClassFistLevel[0]
 
+
+def SaveClassifier(modelName,svmClassifier):
+    joblib.dump(svmClassifier,"SVModel/%s.pkl"%modelName)
+    print "In AudioIO - SaveClassifier : Model has been saved correctly"
+    
+def LoadClassifier(SVMModelName):
+    try : 
+        model=joblib.load("SVModel/%s.pkl"%SVMModelName)
+        print "Classifier loaded"
+        return model
+    except IOError :
+        print "Unable to load the Classifier"
+        return
+    
 def test():
-    features, classL=ReadFeatureClass()
-    fT,fTT ,ct, ctt = MachineLearning.Splitfeatures(features.T,classL.T,0.9)
-    print "class" , ct , "data" , fT.T
-    print(ctt)
-FindWavFileAndStoreData()
-test()
+    [features, featuresL, featuresR, classL, classR,ClassFistLevel]=ReadFeatureClass()
+    if len(features)==0 :
+        print "In Classifier - Error : folders are empty"
+        return
+    np.savetxt('tt.out',featuresR)
+    print featuresL.shape , len(classL), featuresR.shape , len(classR),features.shape , len(ClassFistLevel)
+    FistSvmModel=MachineLearning.TrainSVM_RBF_Features(features.T, ClassFistLevel)
+    SaveClassifier("FistSVM",FistSvmModel)
+    SecondSvmModel=MachineLearning.TrainSVM_RBF_Features(featuresL.T, classL)
+    SaveClassifier("LeftSVM",SecondSvmModel)
+    ThirdSvmModel=MachinFindWavFileAndStoreDataeLearning.TrainSVM_RBF_Features(featuresR.T, classR)
+    SaveClassifier("RightSVM",ThirdSvmModel)
+
+if __name__=='__main__' :
+  #  FindWavFileAndStoreData()
+  test()
+  #model=LoadClassifier("premierModel")
+ # features=np.loadtxt('coeff.out')
+ # print len(features)
+ # R=MachineLearning.ClassifierWrapper(model,features)
+ # print R
+#('the best classifier is :', SVC(C=4.2813323987193872, cache_size=200, class_weight=None, coef0=0.0,
+#  degree=3, gamma=1.0000000000000001e-09, kernel='rbf', max_iter=-1,
+#  probability=False, random_state=None, shrinking=True, tol=0.001,
+#  verbose=False))
+
+   

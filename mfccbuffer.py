@@ -20,8 +20,8 @@ __version__="1.0-dev"
 class MFFCsRingBuffer(object):
         """ Initialize the ring buffer"""
         def __init__(self):
-            self.__data=np.zeros(1300*2)
-            self.__length=1300*2
+            self.__data=np.zeros(1950)
+            self.__length=1950
             self.__index=0
             self.__tail=0
             self.__count=0
@@ -42,17 +42,37 @@ class MFFCsRingBuffer(object):
                             print("fatal Error : segment too long")
             else :
                     print("Error : RingBuffer is overwritten ")
-            print(self.__index)
+        def extend2(self,data):
+            data_index=(self.__tail+np.arange(data.size))
+            if np.all(self.__data[data_index]==np.zeros(len(data_index))) :
+                    self.__data[data_index]=data
+                    self.__tail=data_index[-1]+1
+                    if self.__tail >= self.__length :
+                            print("fatal Error : segment too long")
+            else :
+                    print("Error : RingBuffer is overwritten ")
+        
         def get(self):
-                temp=np.array(self.__data).reshape((200,13)).T
+                #new version #
+                idx=(0+np.arange(self.__tail))
+                temp=np.array(self.__data[idx]).reshape((len(idx)/13),13).T
                 delta=function.deltaMFCCs(temp,9)
                 deltaDelta=function.deltaMFCCs(delta,9)
                 mfccs=np.concatenate((temp,delta,deltaDelta),axis=0)
-                self.__data=np.zeros(1300*2)
+                mfccs_reshape=mfccs.reshape(mfccs.size,order='F')
+                
+                ####### old version ######
+              #  temp=np.array(self.__data).reshape((150,13)).T
+              #  delta=function.deltaMFCCs(temp,9)
+              #  deltaDelta=function.deltaMFCCs(delta,9)
+              #  mfccs=np.concatenate((temp,delta,deltaDelta),axis=0)
+              #  np.savetxt('mfcc.out',mfccs)
+                self.__data=np.zeros(1950)
                 self.__index=0
+                self.__tail=0
                 self.__out="out"
          #       print "tail :" ,self.__tail , "new value ;" , self.__tail/13 
-                return mfccs.reshape(mfccs.size,order='F'),self.__SampleRingBuffer.getSegments(self.__tail/13)
+                return np.concatenate((mfccs_reshape,np.zeros(self.__length*3-mfccs_reshape.size)),axis=0),self.__SampleRingBuffer.getSegments(self.__tail/13)
 
         def flag(self,data,threshold,entropyDistance,entropyThresh,coeff,energy, AudioSample):
                 # first case
@@ -103,7 +123,7 @@ class MFFCsRingBuffer(object):
                 if self.__flag=="done" :
                         if self.__tail< self.__lengthOfWindowMinima :
                                 self.__flag="rejeted"
-                                self.__data=np.zeros(1300*2)
+                                self.__data=np.zeros(1950)
                         else :
                                 self.__flag="admit"
 
