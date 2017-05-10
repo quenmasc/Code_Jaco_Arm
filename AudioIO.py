@@ -12,6 +12,7 @@ import fnmatch
 import wave
 import MachineLearning
 from sklearn.externals import joblib
+import tools
 
 __author__="Quentin MASCRET <quentin.mascret.1 ulaval.ca>"
 __date__="2017-05-03"
@@ -43,8 +44,9 @@ def FindWavFileAndStoreData():
             classLabel=ClassAttribution(filename)
             struct=[classLabel,mfccs]
             FeaturesSaved(struct)
-            print "Features of", filename ," have been saved" , "remaining" , len(listdirectory)-i
-    print "all done"
+            print tools.bcolors.HEADER +"Features of", filename ," have been saved"  + tools.bcolors.ENDC
+            print "remaining" ,len(listdirectory)-i
+    print tools.bcolors.OKGREEN +"all done" +tools.bcolors.ENDC
 
 def WAV2MFCCs(data,window_sample=200,window_shift=85):
      data=DSP.normalize(data,32768.0)
@@ -80,7 +82,7 @@ def FeaturesSaved(struct):
     os.chdir('../')
     if not os.path.exists(struct[0]) :
         os.makedirs(struct[0])
-        print "folder :" ,struct[0], "has been created"
+        print tools.bcolors.OKBLUE +"folder :" ,struct[0], "has been created" + tools.bcolors.ENDC
     os.chdir(struct[0])
     if not os.path.isfile(ClassDictionnaryFile(struct[0])):
         file(ClassDictionnaryFile(struct[0]),'a').close()
@@ -151,39 +153,42 @@ def ReadFeatureClass():
                 ClassRight=np.hstack([ClassRight,classRight])
                 FeaturesRight=np.hstack([FeaturesRight,data[(0+np.arange(3120))]])
             ClassFistLevel=np.hstack([ClassFistLevel,classFistLevel])
-    print "In AudioIO - ReadFeatureClass : all features have been read. size of features matrix :", Features.shape[0], Features.shape[1]
+    print tools.bcolors.OKGREEN + "In AudioIO - ReadFeatureClass : all features have been read." +tools.bcolors.ENDC
     return Features,FeaturesLeft, FeaturesRight , ClassLeft[0],ClassRight[0],ClassFistLevel[0]
 
 
 def SaveClassifier(modelName,svmClassifier):
     joblib.dump(svmClassifier,"SVModel/%s.pkl"%modelName)
-    print "In AudioIO - SaveClassifier : Model has been saved correctly"
+    print tools.bcolors.OKGREEN + "In AudioIO - SaveClassifier : Model has been saved correctly" + tools.bcolors.ENDC
     
 def LoadClassifier(SVMModelName):
     try : 
         model=joblib.load("SVModel/%s.pkl"%SVMModelName)
-        print "Classifier loaded"
+        print tools.bcolors.OKGREEN + "Classifier loaded" + tools.bcolors.ENDC
         return model
     except IOError :
-        print "Unable to load the Classifier"
+        print tools.bcolors.FAIL +"Unable to load the Classifier"+tools.bcolors.ENDC
         return
     
 def test():
     [features, featuresL, featuresR, classL, classR,ClassFistLevel]=ReadFeatureClass()
     if len(features)==0 :
-        print "In Classifier - Error : folders are empty"
+        print tools.bcolors.FAIL + "In Classifier - Error : folders are empty"+tools.bcolors.ENDC
         return
-    np.savetxt('tt.out',featuresR)
-    print featuresL.shape , len(classL), featuresR.shape , len(classR),features.shape , len(ClassFistLevel)
+    print tools.bcolors.HEADER +"Size of features :" , featuresL.shape , len(classL), featuresR.shape , len(classR),features.shape , len(ClassFistLevel) , "Features, FeaturesL , FeaturesR" + tools.bcolors.ENDC
     FistSvmModel=MachineLearning.TrainSVM_RBF_Features(features.T, ClassFistLevel)
     SaveClassifier("FistSVM",FistSvmModel)
+    print tools.bcolors.HEADER + "First SVM saved" + tools.bcolors.ENDC
     SecondSvmModel=MachineLearning.TrainSVM_RBF_Features(featuresL.T, classL)
     SaveClassifier("LeftSVM",SecondSvmModel)
+    print tools.bcolors.HEADER + "Second SVM saved" + tools.bcolors.ENDC
     ThirdSvmModel=MachinFindWavFileAndStoreDataeLearning.TrainSVM_RBF_Features(featuresR.T, classR)
     SaveClassifier("RightSVM",ThirdSvmModel)
+    print tools.bcolors.HEADER + "Third SVM saved" + tools.bcolors.ENDC
+    print tools.bcolors.OKGREEN + "All classifiers have been saved" +tools.bcolors.ENDC
 
 if __name__=='__main__' :
-  #  FindWavFileAndStoreData()
+   # FindWavFileAndStoreData()
   test()
   #model=LoadClassifier("premierModel")
  # features=np.loadtxt('coeff.out')
