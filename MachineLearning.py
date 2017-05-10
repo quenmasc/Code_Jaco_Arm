@@ -16,19 +16,27 @@ from sklearn.grid_search import GridSearchCV
 from sklearn.cross_validation import train_test_split
 from sklearn.cross_validation import StratifiedShuffleSplit
 from sklearn.cross_validation import StratifiedKFold
-
+import tools
 
 __author__="Quentin MASCRET <quentin.mascret.1@ulaval.ca>"
 __date__="2017-04-30"
 __version__="1.0-dev"
 
 
-def ClassifierWrapper(classifier, Vector):
-    R=-1
-    P=-1
-    R=classifier.predict(Vector)
-   # P=classifier.predict_proba(Vector)
-    return R
+def ClassifierWrapper(classifier,classifierL,classifierR, Vector):
+    R1=-1
+    P1=-1
+    R2=-1
+    P2=-1
+    R1=classifier.predict(Vector)
+    P1=classifier.predict_proba(Vector)
+    if R1 == 1 :
+        R2=classifierL.predict(Vector)
+        P2=classifierL.predict_proba(Vector)
+    elif R1 == 2 :
+        R2=classifierR.predict(Vector[(0+np.arange(3120))])
+        P2=classifierR.predict_proba(Vector[(0+np.arange(3120))])
+    return R1 , R2 , P1 , P2
 
 def SVM_RBF(featuresClass, Cparam):
     [features,Class]=listOfFeaturesClass(featuresClass)
@@ -57,15 +65,14 @@ def TrainSVM_RBF_Features(features,classLabel):
    # cv = StratifiedShuffleSplit(n_splits=50 , test_size=0.1, random_state=42)
 
     # grid
-    print("Running ...")
-    grid =GridSearchCV(SVC(probability=True),param_grid=param_grid,cv=StratifiedKFold(classLabel,k=17),verbose=50,n_jobs=3)
+    print tools.bcolors.OKBLUE + "Running ..." + tools.bcolors.ENDC
+    grid =GridSearchCV(SVC(),param_grid=param_grid,cv=StratifiedKFold(classLabel,k=17),verbose=40,n_jobs=4)
     grid.fit(features,classLabel)
-    print("the best classifier is :" , grid.best_estimator_)
     return grid
     
 def Splitfeatures(features, classLabel, pourcentOf):
     featuresTrain, featuresTest, ClassTrain, ClassTest = train_test_split(features,classLabel,test_size=pourcentOf,random_state=45)
-    print "In MachineLearning - Splitfeatures : featuresTrain and featuresTest have been generated with suceed"
+    print tools.bcolors.OKGREEN + "In MachineLearning - Splitfeatures : featuresTrain and featuresTest have been generated with suceed" +tools.bcolors.ENDC
     return featuresTrain, featuresTest, ClassTrain ,ClassTest
 
 
