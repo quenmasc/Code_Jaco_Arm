@@ -2,8 +2,9 @@
 /* The code below is from Ulysse Project */
 PyObject *pNameSVM , *pModuleSVM , *pDictSVM , *pClassSVM , *pInstanceSVM;
 
+
 PythonBridge::PythonBridge(){
-	const char *python_information[]={"PythonFile","MFCC","MFCCs"};
+	const char* python_information[]={"PythonFile","SpeechRecognition","Speech_Recognition"};
 	// build project name
 	pNameSVM=PyString_FromString(python_information[1]);
 	// load the module project
@@ -20,3 +21,17 @@ PythonBridge::PythonBridge(){
 	}
 	
 }
+void PythonBridge::finalize_python(){
+	Py_DECREF(pInstanceSVM);
+	Py_DECREF(pDictSVM);
+	Py_DECREF(pModuleSVM);
+	Py_DECREF(pNameSVM);
+	Py_Finalize();
+}
+
+void PythonBridge::Running_python(){
+	PyObject_CallMethod(pInstanceSVM,"run","");
+}
+
+
+

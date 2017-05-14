@@ -3,6 +3,5 @@
 #include "PythonBridge.h"
 
 int main(){
-	printf("correct");
 	return 0;
 }
