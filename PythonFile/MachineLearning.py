@@ -30,11 +30,11 @@ def ClassifierWrapper(classifier,classifierL,classifierR, Vector):
     P2=-1
     R1=classifier.predict(Vector)
   #  P1=classifier.predict_proba(Vector)
-    if R1 == 1 :
-        R2=classifierL.predict(Vector)
+ #   if R1 == 1 :
+     #   R2=classifierL.predict(Vector)
       #  P2=classifierL.predict_proba(Vector)
-    elif R1 == 2 :
-        R2=classifierR.predict(Vector[(0+np.arange(3120))])
+   # elif R1 == 2 :
+      #  R2=classifierR.predict(Vector[(0+np.arange(3120))])
        # P2=classifierR.predict_proba(Vector[(0+np.arange(3120))])
     return R1 , R2 , P1 , P2
 

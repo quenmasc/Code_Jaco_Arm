@@ -9,17 +9,26 @@ import mfccbuffer
 from collections import deque
 import DSP
 import function
+import threading
+import MachineLearning
 
 __author__="Quentin MASCRET <quentin.mascret.1@ulaval.ca>"
 __date__="2017-05-11"
 __version__="1.0-dev"
 
-class SpeechRecognition(object):
-    def __init__(self):
-        self.__mfcc=np.zeros(5850)
-        self.__start_SVM=False
+class Speech_Recognition(object):
+    """ Semaphore """
+    MfccsCoeff=np.empty((39,200),'f')
 
+    """ Thread """ 
+    def __init__(self):
+        self.__maxconnections=2
+        self.__semaphore=threading.BoundedSemaphore(2)
+        self.__condition=threading.Condition()
+        self.__svm=AudioIO.LoadClassifier("SVM_Trained")
+        
     def Recorder(self):
+        global MfccsCoeff
         audio= alsa_record.Record()
         mfcc = MFCC.MFCCs()
         entropy = spectral_entropy.SPECTRAL_ENTROPY()
@@ -30,11 +39,6 @@ class SpeechRecognition(object):
 
    # store=RingBuffer.WaitingBuffer(10,window_sample)
         audio.run()
-        print "running"
-        cur=0
-
-        tail=0
-
         i=0 
         c=[[],[]]
         j=0
@@ -47,7 +51,6 @@ class SpeechRecognition(object):
     # mfcc
         mfccN=np.zeros(13)
         mfccNoise=np.zeros(13)
-        mfc=np.empty((26,200),'f')
     # entropy
         SEntropy=np.zeros(13)
 
@@ -113,30 +116,47 @@ class SpeechRecognition(object):
                     # update threshold 
                         th[i]=function.sigmoid(10,5,corr)
                         entropyThresh=function.EntropyThresholdUpdate(entropyData, entropyThreshNoise,0.96)
-                    
 
-                   # print(entropyThreshNoise)
-                        if entropyDistance >=  entropyThreshNoise:
-                            print "dist" , entropyDistance , "th" , entropyThresh
-
-                     # flag
                         fl=buff.flag(corr,th[i],entropyDistance,entropyThresh,coeff,energy,np.array(c[i]))
                         if fl=="admit" :
-                            mfc,audioData=buff.get()
-                            np.savetxt('coeff.out',mfc)
-                            print("  #############################")
-            print "flag is : " , fl
+                            self.__semaphore.acquire()
+                            self.__condition.acquire()
+                            MfccsCoeff,audioData=buff.get()
+                            self.__condition.notify()
+                            self.__condition.release()
+                            self.__semaphore.release()
             c=[]
        # ndata=DSP.denormalize(pdata,0xFF)
             ndata=audio.depseudonymize(pdata)
             audio.write(ndata)
 #
         print("out of loop")
-        print("end of transmission -> waiting new data")        
+        print("end of transmission -> waiting new data")
         
+    def SVM(self):
+        global MfccsCoeff
+        self.__condition.acquire()
+        while True :
+            self.__condition.wait()
+            self.__semaphore.acquire()
+            classLab=AudioIO.ClassName(int(MachineLearning.ClassifierWrapper(self.__svm, 0, 0,MfccsCoeff)[0][0]))
+            print classLab
+            self.__semaphore.release()
+        self.__condition.release()    
 
+    def run(self):
+         self.__t1=threading.Thread(target=self.Recorder)
+         self.__t2=threading.Thread(target=self.SVM)
+         self.__t1.start()
+         self.__t2.start()
+         
+    def stop(self):
+        self.__t1.join()
+        self.__t2.join()
+    
+        
 if __name__=='__main__' :
     print "Running ...."
     speech=SpeechRecognition()
-    speech.Recorder()
-    print "end of running"
+    speech.run()
+        

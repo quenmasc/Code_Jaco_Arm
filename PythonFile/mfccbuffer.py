@@ -120,7 +120,7 @@ class MFFCsRingBuffer(object):
                                 delete_index=(self.__tail+np.arange(self.__index-self.__tail))
                                 self.__data[delete_index]=0.
                                 self.__count=0
-                                print(self.__index)
+                           #     print(self.__index)
                                 self.__flag="done"
                                 self.__index=0
 

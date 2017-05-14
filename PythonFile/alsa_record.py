@@ -19,7 +19,7 @@ import MFCC
 from collections import deque
 from scipy.signal import hilbert
 import AudioIO
-
+import tools
 __author__="Quentin MASCRET <quentin.mascret.1@ulaval.ca>"
 __date__="2017-04-14"
 __version__="1.1-dev"
@@ -53,13 +53,13 @@ class Record(object) :
         #### NO PCM-NONBLOCK ELSE ERROR NO THE SAME CADENCE BETWEEN PROCESSES ####
     """"Reads audio from ALSA audio device """
     def __read(self) :
-        card='sysdefault:CARD=Device_1'  # define default recording card 
+        card='sysdefault:CARD=Device'  # define default recording card 
         inp = alsa.PCM(alsa.PCM_CAPTURE, alsa.PCM_NORMAL,card) 
         inp.setchannels(1) # number of channels
         inp.setrate(self.__rate) # sample  rate
         inp.setformat(self.__format) # format of sample
         inp.setperiodsize(self.__rate / 50) # buffer period size
-        print("Audio Device is parameted")
+        print tools.bcolors.OKGREEN + "In alsa_record - Audio Device is correctly parameted" + tools.bcolors.ENDC
         
 
         while True :
@@ -69,7 +69,7 @@ class Record(object) :
 
 
     def __write(self):
-        card='sysdefault:CARD=Device_1'
+        card='sysdefault:CARD=Device'
 
         outp = alsa.PCM(alsa.PCM_PLAYBACK, alsa.PCM_NORMAL,card)
         outp.setchannels(1)
@@ -281,6 +281,7 @@ if __name__=='__main__' :
                      # flag
                     fl=buff.flag(corr,th[i],entropyDistance,entropyThresh,coeff,energy,np.array(c[i]))
                     if fl=="admit" :
+
                         mfc,audioData=buff.get()
                     ### playback
                         np.savetxt('coeff.out',mfc)

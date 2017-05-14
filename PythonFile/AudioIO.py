@@ -119,7 +119,17 @@ def FolderClassDictionnary(listOfDirs):
         'Class_8' : 8,
         }.get(listOfDirs,0) # zero is default class
 
-
+def ClassName(Label):
+     return { 
+         1 : "BACKWARD",
+         2 : "FORWARD",
+         3 : "LEFT",
+         4 : "RIGHT" ,
+         5 : "GOTO",
+         6 : "READY",
+         7 : "MODE",
+        }.get(Label,0)
+    
 def FistSVMClass(listOfDirs):
      return { 
         'Class_1' : 1,
@@ -219,15 +229,15 @@ def train():
     
 if __name__=='__main__' :
    # FindWavFileAndStoreData()
-  test()
-  train()
-#  model=LoadClassifier("FistSVM_Trained")
-#  modelL=LoadClassifier("LeftSVM_Trained")
-#  modelR=LoadClassifier("RightSVM_Trained")
+ # test()
+ # train()
+   model=LoadClassifier("SVM_Trained")
+   modelL=0 #LoadClassifier("LeftSVM_Trained")
+   modelR=0 #LoadClassifier("RightSVM_Trained")
  # print(model)
-#  features=np.loadtxt('coeff.out')
+   features=np.loadtxt('coeff.out')
  # print len(features)
-#  R1 , R2 , P1 , P2=MachineLearning.ClassifierWrapper(model, modelL, modelR,features)
- # print R1, R2
+   R1 , R2 , P1 , P2=MachineLearning.ClassifierWrapper(model, modelL, modelR,features)
+   print R1, R2
 
    
