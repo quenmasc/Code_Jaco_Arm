@@ -19,15 +19,18 @@ __version__="1.0-dev"
 class Speech_Recognition(object):
     """ Semaphore """
     MfccsCoeff=np.empty((39,200),'f')
-
+    ClassLab=0
     """ Thread """ 
     def __init__(self):
         self.__maxconnections=2
-        self.__semaphore=threading.BoundedSemaphore(2)
+        self.__semaphore=threading.BoundedSemaphore(self.__maxconnections)
         self.__condition=threading.Condition()
+        self.__semaphore2=threading.BoundedSemaphore(self.__maxconnections)
+        self.__condition2=threading.Condition()
         self.__svm=AudioIO.LoadClassifier("SVM_Trained")
         
     def Recorder(self):
+
         global MfccsCoeff
         audio= alsa_record.Record()
         mfcc = MFCC.MFCCs()
@@ -69,6 +72,7 @@ class Speech_Recognition(object):
         endpoint=np.empty(2,'f')
         corr=np.empty((2,1),'f')
         flag=0
+
         while True :
             data, length = audio.read()
             pdata=audio.pseudonymize(data)
@@ -86,10 +90,12 @@ class Speech_Recognition(object):
             else :
                 for i in range(0,2) :
 
+
                 # return MFCC and spectral entropy
                     coeff,energy=mfcc.MFCC(np.array(c[i]))
                     SEntropy=entropy.SpectralEntropy(np.array(c[i]))
                     if j<20 :
+
                         mfccNoise+=np.array(coeff)
                         entropyData.append(SEntropy)
                         j+=1
@@ -114,6 +120,7 @@ class Speech_Recognition(object):
                         entropyData.rotate(-1)
                         entropyData[19]=entropyDistance
                     # update threshold 
+
                         th[i]=function.sigmoid(10,5,corr)
                         entropyThresh=function.EntropyThresholdUpdate(entropyData, entropyThreshNoise,0.96)
 
@@ -130,25 +137,33 @@ class Speech_Recognition(object):
             ndata=audio.depseudonymize(pdata)
             audio.write(ndata)
 #
+
         print("out of loop")
-        print("end of transmission -> waiting new data")
+        print("end of transmission -> wait")
         
     def SVM(self):
         global MfccsCoeff
+       # print "In function"
         self.__condition.acquire()
         while True :
             self.__condition.wait()
             self.__semaphore.acquire()
             classLab=AudioIO.ClassName(int(MachineLearning.ClassifierWrapper(self.__svm, 0, 0,MfccsCoeff)[0][0]))
+            classL=int(MachineLearning.ClassifierWrapper(self.__svm, 0, 0,MfccsCoeff)[0][0])
             print classLab
             self.__semaphore.release()
-        self.__condition.release()    
-
+        self.__condition.release()
+           # return classLab
+           
+  
+    
     def run(self):
+         i=0
          self.__t1=threading.Thread(target=self.Recorder)
          self.__t2=threading.Thread(target=self.SVM)
          self.__t1.start()
          self.__t2.start()
+             
          
     def stop(self):
         self.__t1.join()
@@ -157,6 +172,6 @@ class Speech_Recognition(object):
         
 if __name__=='__main__' :
     print "Running ...."
-    speech=SpeechRecognition()
+    speech=Speech_Recognition()
     speech.run()
         

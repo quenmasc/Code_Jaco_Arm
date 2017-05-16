@@ -179,7 +179,7 @@ def SaveClassifier(modelName,svmClassifier):
     
 def LoadClassifier(SVMModelName):
     try : 
-        model=joblib.load("SVModel/%s.pkl"%SVMModelName)
+        model=joblib.load("../PythonFile/SVModel/%s.pkl"%SVMModelName)
         print tools.bcolors.OKGREEN + "Classifier loaded %s"%SVMModelName + tools.bcolors.ENDC
         return model
     except IOError :
