@@ -11,7 +11,6 @@ import wave
 import os
 from threading import Thread
 import RingBuffer
-import mfcc
 import spectral_entropy
 import function
 import mfccbuffer
