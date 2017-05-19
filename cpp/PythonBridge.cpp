@@ -1,4 +1,5 @@
 #include "PythonBridge.h"
+
 /* The code below is from Ulysse Project */
 PyObject *pNameSVM , *pModuleSVM , *pDictSVM , *pClassSVM , *pInstanceSVM;
 PyThreadState *mainThreadState , *myThreadState , *tempState ;
@@ -59,9 +60,10 @@ void PythonBridge::Running_python(){
 int PythonBridge::ClassValue(){
 	int Classification=0;
 	PyObject *pValue ;
-	pValue=PyObject_CallMethod(pInstanceSVM,(char*)"ClassLabel",(char*)"O");
+	pValue=PyObject_CallMethod(pInstanceSVM,(char*)"read_Pipe",(char*)"O");
 	if (pValue!=NULL){
 		Classification=PyInt_AsLong(pValue);
+		printf("value : %ld",PyInt_AsLong(pValue));
 		Py_DECREF(pValue);
 	}
 	return Classification;
