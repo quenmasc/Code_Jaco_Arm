@@ -102,15 +102,18 @@ class Record(object) :
         RingLength=24650
         window_sample=200
         step_sample=85
-        read_process = Process(target=self.__read)
-        write_process = Process(target = self.__write)
+        self.__read_process = Process(target=self.__read)
+        self.__write_process = Process(target = self.__write)
         ring=RingBuffer.RingBuffer(RingLength,window_sample,step_sample)
-        RingBuffer_write_process = Process (target =self.__RingBufferWrite, args=(ring,))
-        read_process.start()
-        RingBuffer_write_process.start()
-        write_process.start()
+        self.__RingBuffer_write_process = Process (target =self.__RingBufferWrite, args=(ring,))
+        self.__read_process.start()
+        self.__RingBuffer_write_process.start()
+        self.__write_process.start()
         
-        
+    def stop(self):
+        self.__read_process.terminate()
+        self.__write_process.terminate()
+        self.__RingBuffer_write_process.terminate()
     """__author__="Quentin MASCRET <quentin.mascret.1@ulaval.ca>"
 __date__="2017-04-14"
 __version__="1.0-dev" get all data from audiuo devices """

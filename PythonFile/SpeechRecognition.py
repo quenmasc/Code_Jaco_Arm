@@ -11,6 +11,10 @@ import DSP
 import function
 import threading
 import MachineLearning
+import tools
+import os
+import time
+import errno
 
 __author__="Quentin MASCRET <quentin.mascret.1@ulaval.ca>"
 __date__="2017-05-11"
@@ -28,11 +32,14 @@ class Speech_Recognition(object):
         self.__semaphore2=threading.BoundedSemaphore(self.__maxconnections)
         self.__condition2=threading.Condition()
         self.__svm=AudioIO.LoadClassifier("SVM_Trained")
+        self.__fifo_name= 'fifo'
+        
         
     def Recorder(self):
 
         global MfccsCoeff
         audio= alsa_record.Record()
+
         mfcc = MFCC.MFCCs()
         entropy = spectral_entropy.SPECTRAL_ENTROPY()
         buff=mfccbuffer.MFFCsRingBuffer()
@@ -63,7 +70,8 @@ class Speech_Recognition(object):
          # threshold
 
         entropyData =deque([])
-        entropyThreshNoise=0
+
+        entropyThreshNoise=0l
         entropyThresh = 0
     #audio 
         audioData=[]
@@ -76,7 +84,6 @@ class Speech_Recognition(object):
         while True :
             data, length = audio.read()
             pdata=audio.pseudonymize(data)
-
             ndata=DSP.normalize(pdata,32767.0)
             audio.RingBufferWrite(ndata)
             if (c==[]) :
@@ -85,6 +92,7 @@ class Speech_Recognition(object):
                 print ("Overwrite")
                 break
             if flag < 3:
+
                 flag+=1
 
             else :
@@ -106,7 +114,7 @@ class Speech_Recognition(object):
                             entropyData=deque([])
                             for k in range(0,len(Data)) :
                                 entropyData.append(function.distance(Data[k],entropyNoise))
-                            entropyThreshNoise =function.MeanStandardDeviation(entropyData,3)
+                            entrrolpyThreshNoise =function.MeanStandardDeviation(entropyData,3)
                     else :
                     # return MFCC and Spectral Entropy background noise
                         mfccN=function.updateMFCCsNoise(np.array(coeff),mfccNoise, 0.90)
@@ -136,13 +144,24 @@ class Speech_Recognition(object):
        # ndata=DSP.denormalize(pdata,0xFF)
             ndata=audio.depseudonymize(pdata)
             audio.write(ndata)
-#
+
 
         print("out of loop")
         print("end of transmission -> wait")
         
     def SVM(self):
         global MfccsCoeff
+        try :
+            os.remove('../cpp/%s' %self.__fifo_name)
+        except :
+            print "Pipe already removed"
+        try :
+            os.mkfifo('../cpp/%s' %self.__fifo_name)
+        except OSError as e :
+            if e.errno==errno.EEXIST :
+                print("File already exist")
+            else :
+                raise
        # print "In function"
         self.__condition.acquire()
         while True :
@@ -152,24 +171,31 @@ class Speech_Recognition(object):
             classL=int(MachineLearning.ClassifierWrapper(self.__svm, 0, 0,MfccsCoeff)[0][0])
             print classLab
             self.__semaphore.release()
+            self.write_Pipe(classL)
         self.__condition.release()
            # return classLab
            
-  
-    
+    def write_Pipe(self,classL):
+            with open(self.__fifo_name,'wb') as f:
+                f.write('{}\n'.format(len(bin(classL)[2:])).encode())
+                f.write(bin(classL)[2:])
+            print "Done ..."
+
+
+        
     def run(self):
          i=0
          self.__t1=threading.Thread(target=self.Recorder)
          self.__t2=threading.Thread(target=self.SVM)
          self.__t1.start()
          self.__t2.start()
-             
+         self.__t1.join()
+         self.__t2.join()
          
     def stop(self):
         self.__t1.join()
         self.__t2.join()
     
-        
 if __name__=='__main__' :
     print "Running ...."
     speech=Speech_Recognition()
