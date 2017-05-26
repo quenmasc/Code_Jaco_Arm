@@ -13,7 +13,7 @@
 
 
 int main (){
-	system("gnome-terminal -x sh -c 'python SpeechRecognition.py &'");
+	//system("gnome-terminal -x sh -c 'python SpeechRecognition.py &'");
 	const char *fifo_name="fifo";
 	int n;
 	while(1){
