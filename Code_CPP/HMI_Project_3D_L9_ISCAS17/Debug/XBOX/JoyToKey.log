@@ -1,7 +1,0 @@
-2017-04-11 17:55:52.054 Info   Starting JoyToKey Ver5.8.2
-2017-04-11 17:55:52.054 Info   ExeFile=C:\Users\CLFAL9\Dropbox\Projet_CPP\HMI_Project_3D_L8\Debug\XBOX\JoyToKey.exe
-2017-04-11 17:55:52.054 Info   ConfigDir=C:\Users\CLFAL9\Dropbox\Projet_CPP\HMI_Project_3D_L8\Debug\XBOX\
-2017-04-11 17:55:52.054 Info   IniFile=C:\Users\CLFAL9\Dropbox\Projet_CPP\HMI_Project_3D_L8\Debug\XBOX\JoyToKey.ini
-2017-04-11 17:55:52.054 Info   Windows Version = 6.1
-2017-04-11 17:55:52.055 Error  Failed to load VistaAPI.dll (Utils\Utils.cpp#212)
-2017-04-11 17:55:52.098 Info   Application terminated (Utils\LogFile.cpp#20)
