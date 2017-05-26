@@ -1,0 +1,14 @@
+/*printf("YAW REFERENCE = " + Convert::ToString(CJACO.z0_ref) + " ____ OFFSET = " + Convert::ToString(CJACO.z0 - CJACO.z0_ref));
+						Console::WriteLine("FORBACK = " + Convert::ToString(CJACO.ForBackComm) + " ____ RIGHTLEFT = " + Convert::ToString(CJACO.RightLeftComm) + " ____ UPDOWN = " + Convert::ToString(CJACO.UpDownComm));
+						Console::WriteLine("MEAN VELOCITY REFERENCE = " + Convert::ToString(CJACO.MeanVelRef) + " ____ REF VELOCITY TH = " + Convert::ToString(CJACO.ThRotReference));
+						Console::WriteLine("Z control inhibited = " + Convert::ToString(CJACO.InhibiteZctrl));
+						Console::WriteLine("MEAN TKE  = " + Convert::ToString(CJACO.MEAN_TKE) + " ____ STD TKE = " + Convert::ToString(CJACO.STD_TKE));
+						Console::WriteLine("MEAN TKE CURRENT = " + Convert::ToString(CJACO.MEAN_TKE_CURRENT) + " ____ EMG DETECTED = " + Convert::ToString(CJACO.EMG_DETECTED));*/
+						//Console::WriteLine("NB_TKE_PLOT = " + Convert::ToString(NB_TKE_PLOTTED));
+						//Console::WriteLine("EMG BUTTON = " + Convert::ToString(CJACO.min_tabc(CJACO.EMG_BUTTON,CJACO.nb_detect)));
+						//if (plot_refreshed)
+							//Console::WriteLine("PLOT REFRESHED  = " + Convert::ToString(plot_refreshed));
+						//Console::WriteLine("YAW_FUSED_SENSOR = " + Convert::ToString(CJACO.yaw_fused_sensor) + " ____ YAW_FUSED_CPP = " + Convert::ToString(CJACO.yaw));
+						//Console::WriteLine("CmdXout = " + Convert::ToString(CJACO.CmdXout) + " ____ CmdYout = " + Convert::ToString(CJACO.CmdXout));
+						//Console::WriteLine("CmdX_new = " + Convert::ToString(CJACO.CmdX_new) + " ____ CmdY_new = " + Convert::ToString(CJACO.CmdX_new));
+						//Console::WriteLine("Theta_offset = " + Convert::ToString(CJACO.Theta_offset));

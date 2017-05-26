@@ -1,0 +1,35 @@
+﻿La génération a démarré 2017-05-26 02:03:19.
+     1>Projet "C:\Users\Etudiant\Dropbox\Projet_CPP\HMI_Project_3D_L9_ISCAS17\MyoArmBand_JACO\MyoArmBand_JACO.vcxproj" sur le nœud 2 (Build cible(s)).
+     1>C:\Program Files (x86)\MSBuild\Microsoft.Cpp\v4.0\V120\Microsoft.CppBuild.targets(388,5): warning MSB8028: The intermediate directory (Debug\) contains files shared from another project (Control_IMU_2.0.vcxproj, HMI_Project_IMU_NODE.vcxproj).  This can lead to incorrect clean and rebuild behavior.
+     1>ClCompile:
+         C:\Program Files (x86)\Microsoft Visual Studio 12.0\VC\bin\CL.exe /c /IC:\Users\Etudiant\Dropbox\Projet_CPP\Projet_ALGO_CPP_0208_Alex\Projet_ALGO_CPP_0208_Alex\MyoArmBand_JACO /AI"C:\Program Files (x86)\Reference Assemblies\Microsoft\Framework\.NETFramework\v4.0" /AI"C:\Program Files (x86)\Windows Kits\8.1\References\CommonConfiguration\Neutral" /Zi /clr /nologo /W3 /WX- /Od /Oy- /D WIN32 /D _DEBUG /D _USING_V110_SDK71_ /D _UNICODE /D UNICODE /EHa /MDd /GS /fp:precise /Zc:wchar_t /Zc:forScope /Fo"Debug\\" /Fd"Debug\vc120.pdb" /TP /FU"C:\Program Files (x86)\Reference Assemblies\Microsoft\Framework\.NETFramework\v4.0\mscorlib.dll" /FU"C:\Program Files (x86)\Reference Assemblies\Microsoft\Framework\.NETFramework\v4.0\System.Data.dll" /FU"C:\Program Files (x86)\Reference Assemblies\Microsoft\Framework\.NETFramework\v4.0\System.dll" /FU"C:\Program Files (x86)\Reference Assemblies\Microsoft\Framework\.NETFramework\v4.0\System.Drawing.dll" /FU"C:\Program Files (x86)\Reference Assemblies\Microsoft\Framework\.NETFramework\v4.0\System.Windows.Forms.dll" /FU"C:\Program Files (x86)\Reference Assemblies\Microsoft\Framework\.NETFramework\v4.0\System.Xml.dll" /analyze- /errorReport:prompt /clr:nostdlib Main.cpp
+         Main.cpp
+     1>c:\users\etudiant\dropbox\projet_cpp\hmi_project_3d_l9_iscas17\myoarmband_jaco\Defined_Macro.h(34): warning C4005: 'M_PI' : redéfinition de macro
+                 C:\Program Files (x86)\Microsoft Visual Studio 12.0\VC\include\math.h(1298) : voir la définition précédente de 'M_PI'
+     1>Main.cpp(123): warning C4129: '|' : caractère de séquence d'échappement non reconnu
+     1>Main.cpp(126): warning C4129: ' ' : caractère de séquence d'échappement non reconnu
+     1>Main.cpp(126): warning C4129: '|' : caractère de séquence d'échappement non reconnu
+     1>Main.cpp(126): warning C4129: '_' : caractère de séquence d'échappement non reconnu
+     1>Main.cpp(127): warning C4129: '_' : caractère de séquence d'échappement non reconnu
+     1>Main.cpp(143): warning C4101: 'Port_COM' : variable locale non référencée
+     1>Main.cpp(928): warning C4101: 'status_jaco' : variable locale non référencée
+       Link:
+         C:\Program Files (x86)\Microsoft Visual Studio 12.0\VC\bin\link.exe /ERRORREPORT:PROMPT /OUT:"C:\Users\Etudiant\Dropbox\Projet_CPP\HMI_Project_3D_L9_ISCAS17\Debug\HMI_Project_3D.exe" /INCREMENTAL /NOLOGO kernel32.lib user32.lib gdi32.lib winspool.lib comdlg32.lib advapi32.lib shell32.lib ole32.lib oleaut32.lib uuid.lib odbc32.lib odbccp32.lib /NODEFAULTLIB:libc.lib /MANIFEST /MANIFESTUAC:"level='asInvoker' uiAccess='false'" /manifest:embed /DEBUG /PDB:"C:\Users\Etudiant\Dropbox\Projet_CPP\HMI_Project_3D_L9_ISCAS17\Debug\HMI_Project_3D.pdb" /ASSEMBLYDEBUG /TLBID:1 /ENTRY:"main" /DYNAMICBASE /FIXED:NO /NXCOMPAT /MACHINE:X86 Debug\Control_JACO.obj
+         Debug\Dislin_Scope.obj
+         Debug\EMG_Sensor.obj
+         Debug\IMU_Sensor.obj
+         Debug\Main.obj
+         Debug\Routine.obj
+         Debug\Sensor.obj
+         "Debug\.NETFramework,Version=v4.0.AssemblyAttributes.obj"
+         lib\discpp.lib
+         lib\dislnc.lib
+         lib\disvc.lib
+         lib\disvcd.lib
+         lib\disvcm.lib
+         MyoArmBand_JACO.vcxproj -> C:\Users\Etudiant\Dropbox\Projet_CPP\HMI_Project_3D_L9_ISCAS17\Debug\HMI_Project_3D.exe
+     1>Génération du projet "C:\Users\Etudiant\Dropbox\Projet_CPP\HMI_Project_3D_L9_ISCAS17\MyoArmBand_JACO\MyoArmBand_JACO.vcxproj" terminée (Build cible(s)).
+
+La génération a réussi.
+
+Temps écoulé 00:00:01.84
