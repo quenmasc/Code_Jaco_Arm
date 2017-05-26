@@ -1,5 +1,7 @@
 #include "EMG_Sensor.h"
 
+
+namespace KinDrv{
 //Fs_EMG = 1125 Hz
 const double EMG_Sensor::den_bp_20_450Hz[5] = { 1.0, -0.706332727403145, -0.823332488588912, 0.205925223216761, 0.354276046972334 };
 const double EMG_Sensor::num_bp_20_450Hz[5] = { 0.588587106635191, 0.0, -1.17717421327038, 0.0, 0.588587106635191 };
@@ -201,4 +203,4 @@ float EMG_Sensor::C2_3(int var)
 	var2 = (var >> 23)*(-8388608);
 	return (var1 + var2);
 }
-
+}

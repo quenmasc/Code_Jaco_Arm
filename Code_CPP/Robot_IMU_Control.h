@@ -8,7 +8,7 @@
 //using namespace System;
 //using namespace std;
 
-
+namespace KinDrv{
 public class Robot_IMU_Control
 {
 public:	
@@ -169,3 +169,4 @@ public:
 	float mean_tabi(int * tab, int taille);
 
 };
+}

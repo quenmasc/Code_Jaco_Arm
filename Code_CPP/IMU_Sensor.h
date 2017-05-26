@@ -5,7 +5,7 @@
 
 #include <math.h>
 #include "Defined_Macro.h"
-
+namespace KinDrv{
 public class IMU_Sensor
 {
 public:
@@ -77,4 +77,4 @@ public:
 	float rad2deg(float angle_rad);
 	float deg2rad(float angle_deg);
 };
-
+}

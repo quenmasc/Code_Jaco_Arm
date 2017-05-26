@@ -1,7 +1,7 @@
 #pragma once
 #include <math.h>
 #include "Defined_Macro.h"
-
+namespace KinDrv{
 public class EMG_Sensor
 {
 public:
@@ -58,4 +58,4 @@ public:
 	float mean_tabi(int * tab, int taille);
 	float C2_3(int var);
 };
-
+}

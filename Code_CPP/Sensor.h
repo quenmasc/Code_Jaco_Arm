@@ -1,5 +1,7 @@
 #pragma once
-ref class Sensor
+
+namespace KinDrv{
+class Sensor
 {
 public:
 	char type;
@@ -9,4 +11,4 @@ public:
 	Sensor();
 	~Sensor();
 };
-
+}

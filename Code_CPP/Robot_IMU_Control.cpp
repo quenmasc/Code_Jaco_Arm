@@ -1,5 +1,5 @@
 #include "Robot_IMU_Control.h"
-
+namespace KinDrv{
 #pragma region FILTERS/CALIB
 const double Robot_IMU_Control::num_lp_10Hz[3] = { 0.355, 0.355, 0.0 };
 const double Robot_IMU_Control::num_lp_25Hz[3] = { 0.755, 0.755, 0.0 };
@@ -759,4 +759,5 @@ float Robot_IMU_Control::mean_tabi(int * tab, int taille)
 	for (g = 0; g < taille; g++)
 		sum = sum + tab[g];
 	return (sum / taille);
+}
 }

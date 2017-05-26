@@ -1,5 +1,5 @@
 #include "IMU_Sensor.h"
-
+namespace KinDrv{
 const double IMU_Sensor::num_lp_10Hz[3] = { 0.355, 0.355, 0.0 };
 const double IMU_Sensor::num_lp_25Hz[3] = { 0.755, 0.755, 0.0 };
 const double IMU_Sensor::den_lp_10Hz[3] = { 1.0, -0.2905, 0.0 };
@@ -290,4 +290,5 @@ float IMU_Sensor::rad2deg(float angle_rad)
 float IMU_Sensor::deg2rad(float angle_deg)
 {
 	return angle_deg *(M_PI / 180);
+}
 }

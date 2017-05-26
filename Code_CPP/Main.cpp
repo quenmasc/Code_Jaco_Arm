@@ -6,47 +6,20 @@
 #include <math.h>
 #include <sstream>
 #include <string>
-#include <Windows.h>
-#include <random>
 #include <stdio.h>
 #include <stdlib.h>
 #include <intrin.h>
-#include "stdafx.h"
-#include "KinovaTypes.h"
 #include "omp.h"
 #include "Defined_Macro.h"
 #include "IMU_Sensor.h"
 #include "Control_JACO.h"
-#include "Dislin_Scope.h"
-#include "dislin.h"
-#include "discpp.h"
 #include "Routine.h"
 
 
 namespace Control_IMU_JACO
 {
-	using namespace System;
-	using namespace System::ComponentModel;
-	using namespace System::Collections;
-	using namespace System::Windows::Forms;
-	using namespace System::Data;
-	using namespace System::Drawing;
-	using namespace System::IO::Ports;
-	using namespace System::Threading;
 	using namespace std;
 
-	HINSTANCE commandLayer_handle;
-	static int(*MyInitAPI)();
-	static int(*MyCloseAPI)();
-	static int(*MyMoveHome)();
-	static int(*MyInitFingers)();
-	static int(*MySendAdvanceTrajectory)(TrajectoryPoint);
-	static int(*MyGetQuickStatus)(QuickStatus &);
-	static int(*MySendJoystickCommand)(JoystickCommand);
-	static int(*MySetCartesianControl)();
-	static int(*MyStartControlAPI)();
-	static int(*MyStopControlAPI)();
-	static int(*MyGetControlMapping)(ControlMappingCharts &Response);
 
 	const int Packet_Size = 32;
 	int PCKT[Packet_Size - 1];
@@ -98,13 +71,10 @@ namespace Control_IMU_JACO
 	const int NB_SCOPE_IMU = 50 * NB_IMU_TO_PLOT;
 
 	Control_JACO CTRL_IMU;
-	Dislin_Scope PLOT_EMG;
 	float new_emg[NB_SAMPLES_TO_PLOT]; int i_nemg = 0; 
 	float new2_emg[NB_SAMPLES_TO_PLOT]; int i_n2emg = 0;
-	Dislin_Scope PLOT_TKE;
 	float new_tke[NB_TKE_TO_PLOT]; int i_ntke = 0;
 	float th = 0;
-	Dislin_Scope PLOT_IMU;
 	float new_imu[4];
 
 	void update_plot(void);

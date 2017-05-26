@@ -5,7 +5,7 @@
 #include "KinovaTypes.h"
 #include "IMU_Sensor.h"
 #include "EMG_Sensor.h"
-
+namespace KinDrv {
 public class Control_JACO
 {
 public:
@@ -104,3 +104,4 @@ public:
 	JoystickCommand ReleaseButton (char buttonindex);
 };
 
+}

@@ -1,5 +1,6 @@
 #include "Control_JACO.h"
 
+namespace KinDrv{
 
 Control_JACO::Control_JACO()
 {}
@@ -543,4 +544,5 @@ int Control_JACO::ReadJACOMode()
 	status_jaco = (*MyGetControlMapping)(MappingJACO);
 	mode_jaco = MappingJACO.ActualControlMapping;
 	return mode_jaco;
+}
 }
