@@ -1,6 +1,9 @@
 #define _USE_MATH_DEFINES
+#include <libkindrv/kindrv.h>
+#include <sys/select.h>
 
 #include <iostream>
+#include <sstream>
 #include <cstdlib>
 #include <time.h>
 #include <math.h>
@@ -15,12 +18,15 @@
 #include "Control_JACO.h"
 #include "Routine.h"
 
-
-namespace Control_IMU_JACO
-{
+	using namespace KinDrv;
 	using namespace std;
 
-
+	/* USB DEVICE */
+	int result;  
+	const char* usb_dev;
+	std::string usb_name;
+	/* END USB DEVICE DEFINITION */
+	
 	const int Packet_Size = 32;
 	int PCKT[Packet_Size - 1];
 	static int S_Of_F = 51;
@@ -84,11 +90,104 @@ namespace Control_IMU_JACO
 	void change_mode_A(char value);
 	int ReadJACOMode(void);
 
+	//PRINTING
+	bool PRINT = 1;
+	int flag=0;
+	int c;
+	
+	
+	
+	/* SOME DEFINITION */ 
+	int goto_home(JacoArm *arm)
+{
+  // going to HOME position is possible from all positions. Only problem is,
+  // if there is some kinfo of error
+  jaco_retract_mode_t mode = arm->get_status();
+  switch( mode ) {
+    case MODE_RETRACT_TO_READY:
+      // is currently on the way to HOME. Need 2 button presses,
+      // 1st moves towards RETRACT, 2nd brings it back to its way to HOME
+      arm->push_joystick_button(2);
+      arm->push_joystick_button(2);
+      break;
+
+    case MODE_NORMAL_TO_READY:
+    case MODE_READY_TO_RETRACT:
+    case MODE_RETRACT_STANDBY:
+    case MODE_NORMAL:
+    case MODE_NOINIT:
+      // just 1 button press needed
+      arm->push_joystick_button(2);
+      break;
+
+    case MODE_ERROR:
+      printf("some error?! \n");
+      return 0;
+      break;
+
+    case MODE_READY_STANDBY:
+      printf("nothing to do here \n");
+      return 1;
+      break;
+  }
+
+  while( mode != MODE_READY_STANDBY ) {
+    usleep(1000*10); // 10 ms
+    mode = arm->get_status();
+    if( mode == MODE_READY_TO_RETRACT ) {
+      arm->release_joystick();
+      arm->push_joystick_button(2);
+    }
+  }
+  arm->release_joystick();
+
+  return 1;
+}
+/* keyboard */
+struct termios orig_termios;
+
+void reset_terminal_mode()
+{
+    tcsetattr(0, TCSANOW, &orig_termios);
+}
+void set_conio_terminal_mode()
+{
+    struct termios new_termios;
+
+    /* take two copies - one for now, one for later */
+    tcgetattr(0, &orig_termios);
+    memcpy(&new_termios, &orig_termios, sizeof(new_termios));
+
+    /* register cleanup handler, and set the new terminal mode */
+    atexit(reset_terminal_mode);
+    cfmakeraw(&new_termios);
+    tcsetattr(0, TCSANOW, &new_termios);
+}
+int kbhit()
+{
+    struct timeval tv = { 0L, 0L };
+    fd_set fds;
+    FD_ZERO(&fds);
+    FD_SET(0, &fds);
+    return select(1, &fds, NULL, NULL, &tv);
+}
+
+int getch()
+{
+    int r;
+    unsigned char c;
+    if ((r = read(0, &c, sizeof(c))) < 0) {
+        return r;
+    } else {
+        return c;
+    }
+}
+
+	/* END */
 	[STAThread]
 	int main()
 	{
-		std::random_device                  rand_dev;
-		std::mt19937                        generator(rand_dev());
+		
 		printf(" ____     ___  ____  _____    _____  _____  _____  ____  ____  _____ _ \n");
 		printf("|_   |   /   ||  __||  _  |  |  _  ||  _  \|  _  ||_   ||  _ ||  __|| |_\n");
 		printf("  |  |  / _  || |   | | | |  | |_| || |_| || | | |  |  || |_  | |   |  _|\n");
@@ -110,47 +209,37 @@ namespace Control_IMU_JACO
 			keypressed[i_k] = 0;
 
 		int cpt = 0; int int_kyp = 0;
-		String^ Port_COM;
-		SerialPort^  serialPort1;
-		serialPort1 = gcnew SerialPort();
-		
-		/*printf("Available Ports:\n");
-		for each (String^ s in SerialPort::GetPortNames())
-		{
-			Console::WriteLine("   {0}", s);
+		result=system("ls -l /dev/ttyUSB*");
+		if (result!=0){
+			std::cout <<"\n no USB devices were found\n" << std::endl;
+			return 0;
 		}
-		printf("Entrez le port COM: \n");
-		Port_COM = Convert::ToString(Console::ReadLine());*/
-		
-		serialPort1->BaudRate = 1998848;//115200;//
-		serialPort1->PortName = "COM11";
-		serialPort1->ReadTimeout = 100000;
-		serialPort1->Open();
-		
-		if (serialPort1->IsOpen)
-		{
-			printf("COM Port 11 opened... \nStart Acquisition?  YES[Y]  |  NO[N]\n");
+		else {
+			printf("\nEnter /dev/ttyUSB* wished \n");
+			std::cin >> usb_name;
+			usb_dev=usb_name.c_str();
+		}
+		mySerial serial1(usb_dev,Baudrate);
+		if (serial1.IsOpen()){
+			printf("USB Devices is opened... \nStart Acquisition?  YES[Y]  |  NO[N]\n");
 			while ((ch_kyp != 'Y') && (ch_kyp != 'y') && (ch_kyp != 'N') && (ch_kyp != 'n'))
 			{
 				std::cin >> ch_kyp;
 			}
 			if (ch_kyp == 'Y' || ch_kyp == 'y')
 			{
-				serialPort1->ReadExisting();
 				system("cls");
 				printf("Acquisition STARTED...\n");
-			}
-			else
-			{
-				serialPort1->Close();
-				printf("COM Port closed, program will stop...\n");
-				Sleep(3000);
-				return 0;
 			}
 		}	
 		
 		while (1)
 		{
+			set_conio_terminal_mode();
+			if (kbhit()){
+				c=getch();
+			}
+			reset_terminal_mode();
 			while (serialPort1->ReadByte() != S_Of_F);
 			refresh++;
 
@@ -902,6 +991,6 @@ namespace Control_IMU_JACO
 		mode_jaco = MappingJACO.Mapping[2].ActualModeA;
 		return mode_jaco;
 	}
-}
+
 
 
