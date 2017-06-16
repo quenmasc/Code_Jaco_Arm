@@ -185,21 +185,47 @@ def FolderClassDictionnary(listOfDirs):
         'Class_2' : 2,
         'Class_3' : 3,
         'Class_4' : 4,
-        'Class_5' : 0,
-        'Class_6' : 6,
-        'Class_7' : 0,
-        'Class_8' : 8,
-        'Class_9' : 0,
-        'Class_10':0,
-        'Class_11':0,
-        'Class_12':12,
-        'Class_13':13,
-        'Class_14':14,
-        'Class_15':15,
-        'Class_16':16,
-        'Class_17':17,
+        'Class_6' : 5,
+        'Class_12': 6,
+        'Class_13': 7,
+        'Class_14': 8,
+        'Class_15': 9,
+        'Class_16':10,
+        'Class_17':11,
+        'Class_18':12,
         }.get(listOfDirs,0) # zero is default class
 
+def FolderClassDictionnary2(listOfDirs):
+     return { 
+        'Class_1' : 1,
+        'Class_2' : 2,
+        'Class_3' : 3,
+        'Class_4' : 4,
+        'Class_6' : 5,
+        'Class_12': 6,
+        'Class_13': 7,
+        'Class_14': 8,
+        'Class_15': 9,
+        'Class_16':10,
+        'Class_17':11,
+        'Class_18':12,
+        }.get(listOfDirs,0) # zero is default class
+
+def InvertClass(Label):
+		return { 
+			1 :1,
+			2 : 2,
+			3 : 3,
+			4 : 4,
+			6 : 5,
+			12 : 6,
+			13 : 7,
+			14 : 8,
+			15 : 9,
+			16 : 10,
+			17 : 11,
+			18 : 12,
+        }.get(Label,0)
 def ClassName(Label):
      return { 
          1 : "BACKWARD",
@@ -209,7 +235,40 @@ def ClassName(Label):
          5 : "GOTO",
          6 : "READY",
          7 : "MODE",
+         8 : "NOISE" ,
+         9 : "ONE",
+         10: "TWO",
+         11: "THREE",
+         12: "UP",
+         13: "DOWN",
+         14: "OPEN",
+         15: "CLOSE",
+         16: "TRANSLATION",
+         17: "ROTATION",
+         18: "STOP",
         }.get(Label,0)
+
+def TrainClasse(listOfDirs):
+     return { 
+         1 : "Class_1",
+         2 : "Class_2",
+         3 : "Class_3",
+         4 : "Class_4" ,
+         5 : "Class_5",
+         6 : "Class_6",
+         7 : "Class_7",
+         8 : "Class_8" ,
+         9 : "Class_9",
+         10: "Class_10",
+         11: "Class_11",
+         12: "Class_12",
+         13: "Class_13",
+         14: "Class_14",
+         15: "Class_15",
+         16: "Class_16",
+         17: "Class_17",
+         18: "Class_18",
+        }.get(listOfDirs,0)
     
 def FirstSVMClass(listOfDirs):
      return { 
@@ -229,7 +288,7 @@ def FirstSVMClass(listOfDirs):
         'Class_14' :1,
         'Class_15' :2,
         'Class_16' :3,
-        'Class_17' :2,
+        'Class_17' :3,
         
         }.get(listOfDirs,0) # zero is default class
 
@@ -312,7 +371,7 @@ def SaveClassifier(modelName,svmClassifier):
     
 def LoadClassifier(SVMModelName):
     try : 
-        model=joblib.load("SVModel/%s.pkl"%SVMModelName)
+        model=joblib.load("/home/pi/libkindrv/PythonFile/SVModel/%s.pkl"%SVMModelName)
         print tools.bcolors.OKGREEN + "Classifier loaded %s"%SVMModelName + tools.bcolors.ENDC
         return model
     except IOError :
