@@ -24,6 +24,7 @@ class Yin_Pitch(object):
 					for i in range(self.__halfBufferSize):
 						delta=data[i]-data[i+tau]
 						self.__YinBuffer[tau]+=delta*delta
+						print self.__YinBuffer[tau] , delta*delta
 		# step 2 : Calculate the cumulative mean on the normalised difference 
 		def YinMean(self):
 				CurrentSum=0.0
@@ -108,7 +109,8 @@ class Yin_Pitch(object):
 		def main(self):
 				bufferLength=100
 				pitch=0.0
-				listdirectory = os.listdir(".")
+				listdirectory = os.listdir("speech/")
+				os.chdir('speech/')
 				for filename in listdirectory :
 					extension=os.path.splitext(filename)[1]
 					if extension=='.wav':
@@ -117,11 +119,10 @@ class Yin_Pitch(object):
 						data=np.fromstring(data, np.int16)
 						x=np.array(data)
 						#x=DSP.normalize(x,2**16)
-						while pitch <10 :
+						while pitch <10.0 :
 							self.YinInit(bufferLength,0.05)
 							pitch=self.GetPitch(x)
 							bufferLength+=1
-							print bufferLength
 						print "Pitch is found to be", pitch , "with a proba of " , self.__probability
 				return 0
 
