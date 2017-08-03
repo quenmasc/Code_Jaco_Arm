@@ -92,7 +92,7 @@ def TrainSVM_RBF_Features(featuresTrain, featuresTest,classTrain,classTest):
 	#cv.split(featuresTrain,classTrain) 
 	
 	print tools.bcolors.OKBLUE + "Running ..." + tools.bcolors.ENDC
-	grid =GridSearchCV((SVC(kernel="rbf")),param_grid=params,cv=cv,verbose=20,n_jobs=10) # k=17 StratifiedKFold(classLabel,k=17)
+	grid =GridSearchCV((SVC(kernel="rbf")),param_grid=params,cv=cv,verbose=20,n_jobs=4) # k=17 StratifiedKFold(classLabel,k=17)
 	grid.fit(featuresTrain.T,classTrain)
 	y_true, y_pred=classTest,grid.predict(featuresTest.T)
 	print (grid.best_score_)

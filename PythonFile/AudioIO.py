@@ -391,7 +391,7 @@ def LoadClassifier(SVMModelName):
 
     
 def test():
-    [features, featuresL, featuresR, featuresC, classL, classR, classC,ClassFistLevel, CN]=ReadFeatureClass('both')
+    [features, featuresL, featuresR, featuresC, classL, classR, classC,ClassFistLevel, CN]=ReadFeatureClass('mine')
    # [features_Rox, featuresL_Rox, featuresR_Rox, featuresC_Rox, classL_Rox, classR_Rox, classC_Rox,ClassFistLevel_Rox, CN_Rox]=ReadFeatureClass('Roxane')
     #[features_Gab, featuresL_Gab, featuresR_Gab, featuresC_Gab, classL_Gab, classR_Gab, classC_Gab,ClassFistLevel_Gab, CN_Gab]=ReadFeatureClass('Gabriel')
     if len(features)==0 :#or len(features_Rox)==0 :
@@ -400,7 +400,7 @@ def test():
     print tools.bcolors.HEADER +"Size of features :" , featuresL.shape , len(classL), featuresR.shape , len(classR),features.shape , len(ClassFistLevel) , "Features, FeaturesL , FeaturesR"  , len(classC), featuresC.shape, "FeaturesC"+ tools.bcolors.ENDC
     #split test/train features
     
-    featuresTr,featuresTe ,classTr, classTe =MachineLearning.Split_Features(features.T,ClassFistLevel)
+    featuresTr,featuresTe ,classTr, classTe =MachineLearning.Split_Features(features.T,CN)
    # featuresTr_Rox,featuresTe_Rox ,classTr_Rox, classTe_Rox =MachineLearning.Split_Features(features_Rox.T,ClassFistLevel_Rox)
    # featuresTr_Gab,featuresTe_Gab ,classTr_Gab, classTe_Gab =MachineLearning.Split_Features(features_Gab.T,ClassFistLevel_Gab)
     featuresTrain=featuresTr#np.concatenate([featuresTr,featuresTr_Rox ], axis=1)
@@ -413,7 +413,7 @@ def test():
     
     # features L
     
-    
+    """
     featuresTr,featuresTe ,classTr, classTe =MachineLearning.Split_Features(featuresL.T,classL)
     #featuresTr_Rox,featuresTe_Rox ,classTr_Rox, classTe_Rox =MachineLearning.Split_Features(featuresL_Rox.T,classL_Rox) 
    # featuresTr_Gab,featuresTe_Gab ,classTr_Gab, classTe_Gab =MachineLearning.Split_Features(featuresL_Gab.T,classL_Gab)
@@ -438,7 +438,7 @@ def test():
     SaveClassifier("RightSVM",ThirdSvmModel)
     print tools.bcolors.HEADER + "Third SVM saved" + tools.bcolors.ENDC
     
-    """
+    
     FourthSvmModel=MachineLearning.TrainSVM_RBF_Features(features.T, CN)
     SaveClassifier("NumberSVM",FourthSvmModel)
     print tools.bcolors.HEADER + "Fourth SVM saved" + tools.bcolors.ENDC
@@ -454,14 +454,15 @@ def train():
 				print tools.bcolors.FAIL + "In Classifier - Error : folders are empty"+tools.bcolors.ENDC
 				return
 		model=LoadClassifier("SVM")
-		modelL=LoadClassifier("LeftSVM")
-		modelR=LoadClassifier("RightSVM")
-		modelC=LoadClassifier("NumberSVM")
+		#modelL=LoadClassifier("LeftSVM")
+		#modelR=LoadClassifier("RightSVM")
+		#modelC=LoadClassifier("NumberSVM")
 		params=dict(gamma=model.best_params_["gamma"], C=model.best_params_["C"])
 		ClassFistLevel=ClassFistLevel_m#np.concatenate([ClassFistLevel_m,ClassFistLevel_Rox ])
 		features=features_m#np.concatenate([features_m,features_Rox ], axis=1)
 		SVM=MachineLearning.TrainBestParams(params,features.T,ClassFistLevel)#ClassFistLevel
 		print tools.bcolors.HEADER + "First SVM Trained" + tools.bcolors.ENDC
+		"""
 		featuresL=featuresL_m#np.concatenate([featuresL_m,featuresL_Rox ], axis=1)
 		paramsL=dict(gamma=modelL.best_params_["gamma"], C=modelL.best_params_["C"])
 		classL=classL_m#np.concatenate([classL_m,classL_Rox ])
@@ -487,6 +488,7 @@ def train():
 		print tools.bcolors.HEADER + " Right SVM Trained saved" + tools.bcolors.ENDC
 		#SaveClassifier("NumberSVM_Trained",SVMC)
 		#print tools.bcolors.HEADER + "Center SVM Trained saved" + tools.bcolors.ENDC
+		"""
 		#print tools.bcolors.OKGREEN + "All SVM Trained have been saved" + tools.bcolors.ENDC
  
  
