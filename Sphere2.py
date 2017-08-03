@@ -168,6 +168,8 @@ class Sphere_calibration(object):
 					
 					
 		return features
+	
+	def Define_Mean_and_Std (self, features)
 
 if __name__ == "__main__" :
 	Sphere= Sphere_calibration()
